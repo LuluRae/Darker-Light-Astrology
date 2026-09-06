@@ -1,0 +1,9 @@
+astro_app/
+│
+├── backend/
+│   ├── main.py
+│   ├── api/
+│   ├── logic/
+│   └── requirements.txt
+│
+└── frontend/
