@@ -1,0 +1,26 @@
+import math
+from datetime import datetime
+
+def calculate_moon_phase(date_str):
+    date = datetime.strptime(date_str, "%Y-%m-%d")
+    diff = date - datetime(2001, 1, 1)
+    days = diff.days + (diff.seconds / 86400)
+    lunations = days / 29.53
+    position = lunations % 1
+
+    if position < 0.03 or position > 0.97:
+        return "New Moon"
+    elif position < 0.22:
+        return "Waxing Crescent"
+    elif position < 0.28:
+        return "First Quarter"
+    elif position < 0.47:
+        return "Waxing Gibbous"
+    elif position < 0.53:
+        return "Full Moon"
+    elif position < 0.72:
+        return "Waning Gibbous"
+    elif position < 0.78:
+        return "Last Quarter"
+    else:
+        return "Waning Crescent"
