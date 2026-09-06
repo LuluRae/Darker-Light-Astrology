@@ -1,0 +1,13 @@
+astro_app/
+│
+├── backend/
+│   ├── main.py
+│   ├── api/
+│   │   └── birthdata.py
+│   ├── logic/
+│   │   └── moon_phase.py
+│   └── database/
+│       └── models.py
+│
+└── frontend/
+    └── (React or HTML/CSS/JS later)
