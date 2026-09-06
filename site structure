@@ -1,0 +1,13 @@
+/root
+  /frontend
+    /public
+    /src
+      /components
+      /pages
+      /styles
+  /backend
+    /api
+    /logic
+    /database
+  /assets
+  /templates
