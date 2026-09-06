@@ -1,0 +1,18 @@
+from fastapi import APIRouter
+from pydantic import BaseModel
+from logic.moon_phase import calculate_moon_phase
+
+router = APIRouter()
+
+class BirthData(BaseModel):
+    date: str
+    time: str
+    location: str
+
+@router.post("/calculate")
+def calculate_birthdata(data: BirthData):
+    moon_phase = calculate_moon_phase(data.date)
+    return {
+        "moon_phase": moon_phase,
+        "message": "Birth data processed successfully"
+    }
