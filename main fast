@@ -1,0 +1,10 @@
+from fastapi import FastAPI
+from api.birthdata import router as birthdata_router
+
+app = FastAPI(
+    title="Celestial Mystic Astrology API",
+    description="Backend engine for personalized astrology calendar",
+    version="1.0.0"
+)
+
+app.include_router(birthdata_router, prefix="/birthdata")
