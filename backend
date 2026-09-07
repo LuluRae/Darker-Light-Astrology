@@ -1,0 +1,14 @@
+# make backend folder
+mkdir -p backend
+
+# move likely FastAPI files into backend (adjust names if different)
+git mv "main fast" backend/main.py 2>/dev/null || true
+git mv "main fast.py" backend/main.py 2>/dev/null || true
+git mv "fast API" backend/ 2>/dev/null || true
+git mv "API endpoint" backend/ 2>/dev/null || true
+git mv "end point" backend/ 2>/dev/null || true
+git mv "starter logic" backend/ 2>/dev/null || true
+
+# if files were plain text without extensions, rename main file to main.py
+# only run the next line if you know which file is your FastAPI entry
+# mv backend/"main fast" backend/main.py
