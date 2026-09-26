@@ -1,0 +1,122 @@
+/*
+Theme Name: Darker Light Astrology
+Description: A responsive one-page home for Darker Light Astrology.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+Text Domain: darker-light-astrology
+*/
+
+:root {
+  color-scheme: dark;
+  --night: #100d19;
+  --night-soft: #171323;
+  --panel: #211b30;
+  --ink: #f8f3ec;
+  --muted: #c4b9ca;
+  --gold: #e4bd78;
+  --rose: #dca6bd;
+  --line: rgba(228, 189, 120, .24);
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+}
+a { color: var(--gold); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--rose);
+  outline-offset: 3px;
+}
+.container { width: min(1080px, calc(100% - 40px)); margin-inline: auto; }
+.skip-link {
+  position: absolute; left: -9999px; top: 8px; z-index: 10;
+  padding: 10px 14px; background: var(--ink); color: var(--night);
+}
+.skip-link:focus { left: 8px; }
+.hero {
+  min-height: 470px;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  padding: 86px 0 92px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 50% 5%, rgba(127, 91, 148, .38), transparent 58%),
+    radial-gradient(ellipse at 15% 80%, rgba(191, 133, 123, .13), transparent 45%),
+    linear-gradient(145deg, #171224, #100d19 70%);
+}
+.hero h1 {
+  max-width: 850px;
+  margin: 0 auto 12px;
+  color: var(--ink);
+  font: 500 clamp(2.8rem, 7vw, 5.5rem)/1.04 var(--serif);
+  letter-spacing: .015em;
+}
+.tag { max-width: 620px; margin: 0 auto 30px; color: var(--muted); font-size: clamp(1rem, 2.4vw, 1.2rem); }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 11px 23px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: var(--gold);
+  color: #21182a;
+  font: 700 .94rem/1.2 var(--sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+.btn:hover { background: transparent; color: var(--gold); transform: translateY(-1px); }
+main.container { padding-block: 24px 70px; }
+section { padding: 56px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
+section h2 { margin: 0 0 18px; color: var(--gold); font: 500 clamp(2rem, 4vw, 2.8rem)/1.2 var(--serif); }
+section > p { max-width: 700px; color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 26px; }
+.card {
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(38, 31, 52, .94), rgba(27, 22, 38, .94));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .14);
+}
+.card h3 { margin: 0 0 8px; color: var(--ink); font: 500 1.55rem/1.3 var(--serif); }
+.card p { margin: 0; color: var(--muted); }
+.contact-form { display: grid; gap: 18px; max-width: 640px; margin-top: 24px; }
+.contact-form label { display: grid; gap: 7px; color: var(--muted); font-weight: 600; }
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(196, 185, 202, .35);
+  border-radius: 10px;
+  background: var(--night-soft);
+  color: var(--ink);
+  font: inherit;
+}
+.contact-form textarea { resize: vertical; }
+.contact-form .btn { justify-self: start; }
+.site-footer { padding: 24px 0 34px; color: var(--muted); font-size: .9rem; }
+
+@media (max-width: 640px) {
+  .container { width: min(100% - 32px, 1080px); }
+  .hero { min-height: 410px; padding: 70px 0; }
+  main.container { padding-top: 10px; }
+  section { padding: 42px 0; }
+  .cards { grid-template-columns: 1fr; gap: 14px; }
+  .card { padding: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
