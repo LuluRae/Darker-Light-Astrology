@@ -6,36 +6,80 @@
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 <style>
 :root{--night:#0d091d;--panel:#1a1130;--cream:#fff4dc;--muted:#c8b9d8;--gold:#e3bc68;--line:rgba(227,188,104,.25)}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#49306b,#0d091d 65%);color:var(--cream);font:16px/1.6 system-ui,sans-serif}main{width:min(920px,calc(100% - 32px));margin:auto;padding:28px 0 70px}.brand{color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.08em}.brand span{color:var(--gold)}header{display:flex;justify-content:space-between;gap:20px}.hero{text-align:center;padding:75px 0 35px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;color:var(--gold);font-size:.72rem;font-weight:800}.hero h1{font:500 clamp(3rem,8vw,5.7rem)/.95 Georgia,serif;margin:18px 0}.hero p{max-width:650px;margin:auto;color:var(--muted)}.panel{background:rgba(20,13,31,.84);border:1px solid var(--line);border-radius:24px;padding:26px;margin-top:20px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.field label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:5px}.field input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#100b1c;color:var(--cream)}button{padding:12px 17px;border-radius:999px;border:1px solid var(--gold);background:rgba(227,188,104,.09);color:var(--cream);font-weight:800;cursor:pointer}.submit{grid-column:1/-1}.error{color:#efb0b0;margin-top:10px}.hidden{display:none}.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:16px;padding:15px;background:rgba(255,255,255,.025)}.card strong{display:block;font:500 1.25rem Georgia,serif}.card small{color:var(--muted)}.rabbit{margin-top:24px;padding:20px;border-left:2px solid var(--gold);background:rgba(227,188,104,.05)}.rabbit h2{font:500 2rem Georgia,serif;margin:5px 0}.thread{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:30px}@media(max-width:650px){.form,.chart-grid{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#49306b,#0d091d 65%);color:var(--cream);font:16px/1.6 system-ui,sans-serif}main{width:min(980px,calc(100% - 32px));margin:auto;padding:28px 0 70px}.brand{color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.08em}header{display:flex;justify-content:space-between;gap:20px}.hero{text-align:center;padding:75px 0 35px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;color:var(--gold);font-size:.72rem;font-weight:800}.hero h1{font:500 clamp(3rem,8vw,5.7rem)/.95 Georgia,serif;margin:18px 0}.hero p{max-width:680px;margin:auto;color:var(--muted)}.panel{background:rgba(20,13,31,.84);border:1px solid var(--line);border-radius:24px;padding:26px;margin-top:20px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.field label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:5px}.field input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#100b1c;color:var(--cream)}button{padding:12px 17px;border-radius:999px;border:1px solid var(--gold);background:rgba(227,188,104,.09);color:var(--cream);font-weight:800;cursor:pointer}.submit{grid-column:1/-1}.error{color:#efb0b0;margin-top:10px}.hidden{display:none}.section-title{font:500 2rem Georgia,serif;margin:5px 0 16px}.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:16px;padding:15px;background:rgba(255,255,255,.025)}.card strong{display:block;font:500 1.25rem Georgia,serif}.card small{color:var(--muted)}.rabbit{margin-top:24px;padding:20px;border-left:2px solid var(--gold);background:rgba(227,188,104,.05)}.rabbit h2{font:500 2rem Georgia,serif;margin:5px 0}.thread{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mini{color:var(--muted);font-size:.9rem}.footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:30px}@media(max-width:700px){.form,.chart-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body><main>
 <header><a class="brand" href="rabbit-hole-v1.html">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span></header>
-<section class="hero"><div class="eyebrow">Your chart · calculated in this browser</div><h1>Follow the thread.</h1><p>Enter a birth date and time. The rabbit will use your actual planetary placements to choose the next thread.</p></section>
+<section class="hero"><div class="eyebrow">Your chart · calculated in this browser</div><h1>Follow the thread.</h1><p>You don't have to know astrology to fall down the rabbit hole. Give the rabbit your birth details and start with the obvious threads — then look underneath them.</p></section>
 <section class="panel">
 <form id="chartForm" class="form">
 <div class="field"><label for="date">Birth date</label><input id="date" type="date" required></div>
 <div class="field"><label for="time">Birth time</label><input id="time" type="time" value="12:00" required></div>
 <div class="field"><label for="tz">UTC offset</label><input id="tz" type="number" step=".5" value="-5" required></div>
+<div class="field"><label for="place">Birth place</label><input id="place" type="text" placeholder="City, State / Country" required></div>
 <button class="submit" type="submit">Open my rabbit hole →</button>
 </form><div id="error" class="error"></div>
 </section>
+
 <section id="result" class="panel hidden" aria-live="polite">
-<div class="eyebrow">Your actual placements</div><h2>Here are the threads.</h2><div id="cards" class="chart-grid"></div>
-<div class="rabbit"><div class="eyebrow" id="rabbitLabel">FOLLOW THE THREAD</div><h2 id="rabbitTitle"></h2><p id="rabbitText"></p><div class="thread"><button data-thread="Sun">Follow Sun</button><button data-thread="Moon">Follow Moon</button><button data-thread="Pluto">Follow Pluto 👀</button></div></div>
+<div class="eyebrow">Your actual placements</div><h2 class="section-title">The first layer: what, how, and where.</h2>
+<p class="mini">The planets describe <b>what</b>. The signs describe <b>how</b>. Your Rising Sign and houses describe <b>where</b>.</p>
+<div id="cards" class="chart-grid"></div>
 </section>
-<div class="footer">Planetary calculations run in this browser. Birth data is not sent to the Darker Light Astrology API.</div>
+
+<section id="deeper" class="panel hidden">
+<div class="eyebrow">The deeper layer</div><h2 class="section-title">Okay, but where does the thread lead?</h2>
+<div id="deepCards" class="chart-grid"></div>
+<div class="rabbit"><div class="eyebrow" id="rabbitLabel">FOLLOW THE THREAD</div><h2 id="rabbitTitle"></h2><p id="rabbitText"></p><div class="thread"><button data-thread="Sun">Follow Sun</button><button data-thread="Moon">Follow Moon</button><button data-thread="North Node">Follow the Nodes</button><button data-thread="Pluto">Follow Pluto 👀</button></div></div>
+</section>
+
+<div class="footer">Planetary calculations run in this browser. Your birth date, time, and chart data are not sent to the Darker Light Astrology API. Birth place is sent only to Open-Meteo's geocoding service to find latitude/longitude.</div>
 </main>
 <script>
 const bodies=[["Sun","☉","what you center your life around"],["Moon","☽","emotional needs and instinct"],["Mercury","☿","thinking and communication"],["Venus","♀","attraction, values, and relating"],["Mars","♂","drive, action, and desire"],["Jupiter","♃","growth, meaning, and expansion"],["Saturn","♄","structure, limits, and responsibility"],["Uranus","♅","change, freedom, and disruption"],["Neptune","♆","imagination, ideals, and sensitivity"],["Pluto","♇","deep change, power, vulnerability, and renewal"]];
 const signs=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
 const $=id=>document.getElementById(id);
-function sign(lon){return signs[Math.floor(((lon%360)+360)%360/30)]}
-function deg(lon){return (((lon%30)+30)%30).toFixed(1)+"°"}
+const norm=x=>((x%360)+360)%360;
+function sign(lon){return signs[Math.floor(norm(lon)/30)]}
+function deg(lon){return (norm(lon)%30).toFixed(1)+"°"}
 function dateFromInputs(){const d=$("date").value,t=$("time").value,off=Number($("tz").value);if(!d||!t||!Number.isFinite(off))throw new Error("Please enter a birth date, time, and UTC offset.");const local=new Date(d+"T"+t+":00");if(Number.isNaN(local.getTime()))throw new Error("Please check your birth details.");return new Date(local.getTime()-off*3600000)}
-function calculate(date){return bodies.map(([name,symbol,meaning])=>{const lon=Astronomy.EclipticLongitude(Astronomy.Body[name],date);return{name,symbol,meaning,lon,sign:sign(lon),degree:deg(lon)}})}
-function render(list){$("cards").innerHTML=list.map(p=>'<article class="card"><strong>'+p.symbol+" "+p.name+" in "+p.sign+'</strong><small>'+p.degree+" · "+p.meaning+"</small></article>").join("")}
-function rabbit(choice,list){const p=list.find(x=>x.name===choice)||list[0];$("rabbitLabel").textContent=choice==="Pluto"?"AND WHAT ABOUT PLUTO?":"FOLLOW THE THREAD";$("rabbitTitle").textContent=choice+" in "+p.sign+" · "+p.degree;$("rabbitText").textContent=choice==="Pluto"?"...Oh no. Pluto is the deeper thread: "+p.meaning+". What keeps asking to change?":"The planet describes what. The sign describes how. You found one piece — now ask where it lives in your chart."}
-$("chartForm").onsubmit=e=>{e.preventDefault();$("error").textContent="";try{const list=calculate(dateFromInputs());render(list);rabbit("Sun",list);$("result").classList.remove("hidden");$("result").scrollIntoView({behavior:"smooth",block:"center"})}catch(err){$("error").textContent=err.message}}
-document.querySelectorAll("[data-thread]").forEach(b=>b.onclick=()=>{const list=[...$("cards").querySelectorAll(".card")].map(()=>null);const d=dateFromInputs();rabbit(b.dataset.thread,calculate(d))});
+async function geocode(place){const url="https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(place)+"&count=1&language=en&format=json";const r=await fetch(url);if(!r.ok)throw new Error("I couldn't look up that birth place.");const j=await r.json();if(!j.results||!j.results.length)throw new Error("I couldn't find that birth place. Try a nearby city.");return j.results[0]}
+function meanNode(date){const T=(date.getTime()-Date.UTC(2000,0,1,12))/31557600000;return norm(125.044555-1934.1361849*T+0.0020762*T*T+T*T*T/467410-T*T*T*T/60616000)}
+function siderealHours(date){return norm(Astronomy.SiderealTime(date)*15)}
+function ascendant(date,lat,lon){const lst=siderealHours(date)+lon;const th=lst*Math.PI/180,phi=lat*Math.PI/180,eps=23.439291*Math.PI/180;return norm(Math.atan2(-Math.cos(th),Math.sin(th)*Math.cos(eps)+Math.tan(phi)*Math.sin(eps))*180/Math.PI+180)}
+function calculate(date,lat,lon){
+const list=bodies.map(([name,symbol,meaning])=>{const ecl=Astronomy.EclipticLongitude(Astronomy.Body[name],date);return{name,symbol,meaning,lon:ecl,sign:sign(ecl),degree:deg(ecl)}});
+const asc=ascendant(date,lat,lon), node=meanNode(date);
+const nodeObj={name:"North Node",symbol:"☊",meaning:"the direction of growth and the thread you keep following",lon:node,sign:sign(node),degree:deg(node)};
+const south={name:"South Node",symbol:"☋",meaning:"familiar patterns, instincts, and what you already know",lon:norm(node+180),sign:sign(node+180),degree:deg(node+180)};
+const houseFor=x=>Math.floor(norm(x-asc)/30)+1;
+list.forEach(p=>p.house=houseFor(p.lon));nodeObj.house=houseFor(node);south.house=houseFor(south.lon);
+return {list,asc,node:nodeObj,south,mc:sign(norm(siderealHours(date)+lon+0))};
+}
+function render(c,place){
+const ascCard={name:"Rising Sign",symbol:"↑",meaning:"how you meet the world and begin things",sign:sign(c.asc),degree:deg(c.asc),house:""};
+const all=[ascCard,...c.list,c.node,c.south];
+$("cards").innerHTML=all.map(p=>'<article class="card"><strong>'+p.symbol+" "+p.name+" in "+p.sign+(p.house? " · House "+p.house:"")+'</strong><small>'+p.degree+" · "+p.meaning+"</small></article>").join("");
+const pluto=c.list.find(x=>x.name==="Pluto");
+$("deepCards").innerHTML=
+'<article class="card"><strong>↑ Rising Sign: '+sign(c.asc)+'</strong><small>'+deg(c.asc)+' · your first doorway into the chart.</small></article>'+
+'<article class="card"><strong>☊ North Node: '+c.node.sign+' · House '+c.node.house+'</strong><small>'+c.node.degree+' · follow the thread toward growth.</small></article>'+
+'<article class="card"><strong>☋ South Node: '+c.south.sign+' · House '+c.south.house+'</strong><small>'+c.south.degree+' · familiar territory and old reflexes.</small></article>'+
+'<article class="card"><strong>♇ Pluto: '+pluto.sign+' · House '+pluto.house+'</strong><small>'+pluto.degree+' · this is where the rabbit starts looking suspicious.</small></article>'+
+'<article class="card"><strong>House system</strong><small>Whole-sign houses for this first interactive layer. The next pass can add exact Placidus cusps.</small></article>'+
+'<article class="card"><strong>Birth place</strong><small>'+place+' · latitude/longitude used only for the local chart geometry.</small></article>';
+}
+function rabbit(choice,c){
+const pluto=c.list.find(x=>x.name==="Pluto"),sun=c.list.find(x=>x.name==="Sun"),moon=c.list.find(x=>x.name==="Moon");
+let title,text,label="FOLLOW THE THREAD";
+if(choice==="Pluto"){label="AND WHAT ABOUT PLUTO?";title="Pluto in "+pluto.sign+" · House "+pluto.house;text="...Oh no. Pluto is the deeper thread: "+pluto.meaning+". Now ask what keeps asking to change — and where that story shows up."}
+else if(choice==="North Node"){label="FOLLOW THE THREAD";title="North Node in "+c.node.sign+" · House "+c.node.house;text="There it is. The North Node points toward a direction of growth. Your thread leads through House "+c.node.house+". Keep following it."}
+else if(choice==="Moon"){title="Moon in "+moon.sign+" · House "+moon.house;text="The Moon shows what you need and how instinct moves. Now look at House "+moon.house+". That's where the feeling gets lived."}
+else{title="Sun in "+sun.sign+" · House "+sun.house;text="The Sun describes what you center your life around. The sign describes how. House "+sun.house+" tells you where the story gets played out."}
+$("rabbitLabel").textContent=label;$("rabbitTitle").textContent=title;$("rabbitText").textContent=text;
+}
+let current=null;
+$("chartForm").onsubmit=async e=>{e.preventDefault();$("error").textContent="";try{const date=dateFromInputs();const place=await geocode($("place").value.trim());current=calculate(date,place.latitude,place.longitude);render(current,place.name+(place.admin1?", "+place.admin1:"")+(place.country?", "+place.country:""));rabbit("Sun",current);$("result").classList.remove("hidden");$("deeper").classList.remove("hidden");$("result").scrollIntoView({behavior:"smooth",block:"center"})}catch(err){$("error").textContent=err.message}};
+document.querySelectorAll("[data-thread]").forEach(b=>b.onclick=()=>{if(current)rabbit(b.dataset.thread,current)});
 </script></body></html>
