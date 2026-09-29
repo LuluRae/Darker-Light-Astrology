@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Darker Light Astrology — Rabbit Hole v1</title>
+<style>
+:root{--ink:#120d1d;--deep:#201331;--violet:#3a2558;--cream:#f7f0df;--gold:#e3bc68;--lav:#cfc2df;--line:rgba(247,240,223,.14)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--cream);background:radial-gradient(circle at 50% -10%,#49306b 0,#211632 38%,#0d0914 78%);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{max-width:940px;margin:auto;padding:28px 20px 80px}.brand{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.06em}.mark{width:38px;height:38px;border:1px solid rgba(227,188,104,.55);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:21px}
+.hero{text-align:center;padding:82px 0 54px}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:800}.hero h1{font:500 clamp(3rem,8vw,6.5rem)/.95 Georgia,serif;margin:18px 0}.hero p{max-width:650px;margin:0 auto;color:var(--lav);font-size:1.08rem}.hole{width:210px;height:120px;margin:42px auto 24px;border-radius:50%;background:radial-gradient(ellipse,#050309 0 28%,#171021 30%,#382251 52%,transparent 54%);box-shadow:0 0 70px rgba(227,188,104,.14)}
+.panel{border:1px solid var(--line);background:rgba(20,13,31,.78);border-radius:26px;padding:28px;margin-top:22px;box-shadow:0 25px 70px rgba(0,0,0,.24)}h2,h3{font-family:Georgia,serif;font-weight:500}.panel h2{font-size:2rem;margin:0 0 8px}.muted{color:var(--lav)}.steps{display:grid;gap:12px}.step{padding:18px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.025)}.step strong{display:block;color:var(--gold);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}.rabbit{display:grid;grid-template-columns:74px 1fr;gap:18px;align-items:center}.rabbit-icon{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(227,188,104,.35);background:rgba(227,188,104,.07);font-size:2.2rem}.button{border:1px solid var(--gold);background:rgba(227,188,104,.08);color:var(--cream);border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer}.button:hover{background:rgba(227,188,104,.16)}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.choices .button{width:100%}.hidden{display:none}.quote{font:italic 1.45rem/1.35 Georgia,serif;color:var(--cream);border-left:2px solid var(--gold);padding-left:18px}.footer{text-align:center;color:var(--lav);margin-top:35px;font-size:.9rem}@media(max-width:620px){.hero{padding-top:60px}.choices{grid-template-columns:1fr}.rabbit{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<a class="brand" href="#"><span class="mark">✦</span><span>DARKER LIGHT ASTROLOGY</span></a>
+<section class="hero">
+<div class="eyebrow">Rabbit Hole v1</div>
+<h1>Follow the thread.</h1>
+<p>You don't have to know astrology to fall down the rabbit hole. You just have to be curious.</p>
+<div class="hole" aria-hidden="true"></div>
+<button class="button" id="begin">Enter the rabbit hole</button>
+</section>
+
+<section class="panel hidden" id="journey" aria-live="polite">
+<div class="rabbit">
+<div class="rabbit-icon" aria-hidden="true">🐇</div>
+<div><div class="eyebrow" id="label">Follow the thread</div><h2 id="title">Something caught your eye?</h2><p class="muted" id="body">Pick a thread. You do not need to understand the symbols first.</p><button class="button" id="next">Start here</button></div>
+</div>
+<div class="choices hidden" id="choices">
+<button class="button" data-choice="Moon">Try the Moon</button>
+<button class="button" data-choice="Pluto">Try Pluto 👀</button>
+</div>
+</section>
+
+<section class="panel">
+<div class="eyebrow">The idea</div>
+<h2>Learn as you explore.</h2>
+<p class="muted">The planets describe <strong>what</strong>. The signs describe <strong>how</strong>. The houses describe <strong>where</strong>.</p>
+<div class="steps">
+<div class="step"><strong>What</strong>Start with a planet or point. What part of the experience are we looking at?</div>
+<div class="step"><strong>How</strong>Add the sign. How does that energy tend to express itself?</div>
+<div class="step"><strong>Where</strong>Add the house. Where in life does it get a stage?</div>
+<div class="step"><strong>Deeper</strong>Compare Pluto, the Nodes, and aspects. Separate pieces can start forming a pattern.</div>
+</div>
+</section>
+
+<section class="panel">
+<p class="quote">“Okay, but have you looked underneath that?”</p>
+<p class="muted">The rabbit is not here to tell you what your chart means. It is here to make you curious enough to keep looking.</p>
+</section>
+<div class="footer">Darker Light Astrology · a grown-up cosmic mystery with a mischievous streak.</div>
+</main>
+<script>
+const state={step:0,choice:null};
+const copy=[
+["Follow the thread","Something caught your eye?","Pick a placement. You do not have to understand it yet. The rabbit will help you follow one layer at a time.","Start here"],
+["WHAT","What is this?","Start with the basic role. The planet describes what is happening.","Okay… but how?"],
+["HOW","How does it work?","Now add the sign. The sign describes the style or way the energy tends to express itself.","Okay… but where?"],
+["WHERE","Where does it show up?","Now add the house. The house gives that placement a life area where it gets a stage.","Go deeper"],
+["WAIT… WHAT DOES THAT MEAN?","There’s something else here.","Compare this thread with Pluto, the Nodes, and the aspects. Look for repetition rather than a single magic answer.","Show me the deeper layer"],
+["DEEPER","...Oh no.","You found the rabbit hole. The next step is patterns: what keeps repeating when different parts of the chart point in the same direction?","Follow the thread again"]
+];
+function render(){
+ const [label,title,body,button]=copy[state.step];
+ document.getElementById("label").textContent=label;
+ document.getElementById("title").textContent=state.choice?state.choice+" · "+title:title;
+ document.getElementById("body").textContent=body;
+ document.getElementById("next").textContent=button;
+ document.getElementById("choices").classList.toggle("hidden",state.step!==0);
+}
+document.getElementById("begin").onclick=()=>{document.getElementById("journey").classList.remove("hidden");document.getElementById("journey").scrollIntoView({behavior:"smooth",block:"center"});render()};
+document.getElementById("next").onclick=()=>{state.step=state.step>=5?1:state.step+1;render()};
+document.querySelectorAll("[data-choice]").forEach(b=>b.onclick=()=>{state.choice=b.dataset.choice;state.step=1;render()});
+</script>
+</body>
+</html>
