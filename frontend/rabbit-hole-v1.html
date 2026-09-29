@@ -1,26 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Darker Light Astrology — Rabbit Hole v1</title>
 <style>
 :root{--ink:#120d1d;--deep:#201331;--violet:#3a2558;--cream:#f7f0df;--gold:#e3bc68;--lav:#cfc2df;--line:rgba(247,240,223,.14)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--cream);background:radial-gradient(circle at 50% -10%,#49306b 0,#211632 38%,#0d0914 78%);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-main{max-width:940px;margin:auto;padding:28px 20px 80px}.brand{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.06em}.mark{width:38px;height:38px;border:1px solid rgba(227,188,104,.55);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:21px}
-.hero{text-align:center;padding:82px 0 54px}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:800}.hero h1{font:500 clamp(3rem,8vw,6.5rem)/.95 Georgia,serif;margin:18px 0}.hero p{max-width:650px;margin:0 auto;color:var(--lav);font-size:1.08rem}.hole{width:210px;height:120px;margin:42px auto 24px;border-radius:50%;background:radial-gradient(ellipse,#050309 0 28%,#171021 30%,#382251 52%,transparent 54%);box-shadow:0 0 70px rgba(227,188,104,.14)}
-.panel{border:1px solid var(--line);background:rgba(20,13,31,.78);border-radius:26px;padding:28px;margin-top:22px;box-shadow:0 25px 70px rgba(0,0,0,.24)}h2,h3{font-family:Georgia,serif;font-weight:500}.panel h2{font-size:2rem;margin:0 0 8px}.muted{color:var(--lav)}.steps{display:grid;gap:12px}.step{padding:18px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.025)}.step strong{display:block;color:var(--gold);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}.rabbit{display:grid;grid-template-columns:74px 1fr;gap:18px;align-items:center}.rabbit-icon{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(227,188,104,.35);background:rgba(227,188,104,.07);font-size:2.2rem}.button{border:1px solid var(--gold);background:rgba(227,188,104,.08);color:var(--cream);border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer}.button:hover{background:rgba(227,188,104,.16)}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.choices .button{width:100%}.hidden{display:none}.quote{font:italic 1.45rem/1.35 Georgia,serif;color:var(--cream);border-left:2px solid var(--gold);padding-left:18px}.footer{text-align:center;color:var(--lav);margin-top:35px;font-size:.9rem}@media(max-width:620px){.hero{padding-top:60px}.choices{grid-template-columns:1fr}.rabbit{grid-template-columns:1fr}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--cream);background:radial-gradient(circle at 50% -10%,#49306b 0,#211632 38%,#0d0914 78%);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;overflow-x:hidden}
+main{max-width:980px;margin:auto;padding:28px 20px 80px}.brand{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.06em}.mark{width:38px;height:38px;border:1px solid rgba(227,188,104,.55);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:21px}
+.hero{text-align:center;padding:70px 0 48px;min-height:690px;position:relative}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:800}.hero h1{font:500 clamp(3rem,8vw,6.5rem)/.95 Georgia,serif;margin:18px 0}.hero p{max-width:650px;margin:0 auto;color:var(--lav);font-size:1.08rem}.scene{height:330px;position:relative;margin:22px auto 5px;max-width:780px;overflow:hidden}.stars{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(247,240,223,.8) 0 1px,transparent 1.5px),radial-gradient(circle,rgba(227,188,104,.65) 0 1px,transparent 1.5px);background-size:93px 71px,137px 101px;background-position:15px 8px,42px 31px;opacity:.5}.hole{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);width:310px;height:145px;border-radius:50%;background:radial-gradient(ellipse,#030207 0 28%,#120c20 31%,#2d1b45 51%,#49306b 55%,transparent 68%);box-shadow:0 0 85px rgba(227,188,104,.16)}.rabbit-run{position:absolute;left:calc(50% - 180px);bottom:86px;width:92px;height:142px;animation:runRabbit 4.8s cubic-bezier(.2,.7,.2,1) infinite;filter:drop-shadow(0 10px 10px rgba(0,0,0,.4))}.rabbit-body{position:absolute;left:25px;top:47px;width:42px;height:72px;background:#eee4d3;border-radius:48% 48% 42% 42%;transform:rotate(-7deg)}.waistcoat{position:absolute;left:24px;top:64px;width:45px;height:48px;background:#241633;border:1px solid rgba(227,188,104,.7);clip-path:polygon(8% 0,46% 15%,54% 15%,92% 0,100% 100%,0 100%);z-index:2}.ear{position:absolute;width:20px;height:64px;background:#eee4d3;border-radius:60% 60% 40% 40%;top:0}.ear.one{left:34px;transform:rotate(-18deg)}.ear.two{left:50px;transform:rotate(17deg)}.tail{position:absolute;left:3px;top:74px;width:27px;height:27px;background:#f7efe0;border-radius:50%}.leg{position:absolute;width:12px;height:48px;background:#eee4d3;border-radius:50%;top:103px}.leg.one{left:31px;transform:rotate(26deg)}.leg.two{left:57px;transform:rotate(-28deg)}.shoe{position:absolute;width:24px;height:10px;background:#17101f;border-radius:70%;top:139px}.shoe.one{left:20px;transform:rotate(17deg)}.shoe.two{left:59px;transform:rotate(-13deg)}.scarf{position:absolute;left:25px;top:56px;width:45px;height:9px;background:#e3bc68;z-index:3;transform:rotate(-7deg);border-radius:5px}.speed{position:absolute;left:-30px;top:102px;width:48px;height:2px;background:rgba(247,240,223,.35);box-shadow:-18px 12px 0 rgba(247,240,223,.18),-9px 24px 0 rgba(247,240,223,.22)}
+@keyframes runRabbit{0%{transform:translate(-220px,20px) rotate(-2deg);opacity:0}12%{opacity:1}42%{transform:translate(20px,-6px) rotate(2deg)}64%{transform:translate(125px,-42px) rotate(-3deg)}82%{transform:translate(185px,-72px) scale(.88) rotate(4deg)}100%{transform:translate(235px,-104px) scale(.68);opacity:.12}}
+.thump{font:italic 1rem Georgia,serif;color:var(--lav);min-height:26px;animation:blink 4.8s infinite}@keyframes blink{0%,62%{opacity:0}66%,82%{opacity:1}90%,100%{opacity:0}}
+.actions{position:relative;z-index:4}.button{border:1px solid var(--gold);background:rgba(227,188,104,.08);color:var(--cream);border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer}.button:hover{background:rgba(227,188,104,.16)}
+.panel{border:1px solid var(--line);background:rgba(20,13,31,.78);border-radius:26px;padding:28px;margin-top:22px;box-shadow:0 25px 70px rgba(0,0,0,.24)}h2,h3{font-family:Georgia,serif;font-weight:500}.panel h2{font-size:2rem;margin:0 0 8px}.muted{color:var(--lav)}.steps{display:grid;gap:12px}.step{padding:18px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.025)}.step strong{display:block;color:var(--gold);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}.rabbit{display:grid;grid-template-columns:74px 1fr;gap:18px;align-items:center}.rabbit-icon{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(227,188,104,.35);background:rgba(227,188,104,.07);font-size:2.2rem}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.choices .button{width:100%}.hidden{display:none}.quote{font:italic 1.45rem/1.35 Georgia,serif;color:var(--cream);border-left:2px solid var(--gold);padding-left:18px}.footer{text-align:center;color:var(--lav);margin-top:35px;font-size:.9rem}@media(max-width:620px){.hero{padding-top:50px;min-height:650px}.choices{grid-template-columns:1fr}.rabbit{grid-template-columns:1fr}.scene{height:290px}.rabbit-run{transform:scale(.82)}}
 </style>
 </head>
 <body>
 <main>
 <a class="brand" href="#"><span class="mark">✦</span><span>DARKER LIGHT ASTROLOGY</span></a>
 <section class="hero">
-<div class="eyebrow">Rabbit Hole v1</div>
-<h1>Follow the thread.</h1>
+<div class="eyebrow">A little late. As usual.</div>
+<h1>Follow the rabbit.</h1>
 <p>You don't have to know astrology to fall down the rabbit hole. You just have to be curious.</p>
-<div class="hole" aria-hidden="true"></div>
-<button class="button" id="begin">Enter the rabbit hole</button><a class="button" style="display:inline-block;text-decoration:none;margin-left:8px" href="chart-rabbit.html">Use my actual chart →</a>
+<div class="scene" aria-label="A waistcoated rabbit runs toward a glowing rabbit hole">
+<div class="stars"></div>
+<div class="rabbit-run" aria-hidden="true"><div class="ear one"></div><div class="ear two"></div><div class="rabbit-body"></div><div class="tail"></div><div class="scarf"></div><div class="waistcoat"></div><div class="leg one"></div><div class="leg two"></div><div class="shoe one"></div><div class="shoe two"></div><div class="speed"></div></div>
+<div class="hole"></div>
+</div>
+<div class="thump" aria-hidden="true">thump · thump · thump · thump</div>
+<div class="actions"><button class="button" id="begin">Follow him →</button><a class="button" style="display:inline-block;text-decoration:none;margin-left:8px" href="chart-rabbit.html">Use my actual chart →</a></div>
 </section>
 
 <section class="panel hidden" id="journey" aria-live="polite">
@@ -48,7 +55,7 @@ main{max-width:940px;margin:auto;padding:28px 20px 80px}.brand{display:flex;alig
 
 <section class="panel">
 <p class="quote">“Okay, but have you looked underneath that?”</p>
-<p class="muted">The rabbit is not here to tell you what your chart means. It is here to make you curious enough to keep looking.</p>
+<p class="muted">The rabbit is not here to tell you what your chart means. He is late. He has somewhere to be. You are going to have to follow him.</p>
 </section>
 <div class="footer">Darker Light Astrology · a grown-up cosmic mystery with a mischievous streak.</div>
 </main>
@@ -62,14 +69,7 @@ const copy=[
 ["WAIT… WHAT DOES THAT MEAN?","There’s something else here.","Compare this thread with Pluto, the Nodes, and the aspects. Look for repetition rather than a single magic answer.","Show me the deeper layer"],
 ["DEEPER","...Oh no.","You found the rabbit hole. The next step is patterns: what keeps repeating when different parts of the chart point in the same direction?","Follow the thread again"]
 ];
-function render(){
- const [label,title,body,button]=copy[state.step];
- document.getElementById("label").textContent=label;
- document.getElementById("title").textContent=state.choice?state.choice+" · "+title:title;
- document.getElementById("body").textContent=body;
- document.getElementById("next").textContent=button;
- document.getElementById("choices").classList.toggle("hidden",state.step!==0);
-}
+function render(){const [label,title,body,button]=copy[state.step];document.getElementById("label").textContent=label;document.getElementById("title").textContent=state.choice?state.choice+" · "+title:title;document.getElementById("body").textContent=body;document.getElementById("next").textContent=button;document.getElementById("choices").classList.toggle("hidden",state.step!==0)}
 document.getElementById("begin").onclick=()=>{document.getElementById("journey").classList.remove("hidden");document.getElementById("journey").scrollIntoView({behavior:"smooth",block:"center"});render()};
 document.getElementById("next").onclick=()=>{state.step=state.step>=5?1:state.step+1;render()};
 document.querySelectorAll("[data-choice]").forEach(b=>b.onclick=()=>{state.choice=b.dataset.choice;state.step=1;render()});
