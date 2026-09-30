@@ -42,6 +42,18 @@ main{max-width:980px;margin:auto;padding:28px 20px 80px}.brand{display:flex;alig
 .houses-door{margin-top:26px;padding:22px;border-top:1px solid var(--line);text-align:center}
 .houses-door h3{font-size:2rem;margin:5px 0}
 @media(max-width:720px){.element-grid{grid-template-columns:repeat(2,1fr)}.sign-examples{grid-template-columns:1fr}.door-rabbit{right:8%}}
+
+.house-room{position:relative;overflow:hidden}
+.house-map{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.house-card{padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);cursor:pointer;transition:.25s ease}
+.house-card:hover,.house-card.selected{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 0 26px rgba(227,188,104,.1)}
+.house-number{color:var(--gold);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+.house-name{font:1.15rem Georgia,serif;margin-top:4px}.house-clue{color:var(--lav);font-size:.86rem;margin-top:4px}
+.house-reveal{margin-top:18px;padding:18px;border-left:2px solid var(--gold);background:rgba(227,188,104,.045);border-radius:0 14px 14px 0;opacity:0;max-height:0;overflow:hidden;transition:.55s ease}
+.house-reveal.show{opacity:1;max-height:300px}.house-whisper{font:italic 1.15rem Georgia,serif;color:var(--gold)}
+.aspect-door{margin-top:28px;padding:22px;text-align:center;border-top:1px solid var(--line)}
+.aspect-door h3{font-size:2rem;margin:5px 0}
+@media(max-width:760px){.house-map{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -90,6 +102,29 @@ main{max-width:980px;margin:auto;padding:28px 20px 80px}.brand{display:flex;alig
 <button class="button" id="enter-houses">Follow him →</button>
 </div>
 </section>
+
+<section class="panel house-room hidden" id="house-room" aria-live="polite">
+<div class="eyebrow">WHERE</div>
+<h2>Now we know what. We know how.</h2>
+<p class="muted">But a story needs a place to happen.</p>
+<p class="muted">The houses are the rooms of the chart. Pick one. See what happens when the rabbit opens the door.</p>
+<div class="house-map">
+<button class="house-card" data-house="1"><div class="house-number">House I</div><div class="house-name">Self</div><div class="house-clue">the way you enter life</div></button>
+<button class="house-card" data-house="2"><div class="house-number">House II</div><div class="house-name">What is mine</div><div class="house-clue">values · resources · worth</div></button>
+<button class="house-card" data-house="3"><div class="house-number">House III</div><div class="house-name">The nearby world</div><div class="house-clue">thoughts · words · learning</div></button>
+<button class="house-card" data-house="4"><div class="house-number">House IV</div><div class="house-name">Home</div><div class="house-clue">roots · belonging · private life</div></button>
+</div>
+<div class="house-reveal" id="house-reveal">
+<div class="house-whisper" id="house-whisper">The rabbit opens the door.</div>
+<div class="muted" id="house-detail">A planet doesn't just describe a theme. Its house tells us where that theme gets a stage.</div>
+</div>
+<div class="aspect-door hidden" id="aspect-door">
+<div class="eyebrow">And then the rooms start talking to each other.</div>
+<h3>What happens when two planets meet?</h3>
+<p class="muted">That's where the aspects begin.</p>
+<button class="button" id="enter-aspects">Follow him →</button>
+</div>
+</section>
 <section class="panel hidden" id="journey" aria-live="polite"><div class="rabbit"><div class="rabbit-icon" aria-hidden="true">🐇</div><div><div class="eyebrow" id="label">Follow the thread</div><h2 id="title">Something caught your eye?</h2><p class="muted" id="body">Pick a placement. You do not have to understand it yet.</p><button class="button" id="next">Start here</button></div></div><div class="choices hidden" id="choices"><button class="button" data-choice="Moon">Try the Moon</button><button class="button" data-choice="Pluto">Try Pluto 👀</button></div></section>
 <section class="panel"><div class="eyebrow">The idea</div><h2>Learn as you explore.</h2><p class="muted">The planets describe <strong>what</strong>. The signs describe <strong>how</strong>. The houses describe <strong>where</strong>.</p><div class="steps"><div class="step"><strong>What</strong>Start with a planet or point. What part of the experience are we looking at?</div><div class="step"><strong>How</strong>Add the sign. How does that energy tend to express itself?</div><div class="step"><strong>Where</strong>Add the house. Where in life does it get a stage?</div><div class="step"><strong>Deeper</strong>Compare Pluto, the Nodes, and aspects. Separate pieces can start forming a pattern.</div></div></section>
 <section class="panel"><p class="quote">“Okay, but have you looked underneath that?”</p><p class="muted">The rabbit is not here to tell you what your chart means. He is late. He has somewhere to be. You are going to have to follow him.</p></section>
@@ -103,6 +138,9 @@ document.getElementById("begin").onclick=()=>{document.body.classList.add("falli
 document.querySelectorAll("[data-planet]").forEach(card=>card.onclick=()=>{document.querySelectorAll("[data-planet]").forEach(x=>x.classList.remove("selected"));card.classList.add("selected");const n=planetNotes[card.dataset.planet];document.getElementById("planet-whisper").textContent=n[0];document.getElementById("planet-detail").textContent=n[1];document.getElementById("planet-reveal").classList.add("show")});document.getElementById("continue-astrology").onclick=()=>{const room=document.getElementById("sign-room");room.classList.remove("hidden");requestAnimationFrame(()=>room.scrollIntoView({behavior:"smooth",block:"center"}))};document.getElementById("next").onclick=()=>{state.step=state.step>=5?1:state.step+1;render()};document.querySelectorAll("[data-choice]").forEach(b=>b.onclick=()=>{state.choice=b.dataset.choice;state.step=1;render()});
 const elementNotes={Fire:["The rabbit's ears go back.","Fast. Warm. Instinctive. Fire wants to move, begin, and make something happen."],Earth:["He finally slows down.","Steady. Sensual. Practical. Earth wants something real enough to touch, build, keep, or return to."],Air:["He taps the air like he's catching a thought.","Curious. Mobile. Connecting. Air wants to name things, compare them, ask questions, and keep moving."],Water:["He looks toward the dark.","Feeling. Sensing. Absorbing. Water notices what is underneath the obvious story."]};
 document.querySelectorAll("[data-element]").forEach(card=>card.onclick=()=>{document.querySelectorAll("[data-element]").forEach(x=>x.classList.remove("selected"));card.classList.add("selected");const note=elementNotes[card.dataset.element];document.getElementById("sign-whisper").textContent=note[0];document.getElementById("sign-detail").textContent=note[1];document.getElementById("sign-reveal").classList.add("show");document.getElementById("houses-door").classList.remove("hidden")});
-document.getElementById("enter-houses").onclick=()=>{document.getElementById("journey").classList.remove("hidden");state.step=2;state.choice=null;render();document.getElementById("journey").scrollIntoView({behavior:"smooth",block:"center"})};
+document.getElementById("enter-houses").onclick=()=>{const room=document.getElementById("house-room");room.classList.remove("hidden");requestAnimationFrame(()=>room.scrollIntoView({behavior:"smooth",block:"center"}))};
+const houseNotes={1:["The rabbit looks around.","House I is the room of the self: how you meet life, how you enter a room, and what you instinctively lead with."],2:["He checks his pockets.","House II turns toward values, resources, possessions, and the question of what feels worth keeping."],3:["He finds the book again.","House III is the nearby world: thinking, speaking, learning, siblings, and the small exchanges that shape a life."],4:["He stops at the old door.","House IV goes underneath everything: home, roots, belonging, family history, and private life."]};
+document.querySelectorAll("[data-house]").forEach(card=>card.onclick=()=>{document.querySelectorAll("[data-house]").forEach(x=>x.classList.remove("selected"));card.classList.add("selected");const note=houseNotes[card.dataset.house];document.getElementById("house-whisper").textContent=note[0];document.getElementById("house-detail").textContent=note[1];document.getElementById("house-reveal").classList.add("show");document.getElementById("aspect-door").classList.remove("hidden")});
+document.getElementById("enter-aspects").onclick=()=>{document.getElementById("journey").classList.remove("hidden");state.step=3;state.choice=null;render();document.getElementById("journey").scrollIntoView({behavior:"smooth",block:"center"})};
 randomizeObjects();
 </script></body></html>
