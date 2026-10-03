@@ -29,15 +29,20 @@
   world.insertAdjacentHTML('beforeend', `<section id="destinationRoom" class="destination-room" hidden aria-label="Inside your chosen rabbit hole"><div class="room-wonder" aria-hidden="true"><div class="room-whirlpool"></div>${cartoon}<span id="roomGlyph"></span></div><div class="eyebrow">Down the rabbit hole</div><h3 id="roomTitle" tabindex="-1"></h3><p id="roomDetail"></p><p class="room-aside">“Well? Was it worth being late for?”</p><button type="button" id="returnToVortex">Back to the swirling chart ↗</button></section>`);
   $('sceneCaption').textContent = 'Choose a rabbit hole. He knows the way down.';
   function leaveRoom(focus = false) {
+    const leavingMoon = world.classList.contains('moon-open');
+    window.DLAMoonRoom?.close();
     ++diveVersion; if (hop) { hop.cancel(); hop = null; }
     world.classList.remove('diving', 'inside-hole'); $('destinationRoom').hidden = true; map.inert = false;
     document.querySelectorAll('.portal-selected').forEach(el=>el.classList.remove('portal-selected'));
-    if (focus && lastStop?.isConnected) lastStop.focus({preventScroll:true});
+    if (focus && lastStop?.isConnected) {
+      lastStop.focus({preventScroll:true});
+      if (leavingMoon) lastStop.scrollIntoView({block:'center', behavior:'instant'});
+    }
   }
   $('returnToVortex').onclick = () => leaveRoom(true);
   world.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('destinationRoom').hidden) {e.preventDefault(); leaveRoom(true);} });
   const originalReset = DLAExperience.reset;
-  DLAExperience.reset = function () { leaveRoom(); originalReset(); };
+  DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); originalReset(); };
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   function stopHop() { if (hop) hop.finish(); }
   $('motionToggle').addEventListener('click', stopHop);
@@ -73,6 +78,7 @@
         $('roomDetail').textContent = residents.length ? 'You found ' + residents.join(', ') + ' here in your chart.' : 'No calculated planets or nodes occupy this house. Its theme is still part of your chart.';
       }
       $('destinationRoom').hidden = false;
+      if (placement?.name === 'Moon') window.DLAMoonRoom?.open(chart);
       $('roomTitle').focus({preventScroll:true});
     }
     if (!reduced.matches && !document.body.classList.contains('motion-paused')) {
