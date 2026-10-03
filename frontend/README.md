@@ -63,3 +63,9 @@ Deploy both Wonderland files and the `assets/` directory with the other frontend
 ### Approved illustrated rabbit
 
 The character selected by the user is now `assets/rabbit-guide.png`. It replaces the old inline vector in the entrance, map, and destination room while retaining the existing character movement and dive controls. The PNG has an alpha channel; no background-removal service is required. Generate attribution and the final prompt are recorded in `assets/RABBIT.md`. Deploy the PNG with the rest of the assets.
+
+### The Threshold Reading
+
+The user-provided React landing-page concept is integrated as `threshold-reading.html` with `threshold-reading.css`, under Darker Light Astrology branding. It includes the reading overview, four feature cards, planned purchase/intake/delivery journey, and a coming-soon booking section. The existing static-file experience needs no React build, Framer Motion, Tailwind, or component-library installation to open it.
+
+Header and invitation links open this page separately so the current chart and birth details remain in their original tab. No chart data is passed to the reading page. The reading page does not collect intake data, accept payments, or imply that a booking was completed. To open bookings later, supply a real booking destination and confirm the price, delivery window, privacy/intake process, and available audio option.
