@@ -1,0 +1,6 @@
+{
+  "name": "darker-light-rabbit-hole",
+  "private": true,
+  "scripts": {"test": "node --test tests/*.test.cjs"},
+  "devDependencies": {"astronomy-engine": "2.1.19"}
+}

@@ -1,0 +1,79 @@
+/* A chapter in normal page flow: no small, nested scrolling room on phones. */
+.world.moon-open{padding:0;min-height:0;height:auto;background:#0c1223}
+.moon-open>.chart-map,.moon-open>.guide-speech,.moon-open>.explore-note{display:none}
+.moon-open>.scene-stars,.moon-open>.scene-dust{display:none}
+.wonderland-mode .destination-room.moon-room{position:relative;inset:auto;padding:28px 0 0;overflow:visible;background:#0c1223;animation:none}
+.moon-room>.room-wonder,.moon-room>#roomDetail,.moon-room>.room-aside,.moon-room>.eyebrow{display:none}
+.wonderland-mode .moon-room>#roomTitle{font:500 .75rem/1.5 system-ui,sans-serif;letter-spacing:.08em;margin:0 180px 0 28px;text-align:left;color:#dacba6}
+.moon-room>#returnToVortex{position:absolute;top:18px;right:22px;font-size:.7rem;padding:9px 13px;border-color:#e3bc6855;background:#111a2b}
+.moon-chapter[hidden],.moon-chapter [hidden]{display:none!important}
+.moon-heading{padding:38px 20px 28px;background:radial-gradient(ellipse at 50% 130%,#26344d,#0c1223 72%)}
+.moon-heading .eyebrow{font-size:.6rem;letter-spacing:.26em;color:#c6b799;margin:0 auto 16px}
+.moon-heading h4{font:400 clamp(2.1rem,4.5vw,3.5rem)/1.08 Georgia,serif;letter-spacing:-.03em;margin:0;color:#f8ecdb}
+.moon-room .moon-heading>p:last-child{font:.9rem/1.7 system-ui,sans-serif;color:#bdc5d6;margin:17px auto 0}
+.moon-scene{position:relative;isolation:isolate;aspect-ratio:1672/941;width:100%;overflow:hidden;background:#19233b}
+.moon-scenery{position:absolute;inset:0;background:url('assets/moon-conservatory.png') center/cover no-repeat;z-index:-2}
+.moon-scene:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(#0c1223 0%,transparent 12%,transparent 80%,#0c1223);z-index:-1}
+.moon-water{position:absolute;left:30%;right:10%;bottom:3%;height:25%;background:radial-gradient(ellipse,#b9e6f529,transparent 65%);mix-blend-mode:screen;animation:moonTide 8s ease-in-out infinite;pointer-events:none}
+.moon-motes{position:absolute;inset:0;pointer-events:none}.moon-motes i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff3c5;box-shadow:0 0 13px 4px #f5c97877;animation:moonMote var(--drift) ease-in-out var(--delay) infinite}
+.moon-rabbit{position:absolute;width:15%;height:38%;left:32%;top:52%;filter:drop-shadow(0 8px 7px #05132699);pointer-events:none;z-index:2}
+.moon-chapter[data-discovery=mirror] .moon-rabbit{left:25%;top:47%}
+.moon-chapter[data-discovery=door] .moon-rabbit{left:76%;top:55%}
+.moon-chapter[data-discovery=cup] .moon-rabbit,.moon-chapter[data-discovery=keepsake] .moon-rabbit{left:48%;top:53%}
+.moon-room .moon-object{position:absolute;transform:translate(-50%,-50%);border:0;padding:6px 10px;background:#0b1226e8;border-radius:12px;color:#fff2d2;min-height:44px;min-width:44px;box-shadow:0 5px 22px #0008;font-weight:400;z-index:3}
+.moon-object>span{display:block;width:36px;height:36px;margin:-24px auto 5px;border:1px solid #f7dda6;border-radius:50%;background:#1d253eee;font:1.2rem/34px Georgia;color:#fff2bc;box-shadow:0 0 22px #f3e0a860;animation:moonBeacon 4s ease-in-out infinite}
+.moon-object>b{display:block;font:500 .85rem Georgia}.moon-object>small{display:block;font-size:.6rem;letter-spacing:.03em;margin-top:3px;color:#c2cbdf}
+.moon-mirror{left:15%;top:62%}.moon-door{left:87%;top:48%}.moon-cup{left:69%;top:75%}
+.moon-object[aria-pressed=true]{outline:2px solid #f6ddac;outline-offset:4px;background:#29324a}
+.moon-object[data-found=true]>b:after{content:' ✓';color:#dfd6ac}
+.moon-room button:focus-visible,.moon-room textarea:focus-visible{outline:2px solid #fff0bc;outline-offset:5px}
+.moon-room .moon-scene-caption{position:absolute;bottom:5px;left:10%;right:10%;max-width:none;font:italic .85rem Georgia;color:#eae2d2;text-shadow:0 2px 8px #060b16;margin:0}
+.moon-story{padding:25px 6% 30px;text-align:left}
+.moon-trail{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #bfcce525;padding-bottom:18px}
+.moon-room #moonProgress{font-size:.7rem;color:#b7c5dc;margin:0;max-width:none}
+.moon-room #moonRestart{border:0;padding:8px 0;background:transparent;color:#c6bcab;font-size:.65rem;text-decoration:underline;text-underline-offset:4px}
+.moon-discovery{display:grid;grid-template-columns:1.35fr 1fr;gap:50px;padding-top:28px;align-items:start}
+.moon-discovery .eyebrow{margin:0 0 12px;font-size:.6rem;letter-spacing:.15em}
+.moon-discovery h4,.moon-keepsake h4{font:400 clamp(1.75rem,3vw,2.3rem)/1.15 Georgia;letter-spacing:-.015em;margin:0;color:#f8ecdb}
+.moon-room #moonDiscoveryText{font-size:.9rem;line-height:1.8;color:#c4cddd;margin:16px 0;max-width:none}
+.moon-room .moon-fact{font-size:.7rem;line-height:1.6;color:#d8c397;margin:20px 0 0;border-left:1px solid #d8c39788;padding-left:12px}
+.moon-question{border-left:1px solid #bfcce525;padding:10px 0 0 25px;margin-top:4px}
+.moon-question>span{font:3.5rem/.8 Georgia;color:#d9bf89}
+.moon-room #moonQuestion{font:italic 1.4rem/1.4 Georgia;color:#eee3d6;margin:0 0 18px;max-width:none}
+.moon-room .moon-whisper{font:italic .85rem/1.6 Georgia;color:#aebad1;margin:10px 0;max-width:none}
+.moon-care{margin:18px 0 0;padding:22px 25px;border:1px solid #c6cce226;border-radius:12px;background:#1a263966}
+.moon-room .moon-practice{margin:0 0 20px;font-size:.9rem;color:#dfd6c8;max-width:none}
+.moon-care label{display:block;font:1.05rem Georgia;color:#f5e6cd}.moon-care label small{display:block;margin:7px 0 12px;font:.7rem/1.6 system-ui;color:#b1bfd1}
+.moon-care textarea{resize:vertical;width:100%;padding:13px;font: .9rem/1.6 system-ui;color:#f5eadc;background:#0b1222;border:1px solid #a4b7d54d;border-radius:8px}
+.moon-care textarea::placeholder{color:#96a6bc}
+.moon-next-row{display:flex;justify-content:space-between;align-items:center;gap:28px;margin-top:28px}
+.moon-room #moonGuideLine{font:italic .9rem/1.5 Georgia;color:#ccbaa3;margin:0;max-width:400px}
+.moon-room #moonContinue,.moon-room #moonDownload{background:#dcca9f;color:#182036;border-color:#dcca9f;border-radius:8px 18px 8px 18px;padding:13px 20px;font-size:.78rem;flex-shrink:0}
+.moon-room .moon-footnote{font-size:.65rem;color:#9aaac2;max-width:none;margin:24px 0 0;padding-top:18px;border-top:1px solid #bfcce518}
+.moon-keepsake{padding:32px 0 10px;max-width:700px;margin:auto;text-align:center}
+.moon-keepsake>.eyebrow{margin-bottom:18px;font-size:.6rem}
+.moon-room .moon-keepsake .moon-fact{border:0;padding:0;margin:22px auto 18px}
+.moon-room #moonTakeaway,.moon-room #moonTakeawayPractice{font-size:.95rem;color:#c8d2e0;max-width:530px}
+.moon-keepsake blockquote{white-space:pre-wrap;overflow-wrap:anywhere;font:italic 1.15rem/1.6 Georgia;color:#f0dfc1;padding:20px;background:#202e4366;border-radius:10px;margin:24px auto}
+.moon-ending-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:28px 0}
+.moon-room .moon-ending-hint{font-size:.75rem;color:#aebdd1}
+.moon-room .moon-keepsake .moon-whisper{margin:20px auto}
+@keyframes moonTide{50%{transform:scaleX(1.12) translateY(-5px);opacity:.4}}
+@keyframes moonMote{50%{opacity:.15;transform:translate(10px,-18px)}}
+@keyframes moonBeacon{50%{box-shadow:0 0 28px #f3e0a897}}
+@media(max-width:650px){
+  .wonderland-mode .destination-room.moon-room{padding-top:20px}
+  .wonderland-mode .moon-room>#roomTitle{margin:0 20px;font-size:.7rem}
+  .moon-room>#returnToVortex{position:static;margin:0 0 24px;font-size:.7rem}
+  .moon-heading{padding:30px 15px 20px}.moon-heading h4{font-size:2rem}.moon-room .moon-heading>p:last-child{font-size:.8rem}
+  .moon-room .moon-object{padding:6px;min-height:44px;border-radius:8px}.moon-object>span{width:27px;height:27px;font-size:1rem;line-height:25px;margin:-17px auto 4px}.moon-object>b{font-size:.62rem}.moon-object>small{display:none}
+  .moon-door{left:84%;top:43%}.moon-mirror{left:17%;top:59%}.moon-cup{left:67%;top:74%}
+  .moon-room .moon-scene-caption{font-size:.6rem;bottom:1px;left:0;right:0}.moon-motes i{width:2px;height:2px}
+  .moon-story{padding:20px 20px 24px}.moon-trail{gap:10px}.moon-room #moonProgress{font-size:.65rem;max-width:160px}.moon-room #moonRestart{font-size:.6rem}
+  .moon-discovery{grid-template-columns:1fr;gap:20px;padding-top:24px}.moon-discovery h4{font-size:1.85rem}.moon-room #moonDiscoveryText{font-size:.85rem;line-height:1.8}
+  .moon-question{padding:5px 0 0 18px}.moon-question>span{font-size:2.5rem}.moon-room #moonQuestion{font-size:1.25rem;margin-bottom:10px}
+  .moon-next-row{display:block}.moon-room #moonContinue{width:100%;margin-top:18px;font-size:.75rem}.moon-room #moonGuideLine{font-size:.85rem}
+  .moon-care{padding:18px 14px}.moon-room .moon-practice{font-size:.85rem}.moon-care textarea{font-size:16px}
+  .moon-keepsake h4{font-size:1.85rem}.moon-ending-actions{flex-direction:column}.moon-keepsake blockquote{padding:14px;font-size:1rem}
+}
+@media(prefers-reduced-motion:reduce){.moon-chapter *{animation:none!important;transition:none!important}}
