@@ -11,7 +11,7 @@ This branch contains the first GitHub-native Rabbit Hole prototype.
 
 ## Chart integration
 
-Open `rabbit-hole-v1.html` and choose **Use my actual chart**. After entering birth details in `chart-rabbit.html`, choose Sun, Moon, Nodes, or Pluto and follow **What → How → Where → WAIT… → Deeper**. Each layer reads the same calculated chart; selecting another thread resets the journey. Changing birth details clears the previous result.
+Open `chart-rabbit.html` directly. The birth form is immediately available, and a successful calculation shows the chart map. There is no preliminary story screen or automatic room entry. The persistent **My chart** button returns from any room without recalculating or discarding Moon notes. **Planet placements** opens the full chart ledger, and **Edit birth details** returns to the form. Visitors can choose a planet or house to enter, including the Moonlit Conservatory. The **What → How → Where → WAIT… → Deeper** layers all read the same calculated chart. Changing birth details clears the previous result and hides the chart shortcut. The older educational prototype remains in `rabbit-hole-v1.html`, but the chart page's brand link now returns to its own birth form.
 
 `chart-engine.js` extracts the existing browser calculator behind a DOM-free interface: `birthInstant(date, time, utcOffset)` and `calculate(utcDate, latitude, longitude)`. `rabbit-journey.js` consumes its placements without calculating or substituting example placements. Both pages remain static files; deploy `chart-engine.js`, `rabbit-journey.js`, `experience.js`, and `experience.css` beside the HTML.
 
@@ -46,19 +46,19 @@ Browser verification: with Playwright and Edge installed, run `node tests/browse
 
 The local SVG cartoon has expressive eyes, oversized ears, a pocket watch, and a tapping foot. Hops use squash-and-stretch; rapid selections cancel the preceding hop. Pausing motion or enabling reduced motion finishes movement immediately at the selected destination. Deploy the two chart-map assets beside the existing experience assets.
 
-### Story opening and vortex descent
+### Direct entry and vortex descent
 
-The opening now asks about recurring patterns, offers Moon/Venus/Pluto curiosities, and explains the selected theme before inviting birth details. These are general reflection prompts; the selection chooses a thread only after the real chart succeeds. A direct-to-chart option skips the prologue.
+The former opening story has been removed from the active page. Birth details appear immediately, without a start/skip step. The scene becomes visible before the chart map is rendered; room entry waits for a visitor's choice and no longer depends on the old opening script.
 
 The chart is illustrated as a rotating cartoon vortex. Selecting a stop sends the red-waistcoated, bespectacled rabbit into it, then opens a destination scene with the actual placement or house residents. Return and Escape restore the vortex and focus. New selections cancel old dives, input edits invalidate pending arrivals, and reduced motion or Pause motion completes entry without a dive. Exact degrees remain in the full chart; decorative spiral positions are not an astronomical projection.
 
-Deploy `opening.js`, `opening.css`, and `vortex.css` alongside the previously documented assets. Browser checks cover the prologue, chosen starting thread, skip route, dive/arrival/return, rapid choices, pause during a dive, empty/populated houses, and mobile destinations.
+Deploy `vortex.css` alongside the previously documented chart assets. `opening.js`, `opening.css`, and `wonderland.js` are legacy opening assets and are no longer loaded. Browser checks cover immediate form access, chart-first arrival, chart and placement shortcuts, dive/return, rapid choices, pause during a dive, empty/populated houses, and mobile destinations.
 
 ### Illustrated Wonderland setting
 
-`wonderland.js` and `wonderland.css` add the painted environment in `assets/wonderland-rabbit-hole.png` to the entrance, chart vortex, and destination rooms. Foreground playing cards, fireflies, camera drift, and the red-waistcoated rabbit animate separately from the scenery. The curiosity choices appear as small doorways. Motion pause and reduced-motion preferences remain supported.
+`wonderland.css` adds the painted environment in `assets/wonderland-rabbit-hole.png` to the chart vortex and destination rooms. The red-waistcoated rabbit animates separately from the scenery. Motion pause and reduced-motion preferences remain supported. The Moon chapter has its own scenery, light, and water effects.
 
-Deploy both Wonderland files and the `assets/` directory with the other frontend assets. The artwork was generated with the built-in image tool; its complete prompt is saved in `assets/ARTWORK.md`. The browser checks still cover the full chart flow and both desktop and mobile layouts.
+Deploy `wonderland.css` and the `assets/` directory with the other frontend assets. The artwork was generated with the built-in image tool; its complete prompt is saved in `assets/ARTWORK.md`. The browser checks still cover the full chart flow and both desktop and mobile layouts.
 
 ### Approved illustrated rabbit
 

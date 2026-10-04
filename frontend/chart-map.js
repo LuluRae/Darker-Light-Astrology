@@ -3,7 +3,6 @@
   const $ = id => document.getElementById(id);
   const cartoon = `<img class="guide-svg illustrated-rabbit" src="assets/rabbit-guide.png" width="1024" height="1536" alt="" aria-hidden="true" draggable="false">`;
   document.querySelectorAll('.guide-svg').forEach(svg => { svg.outerHTML = cartoon; });
-  document.querySelector('.threshold-caption').textContent = '“Finally! Do you know what time it is? Neither do I. Come on.”';
   const world = $('world');
   world.classList.add('map-world');
   world.insertAdjacentHTML('afterbegin', '<div class="chart-map" id="chartMap" aria-label="Whole-sign chart map"><div class="map-sectors" aria-hidden="true"></div><div id="planetStops"></div><div class="map-center" aria-hidden="true">✦<small>YOUR SKY</small></div></div>');
@@ -40,6 +39,13 @@
     }
   }
   $('returnToVortex').onclick = () => leaveRoom(true);
+  map.tabIndex = -1;
+  DLAExperience.showMap = function () {
+    if (!chart || $('deeper').classList.contains('hidden')) return;
+    leaveRoom();
+    map.focus({preventScroll:true});
+    map.scrollIntoView({block:'center',behavior:'instant'});
+  };
   world.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('destinationRoom').hidden) {e.preventDefault(); leaveRoom(true);} });
   const originalReset = DLAExperience.reset;
   DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); originalReset(); };
@@ -103,7 +109,7 @@
     };
   });
   const originalShow = DLAExperience.show;
-  DLAExperience.show = function (nextChart, choice, step) {
+  DLAExperience.show = function (nextChart, choice, step, {enter = true} = {}) {
     if (chart !== nextChart) {
       chart = nextChart; $('planetStops').replaceChildren();
       const placements = [...chart.list, chart.node, chart.south];
@@ -125,7 +131,10 @@
     [...$('sceneDoors').children].forEach(b=>{b.tabIndex=0});
     [...$('planetStops').children].forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.destination===choice)));
     const p=[...chart.list,chart.node,chart.south].find(p=>p.name===choice);
-    jump(step===2?$('sceneDoors').children[p.house-1]:[...$('planetStops').children].find(b=>b.dataset.destination===choice));
+    if (enter) jump(step===2?$('sceneDoors').children[p.house-1]:[...$('planetStops').children].find(b=>b.dataset.destination===choice));
+    else {
+      leaveRoom(); guide.style.left='50%'; guide.style.top='50%'; delete guide.dataset.destination;
+    }
     $('guideSpeech').textContent = [
       `“${choice}! There you are. Do try to keep up.”`,
       `“${p.sign}. Lovely. Admire it while walking.”`,
@@ -133,6 +142,7 @@
       '“Yes, yes. A revelation. Take your time. I shall panic quietly.”',
       '“Another rabbit hole? Fine. We were already late.”'
     ][step];
+    if (!enter) $('guideSpeech').textContent='“Your chart. Your choice of rabbit hole. I shall wait. Impatiently.”';
     $('sceneCaption').textContent='Pick a planet or a house. Down he goes.';
     $('exploreNote').textContent='Choose a glowing rabbit hole. Your real placements are tucked inside.';
   };

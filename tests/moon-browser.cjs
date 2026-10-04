@@ -17,10 +17,12 @@ const expected = engine.calculate(new Date('2000-01-01T12:00:00Z'),40.7128,-74.0
     await page.route('https://geocoding-api.open-meteo.com/**', route => route.fulfill({json:{results:[{name:'New York',latitude:40.7128,longitude:-74.006,timezone:'America/New_York'}]}}));
     const url = pathToFileURL(path.resolve(__dirname,'../frontend/chart-rabbit.html')).href;
     async function enter() {
-      await page.goto(url); await page.locator('#skipOpening').click();
+      await page.goto(url);
       await page.locator('#date').fill('2000-01-01'); await page.locator('#time').fill('07:00'); await page.locator('#place').fill('New York');
       await page.locator('button.submit').click(); await page.locator('#deeper').waitFor({state:'visible'});
-      await page.locator('[data-thread=Moon]').click(); await page.locator('.moon-chapter').waitFor({state:'visible'});
+      assert.equal(await page.locator('#destinationRoom').isVisible(),false);
+      await page.locator('.planet-stop[data-destination=Moon]').click();
+      await page.locator('.moon-chapter').waitFor({state:'visible'});
     }
     await enter();
     const requestsBefore = external.length;
@@ -55,6 +57,12 @@ const expected = engine.calculate(new Date('2000-01-01T12:00:00Z'),40.7128,-74.0
     await page.locator('#moonToVenus').click(); await page.locator('#destinationRoom').waitFor({state:'visible'});
     assert.match(await page.locator('#roomTitle').innerText(),/Venus/); assert.equal(await page.locator('.moon-chapter').isVisible(),false);
     await page.locator('[data-thread=Moon]').click();
+    assert.equal(await page.locator('#moonSavedNote').innerText(),note);
+    await page.locator('#myChartButton').click();
+    assert.equal(await page.locator('#destinationRoom').isVisible(),false);
+    assert.equal(await page.locator('#chartMap').evaluate(el=>el===document.activeElement),true);
+    await page.locator('.planet-stop[data-destination=Moon]').click();
+    await page.locator('#moonKeepsake').waitFor({state:'visible'});
     assert.equal(await page.locator('#moonSavedNote').innerText(),note);
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#destinationRoom').isVisible(),false);

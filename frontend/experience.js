@@ -2,8 +2,7 @@
   'use strict';
   const $=id=>document.getElementById(id);
   const guide=`<svg class="guide-svg" viewBox="0 0 120 180" aria-hidden="true"><g class="guide-ear"><path d="M48 66Q20 25 38 6Q58 33 56 61" fill="#e8dfcb"/><path d="M63 62Q61 29 83 8Q94 39 75 70" fill="#e8dfcb"/><path d="M44 26L49 51M78 28L70 53" stroke="#bfa9a4" stroke-width="5" stroke-linecap="round"/></g><ellipse cx="60" cy="100" rx="28" ry="43" fill="#e8dfcb"/><circle cx="31" cy="121" r="12" fill="#f6efdf"/><path d="M38 88L59 100L80 87L88 137L61 129L35 140Z" fill="#352238" stroke="#caab69"/><path d="M46 137L37 165M72 138L83 164" stroke="#e8dfcb" stroke-width="10" stroke-linecap="round"/><path d="M37 166L24 169M84 166L98 170" stroke="#b8a18b" stroke-width="8" stroke-linecap="round"/><ellipse cx="61" cy="73" rx="21" ry="24" fill="#e8dfcb"/><circle cx="72" cy="72" r="2.5" fill="#231923"/><path d="M78 81L83 80L79 85" fill="#ab8585"/><path d="M51 96L65 92L66 101Z" fill="#caab69"/><path d="M76 108Q94 101 88 126" stroke="#caab69" fill="none"/><g class="guide-watch"><circle cx="88" cy="131" r="10" fill="#251a2c" stroke="#e3bc68" stroke-width="2"/><path d="M88 125V131L93 134" stroke="#e3bc68" fill="none"/></g></svg>`;
-  // One guide appears in the invitation and follows the visitor into the chart world.
-  document.querySelector('.hero').insertAdjacentHTML('beforeend',`<div class="threshold"><div class="threshold-hole"></div>${guide}<span class="threshold-caption">“There you are. I was beginning to wonder.”</span></div>`);
+  // The guide joins the visitor in the calculated chart world.
   document.querySelector('header').insertAdjacentHTML('beforeend','<button type="button" id="motionToggle" class="motion-button" aria-pressed="false">Pause motion</button>');
   document.querySelector('header > .eyebrow').remove();
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -29,8 +28,8 @@
   function animate(el,className){el.classList.remove(className);void el.offsetWidth;if(!paused)el.classList.add(className)}
   window.DLAExperience={
     loading(value){document.body.classList.toggle('world-loading',value)},
-    reset(){document.body.classList.remove('world-ready');document.querySelector('.threshold').hidden=false},
-    arrive(){document.body.classList.add('world-ready');document.querySelector('.threshold').hidden=true;animate($('descentVeil'),'falling');$('deeper').scrollIntoView({behavior:paused?'instant':'smooth',block:'start'})},
+    reset(){document.body.classList.remove('world-ready');$('myChartButton').hidden=true},
+    arrive(){document.body.classList.add('world-ready');$('myChartButton').hidden=false;animate($('descentVeil'),'falling');$('deeper').scrollIntoView({behavior:paused?'instant':'smooth',block:'start'})},
     show(chart,choice,step){
       const p=[...chart.list,chart.node,chart.south].find(p=>p.name===choice);
       const world=$('world');world.dataset.stage=String(step);world.style.setProperty('--scene-color',colors[step]);

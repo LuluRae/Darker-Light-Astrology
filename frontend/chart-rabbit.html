@@ -14,14 +14,13 @@
 <link rel="stylesheet" href="experience.css">
 <link rel="stylesheet" href="chart-map.css">
 <link rel="stylesheet" href="vortex.css">
-<link rel="stylesheet" href="opening.css">
 <link rel="stylesheet" href="wonderland.css">
 <link rel="stylesheet" href="moon-room.css">
 </head>
-<body><main>
-<header><a class="brand" href="rabbit-hole-v1.html">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Personal reading (opens in a new tab)">Personal reading ↗</a></header>
-<section class="hero"><div class="eyebrow">Your chart · calculated in this browser</div><h1>Follow the thread.</h1><p>You don't have to know astrology to fall down the rabbit hole. Give the rabbit your birth details and start with the obvious threads — then look underneath them.</p></section>
-<section class="panel birth-panel" hidden>
+<body class="wonderland-mode direct-entry"><main>
+<header><a class="brand" href="#chartForm">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><button type="button" id="myChartButton" hidden>My chart</button><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Personal reading (opens in a new tab)">Personal reading ↗</a></header>
+<section class="chart-intro" aria-labelledby="chartIntroTitle"><div class="eyebrow">Your own sky. Your own way down.</div><h1 id="chartIntroTitle">Open your rabbit hole.</h1><p>Enter your birth details to see your chart. Choose a planet or house whenever you’re ready to explore.</p></section>
+<section class="panel birth-panel" aria-label="Your birth details">
 <form id="chartForm" class="form">
 <div class="field"><label for="date">Birth date</label><input id="date" type="date" required></div>
 <div class="field"><label for="time">Birth time (as written on your birth record)</label><input id="time" type="time" required></div>
@@ -35,7 +34,7 @@
 
 
 <section id="deeper" class="panel experience-panel hidden">
-
+<nav class="chart-tools" aria-label="Chart controls"><button type="button" id="showChartPlacements">Planet placements</button><button type="button" id="editBirthDetails">Edit birth details</button></nav>
 <div class="rabbit" aria-live="polite"><div class="eyebrow" id="rabbitLabel">FOLLOW THE THREAD</div><h2 id="rabbitTitle"></h2><p id="rabbitText"></p><button id="rabbitNext" type="button">How does it behave? →</button><div class="thread"><button data-thread="Sun">Follow Sun</button><button data-thread="Moon">Follow Moon</button><button data-thread="North Node">Follow the Nodes</button><button data-thread="Pluto">Follow Pluto 👀</button></div></div>
 </section>
 
@@ -50,8 +49,6 @@
 <script src="experience.js"></script>
 <script src="chart-map.js"></script>
 <script src="moon-room.js"></script>
-<script src="opening.js"></script>
-<script src="wonderland.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const {calculate,sign,deg,birthInstant,birthInstantsInZone}=DLAChart;
@@ -70,11 +67,11 @@ $("deepCards").innerHTML=
 '<article class="card"><strong>Birth place</strong><small id="resolvedPlace"></small></article>';
 $("resolvedPlace").textContent=place+' · latitude/longitude used only for the local chart geometry.';
 }
-let current=null, selectedThread="Sun", step=0, requestId=0;
+let current=null, selectedThread="Moon", step=0, requestId=0;
 const nextLabels=["How does it behave? →","Where does it happen? →","WAIT… WHAT DOES THAT MEAN?","Show me the deeper layer →","Follow this thread again →"];
-function rabbit(choice,c){
+function rabbit(choice,c,options){
   const layer=DLARabbit.steps(c,choice)[step];
-  DLAExperience.show(c,choice,step);
+  DLAExperience.show(c,choice,step,options);
   $("rabbitLabel").textContent=layer.label;
   $("rabbitTitle").textContent=layer.title;
   $("rabbitText").textContent=layer.text;
@@ -87,7 +84,7 @@ $("rabbitNext").onclick=()=>{if(current){step=(step+1)%5;rabbit(selectedThread,c
 $("chartForm").onsubmit=async e=>{
   e.preventDefault();
   const id=++requestId, button=document.querySelector("button.submit");
-  current=null;step=0;selectedThread="Sun";
+  current=null;step=0;selectedThread="Moon";
   DLAExperience.reset();DLAExperience.loading(true);$("chartLedger").classList.add("hidden");$("chartLedger").open=false;
   $("result").classList.add("hidden");$("deeper").classList.add("hidden");
   $("error").textContent="";button.disabled=true;button.textContent="Calculating your chart…";
@@ -103,8 +100,9 @@ $("chartForm").onsubmit=async e=>{
     const date=candidates[candidates.length===1?0:Number($("occurrence").value)];
     current=calculate(date,place.latitude,place.longitude);
     render(current,place.name+(place.admin1?", "+place.admin1:"")+(place.country?", "+place.country:""));
-    rabbit(selectedThread,current);
     $("result").classList.remove("hidden");$("deeper").classList.remove("hidden");
+    // Start on the chart map. A room opens only when the visitor chooses a destination.
+    rabbit(selectedThread,current,{enter:false});
     $("chartLedger").classList.remove("hidden");DLAExperience.arrive();
   }catch(err){if(id===requestId){current=null;$("error").textContent=err.message}}
   finally{if(id===requestId){DLAExperience.loading(false);button.disabled=false;button.textContent="Open my rabbit hole →"}}
@@ -118,4 +116,7 @@ $("chartForm").addEventListener("input",event=>{
   const button=document.querySelector("button.submit");button.disabled=false;button.textContent="Open my rabbit hole →";
 });
 document.querySelectorAll("[data-thread]").forEach(b=>b.onclick=()=>{if(current){selectedThread=b.dataset.thread;step=0;rabbit(selectedThread,current)}});
+$("myChartButton").onclick=()=>{if(current)DLAExperience.showMap()};
+$("showChartPlacements").onclick=()=>{if(current){$("chartLedger").open=true;$("chartLedger").scrollIntoView({block:'start',behavior:'instant'});$("chartLedger").querySelector('summary').focus({preventScroll:true})}};
+$("editBirthDetails").onclick=()=>{$("chartForm").scrollIntoView({block:'center',behavior:'instant'});$("date").focus({preventScroll:true})};
 </script></body></html>
