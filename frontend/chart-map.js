@@ -8,7 +8,7 @@
   world.insertAdjacentHTML('afterbegin', '<div class="chart-map" id="chartMap" aria-label="Whole-sign chart map"><div class="map-sectors" aria-hidden="true"></div><div id="planetStops"></div><div class="map-center" aria-hidden="true">✦<small>YOUR SKY</small></div></div>');
   const map = $('chartMap'), guide = document.querySelector('.scene-guide');
   map.append($('sceneDoors')); map.append(guide); world.append($('guideSpeech'));
-  let chart = null, hop = null, diveVersion = 0, lastStop = null;
+  let chart = null, hop = null, diveVersion = 0, lastStop = null, currentLayer = null;
   const roomNames = ['Self', 'Values', 'Communication', 'Home', 'Creativity', 'Daily life', 'Partnerships', 'Shared resources', 'Exploration', 'Public life', 'Community', 'Reflection'];
   world.classList.add('vortex-world');
   // Cartoon spiral scenery is illustrative. Placements still use the calculated houses.
@@ -28,6 +28,7 @@
   world.insertAdjacentHTML('beforeend', `<section id="destinationRoom" class="destination-room" hidden aria-label="Inside your chosen rabbit hole"><div class="room-wonder" aria-hidden="true"><div class="room-whirlpool"></div>${cartoon}<span id="roomGlyph"></span></div><div class="eyebrow">Down the rabbit hole</div><h3 id="roomTitle" tabindex="-1"></h3><p id="roomDetail"></p><p class="room-aside">“Well? Was it worth being late for?”</p><button type="button" id="returnToVortex">Back to the swirling chart ↗</button></section>`);
   $('sceneCaption').textContent = 'Choose a rabbit hole. He knows the way down.';
   function leaveRoom(focus = false) {
+    window.DLAVoice?.clear();
     const leavingMoon = world.classList.contains('moon-open');
     window.DLAMoonRoom?.close();
     ++diveVersion; if (hop) { hop.cancel(); hop = null; }
@@ -38,17 +39,21 @@
       if (leavingMoon) lastStop.scrollIntoView({block:'center', behavior:'instant'});
     }
   }
-  $('returnToVortex').onclick = () => leaveRoom(true);
+  function narrateMap() {
+    window.DLAVoice?.scene('Your chart', [{speaker:'Rabbit',text:'Your chart. Your choice of rabbit hole. I shall wait. Impatiently.'},{text:'Choose a planet or a numbered house to explore. You can return here with My chart, or open Planet placements to see the details.'}]);
+  }
+  $('returnToVortex').onclick = () => { leaveRoom(true); narrateMap(); };
   map.tabIndex = -1;
   DLAExperience.showMap = function () {
     if (!chart || $('deeper').classList.contains('hidden')) return;
     leaveRoom();
     map.focus({preventScroll:true});
     map.scrollIntoView({block:'center',behavior:'instant'});
+    narrateMap();
   };
-  world.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('destinationRoom').hidden) {e.preventDefault(); leaveRoom(true);} });
+  world.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('destinationRoom').hidden) {e.preventDefault(); leaveRoom(true); narrateMap();} });
   const originalReset = DLAExperience.reset;
-  DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); originalReset(); };
+  DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); window.DLAVoice?.reset(); originalReset(); };
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   function stopHop() { if (hop) hop.finish(); }
   $('motionToggle').addEventListener('click', stopHop);
@@ -85,6 +90,11 @@
       }
       $('destinationRoom').hidden = false;
       if (placement?.name === 'Moon') window.DLAMoonRoom?.open(chart);
+      else window.DLAVoice?.scene($('roomTitle').textContent, [
+        {speaker:'Rabbit',text:'Well? Was it worth being late for?'},
+        {text:$('roomTitle').textContent + '. ' + $('roomDetail').textContent},
+        ...(placement && currentLayer ? [{text:currentLayer.text}] : [])
+      ]);
       $('roomTitle').focus({preventScroll:true});
     }
     if (!reduced.matches && !document.body.classList.contains('motion-paused')) {
@@ -110,6 +120,7 @@
   });
   const originalShow = DLAExperience.show;
   DLAExperience.show = function (nextChart, choice, step, {enter = true} = {}) {
+    currentLayer = DLARabbit.steps(nextChart,choice)[step];
     if (chart !== nextChart) {
       chart = nextChart; $('planetStops').replaceChildren();
       const placements = [...chart.list, chart.node, chart.south];
@@ -145,5 +156,6 @@
     if (!enter) $('guideSpeech').textContent='“Your chart. Your choice of rabbit hole. I shall wait. Impatiently.”';
     $('sceneCaption').textContent='Pick a planet or a house. Down he goes.';
     $('exploreNote').textContent='Choose a glowing rabbit hole. Your real placements are tucked inside.';
+    if (!enter) narrateMap();
   };
 })();

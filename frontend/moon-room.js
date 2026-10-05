@@ -6,7 +6,7 @@
   chapter.className = 'moon-chapter'; chapter.hidden = true;
   chapter.setAttribute('aria-label', 'The Moonlit Conservatory');
   chapter.innerHTML = `
-    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The room that knows you<br>after midnight.</h4><p>Beyond the hurry. Beneath the brave face.<br>What helps you feel at home in yourself?</p></div>
+    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Moon has opinions.<br>Of course it does.</h4><p>Needs. Habits. Your inner weather report.<br>The rabbit would like to speak to management.</p></div>
     <div class="moon-scene" aria-label="Explore the mirror, door, and teacup">
       <div class="moon-scenery" aria-hidden="true"></div><div class="moon-water" aria-hidden="true"></div>
       <div class="moon-motes" aria-hidden="true"></div>
@@ -25,10 +25,10 @@
       <div id="moonCare" class="moon-care" hidden>
         <p class="moon-practice" id="moonPractice"></p>
         <label for="moonReflection">A note to yourself <small>Optional · stays in this tab until you change the birth details or close the page.</small></label>
-        <textarea id="moonReflection" rows="3" maxlength="1200" placeholder="Today, I could give myself permission to…"></textarea>
+        <textarea id="moonReflection" rows="3" maxlength="1200" placeholder="One thing worth trying. No royal decree required."></textarea>
       </div>
       <div id="moonKeepsake" class="moon-keepsake" hidden>
-        <div class="eyebrow">A little moonlight to take with you</div><h4 tabindex="-1" id="moonKeepsakeTitle">You can be a work in progress<br>and still deserve care.</h4>
+        <div class="eyebrow">Findings from the comfort department</div><h4 tabindex="-1" id="moonKeepsakeTitle">You’ve met your Moon.<br>It would like a word.</h4>
         <p class="moon-fact" id="moonKeepsakePlacement"></p><p id="moonTakeaway"></p><p id="moonTakeawayPractice"></p><blockquote id="moonSavedNote" hidden></blockquote>
         <div class="moon-ending-actions"><button type="button" id="moonDownload">Save my Moon note ↓</button><button type="button" id="moonToVenus">Follow Venus →</button></div>
         <p class="moon-whisper">“Late? Yes. But some things are worth stopping for.”</p><p class="moon-ending-hint">Venus opens the next question: what draws you close? Or return to the chart and choose any door.</p>
@@ -84,11 +84,11 @@
       $('moonGuideLine').textContent = 'The chart is still here. So are all its other doors.';
     } else if (welcome) {
       $('moonDiscoveryLabel').textContent = 'You have arrived';
-      $('moonDiscoveryTitle').textContent = 'What if you did not have to earn a softer landing?';
-      $('moonDiscoveryText').textContent = 'The rabbit finally stops checking his watch. In astrology, the Moon gives us a language for emotional needs, familiar responses, and the things we reach for when the day gets loud. This room asks what care could look like for you.';
+      $('moonDiscoveryTitle').textContent = 'Welcome to the comfort department.';
+      $('moonDiscoveryText').textContent = 'In astrology, the Moon is the character concerned with needs, habits, and familiar reactions. The Sun got the spotlight. The Moon got the admin. Your Moon sign suggests a style; its house gives us a setting. Let’s inspect the paperwork.';
       $('moonFact').textContent = story.placement;
-      $('moonQuestion').textContent = 'When the brave face comes off, what do you find yourself needing?';
-      $('moonWhisper').textContent = 'You can hold the question without answering it yet.';
+      $('moonQuestion').textContent = 'What actually helps when your day behaves like a badly organised tea party?';
+      $('moonWhisper').textContent = 'No correct answer. The rabbit has already submitted three complaints.';
       $('moonGuideLine').textContent = '“A mirror, a door, and tea. Finally, a sensible delay.”';
     } else {
       const discovery = story[active];
@@ -103,6 +103,19 @@
     }
     const next = order.find(key => !visited.has(key));
     $('moonContinue').textContent = next ? {mirror: 'Look in the silver mirror →', door: `Open door ${story.house} →`, cup: 'Sit down for moonlight tea →'}[next] : 'Gather my discoveries →';
+    // Narrate authored discoveries only. Private reflection text is never included.
+    window.DLAVoice?.scene(summary ? 'Your Moon note' : $('moonDiscoveryTitle').textContent, summary ? [
+      {speaker:'Rabbit',text:'Late? Yes. But some things are worth stopping for.'},
+      {text:story.takeaway}, {text:story.practice},
+      {text:'You can save your Moon note, follow Venus, or return to your chart.'}
+    ] : [
+      {speaker:'Rabbit',text:$('moonGuideLine').textContent},
+      {text:$('moonDiscoveryText').textContent},
+      ...(welcome ? [{text:story.placement}] : []),
+      {text:$('moonQuestion').textContent},
+      ...(active === 'cup' ? [{text:story.practice}] : []),
+      {text:$('moonContinue').textContent.replace('→','')}
+    ]);
     if (focus) {
       const heading = $(summary ? 'moonKeepsakeTitle' : 'moonDiscoveryTitle');
       heading.focus({preventScroll:true});

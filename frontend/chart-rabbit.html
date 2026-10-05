@@ -16,10 +16,13 @@
 <link rel="stylesheet" href="vortex.css">
 <link rel="stylesheet" href="wonderland.css">
 <link rel="stylesheet" href="moon-room.css">
+<link rel="stylesheet" href="voice.css">
+<link rel="stylesheet" href="entry-sky.css">
 </head>
 <body class="wonderland-mode direct-entry"><main>
 <header><a class="brand" href="#chartForm">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><button type="button" id="myChartButton" hidden>My chart</button><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Personal reading (opens in a new tab)">Personal reading ↗</a></header>
-<section class="chart-intro" aria-labelledby="chartIntroTitle"><div class="eyebrow">Your own sky. Your own way down.</div><h1 id="chartIntroTitle">Open your rabbit hole.</h1><p>Enter your birth details to see your chart. Choose a planet or house whenever you’re ready to explore.</p></section>
+<div class="chart-entry"><div class="entry-sky" aria-hidden="true"><div class="entry-vortex"></div></div>
+<section class="chart-intro" aria-labelledby="chartIntroTitle"><div class="eyebrow">The universe has some explaining to do.</div><h1 id="chartIntroTitle">Open your rabbit hole.</h1><p>Birth details first. Then we’ll see what the planets have been getting up to. The rabbit is already late.</p></section>
 <section class="panel birth-panel" aria-label="Your birth details">
 <form id="chartForm" class="form">
 <div class="field"><label for="date">Birth date</label><input id="date" type="date" required></div>
@@ -30,6 +33,7 @@
 <button class="submit" type="submit">Open my rabbit hole →</button>
 </form><div id="error" class="error" role="alert"></div>
 </section>
+</div>
 
 
 
@@ -43,12 +47,15 @@
 <p class="mini">The planets describe <b>what</b>. The signs describe <b>how</b>. Your Rising Sign and houses describe <b>where</b>.</p>
 <div id="cards" class="chart-grid"></div>
 </section><section class="panel"><div id="deepCards" class="chart-grid"></div></section></details>
-<aside class="reading-invitation" aria-labelledby="readingInvitationTitle"><div><p class="eyebrow">Another door, when you’re ready</p><h2 id="readingInvitationTitle">The Threshold Reading</h2><p>A personal reading of your chart, the rooms within, and the gifts inside the shadow.</p></div><a href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Explore The Threshold Reading (opens in a new tab)">Explore the reading ↗<small>Bookings coming soon</small></a></aside>
+<aside class="reading-invitation" aria-labelledby="readingInvitationTitle"><div><p class="eyebrow">For the questions that brought friends</p><h2 id="readingInvitationTitle">The Threshold Reading</h2><p>A personal look around your chart. Bring your curiosity. The planets have provided plenty of material.</p></div><a href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Explore The Threshold Reading (opens in a new tab)">Explore the reading ↗<small>Bookings coming soon</small></a></aside>
 <div class="footer">Planetary calculations run in this browser. Your birth date, time, and chart data are not sent to the Darker Light Astrology API. Birth place is sent only to Open-Meteo's geocoding service to find latitude/longitude.</div>
 </main>
 <script src="experience.js"></script>
 <script src="chart-map.js"></script>
 <script src="moon-room.js"></script>
+<script src="voice-engine.js"></script>
+<script src="voice.js"></script>
+<script src="entry-sky.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const {calculate,sign,deg,birthInstant,birthInstantsInZone}=DLAChart;
@@ -117,6 +124,6 @@ $("chartForm").addEventListener("input",event=>{
 });
 document.querySelectorAll("[data-thread]").forEach(b=>b.onclick=()=>{if(current){selectedThread=b.dataset.thread;step=0;rabbit(selectedThread,current)}});
 $("myChartButton").onclick=()=>{if(current)DLAExperience.showMap()};
-$("showChartPlacements").onclick=()=>{if(current){$("chartLedger").open=true;$("chartLedger").scrollIntoView({block:'start',behavior:'instant'});$("chartLedger").querySelector('summary').focus({preventScroll:true})}};
-$("editBirthDetails").onclick=()=>{$("chartForm").scrollIntoView({block:'center',behavior:'instant'});$("date").focus({preventScroll:true})};
+$("showChartPlacements").onclick=()=>{if(current){DLAVoice.pause();$("chartLedger").open=true;$("chartLedger").scrollIntoView({block:'start',behavior:'instant'});$("chartLedger").querySelector('summary').focus({preventScroll:true})}};
+$("editBirthDetails").onclick=()=>{DLAVoice.pause();$("chartForm").scrollIntoView({block:'center',behavior:'instant'});$("date").focus({preventScroll:true})};
 </script></body></html>
