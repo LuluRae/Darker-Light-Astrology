@@ -9,6 +9,7 @@
   panel.id = 'voicePanel'; panel.className = 'voice-panel'; panel.hidden = true;
   panel.setAttribute('aria-label', 'Journey voice controls');
   panel.innerHTML = `<div class="voice-top"><div><span class="voice-eyebrow">Listen to the journey</span><p id="voiceStatus" role="status"></p></div><button type="button" id="voiceOff">Voice off</button></div>
+    <div class="cheshire-preview"><label for="cheshirePreview">Meet the Cheshire narrator</label><audio id="cheshirePreview" controls preload="metadata" src="assets/darker-light-cheshire-preview.mp3"></audio><small>This saved performance is the voice direction. Live chart details still use your device voice for now.</small></div>
     <div class="voice-controls"><button type="button" id="voicePause">Pause</button><button type="button" id="voiceReplay">Replay</button><button type="button" id="voiceText" aria-pressed="false">Show text</button></div>
     <p id="voiceCaption" class="voice-caption" hidden></p>`;
   document.body.append(panel);
@@ -32,7 +33,10 @@
     // Spoken lines have visible optional captions, without a second live announcement.
     document.querySelectorAll('.rabbit[aria-live]').forEach(el => el.setAttribute('aria-live', active ? 'off' : 'polite'));
   }
-  function off() { expanded = false; narrator.disable(); }
+  const preview = $('cheshirePreview');
+  preview.addEventListener('play', () => narrator.pause());
+  function stopPreview() { preview.pause(); preview.currentTime = 0; }
+  function off() { stopPreview(); expanded = false; narrator.disable(); }
   function listen() { expanded = true; narrator.enable(); }
   toggle.onclick = () => {
     if (expanded) { off(); return; }
@@ -46,8 +50,8 @@
   window.addEventListener('pagehide', off);
   window.DLAVoice = {
     listen,
-    scene(title, lines) { narrator.scene(title, lines); },
-    clear() { narrator.scene('', []); },
+    scene(title, lines) { stopPreview(); narrator.scene(title, lines); },
+    clear() { stopPreview(); narrator.scene('', []); },
     reset() { off(); narrator.scene('', []); },
     pause() { narrator.pause(); }
   };

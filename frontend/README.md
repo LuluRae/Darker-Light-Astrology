@@ -49,7 +49,7 @@ Listen is opt-in, with Pause/Resume, Replay, Voice off and Show/Hide text. There
 
 Navigation cancels old speech and ignores late callbacks. Switching tabs pauses narration. Resume repeats the interrupted line; editing birth details turns narration off. Speech failure restores written content. No microphone, API key, paid voice service or cloud voice default is used. Direct Listen buttons are available in the calendar and study.
 
-The selected future voice direction is a warm, mischievous Cheshire-style narrator with affectionate dry humor. CHESHIRE-VOICE.md contains the ElevenLabs account setup steps, an original character description, preview script, and integration notes. No character voice has been generated or connected yet; this brief does not change the current device voice.
+The selected voice direction is a warm, mischievous Cheshire-style narrator with affectionate dry humor. The saved ElevenLabs MP3 appears in the voice panel as a single preview, and CHESHIRE-VOICE.md records its brief, script, and integration notes. Live calculated narration still uses the current device voice because no character-voice service is connected.
 
 ## The Threshold Reading
 

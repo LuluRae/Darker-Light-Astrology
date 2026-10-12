@@ -2,7 +2,7 @@
 
 The chosen direction is one warm, sly, British fantasy narrator: a lovable smart-ass with a smile in his voice. Humor is affectionate. Tease cosmic bureaucracy and the absurdity of being human; follow each joke with a clear explanation or useful question. The rabbit is a quiet visual guide along the path, with no dialogue or separate performed personality. All spoken narration belongs to this one guide voice.
 
-This is an original character performance with a Cheshire-like mood. The site currently still uses the device narrator. No ElevenLabs account, designed voice, generated recording, or paid service is connected yet.
+This is an original character performance with a Cheshire-like mood. The selected ElevenLabs sample is saved as `assets/darker-light-cheshire-preview.mp3` and appears in the site's voice panel as **Meet the Cheshire narrator**. The live calculated narration still uses the device narrator because no ElevenLabs service is connected yet.
 
 ## Set up the voice
 
@@ -23,4 +23,4 @@ Ah. There you are. A little red coat between the trees. Follow the rabbit when y
 
 ## Once the voice is saved
 
-Export a short MP3 or WAV sample for review before replacing the site's narrator. Static welcome clips can be shipped as audio assets; readings containing a visitor's calculated sign, house, and degrees need a secure narration service to keep that same voice throughout. Keep service credentials on a server, never in the frontend or in chat. Any future cloud narration should explain what reading text is sent and continue to exclude private journal notes.
+The selected preview is now preserved in the project. Static welcome clips can be shipped as audio assets; readings containing a visitor's calculated sign, house, and degrees need a secure narration service to keep that same voice throughout. Keep service credentials on a server, never in the frontend or in chat. Any future cloud narration should explain what reading text is sent and continue to exclude private journal notes.
