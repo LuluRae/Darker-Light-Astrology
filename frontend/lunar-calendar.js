@@ -4,19 +4,23 @@
   const panel = document.createElement('section');
   panel.id = 'moonCalendar'; panel.className = 'moon-calendar'; panel.hidden = true;
   panel.setAttribute('aria-labelledby', 'calendarHeading');
-  panel.innerHTML = `<div class="calendar-heading"><p class="eyebrow">Shadow · Moon · Wholeness</p><h2 id="calendarHeading" tabindex="-1">One page. One small rabbit hole.</h2><p>Choose a numbered page, then tear it away to discover the Moon and a reflection underneath. Any date is yours to open. The calendar police have the day off.</p><button type="button" id="calendarClose">Close calendar</button></div>
-    <div class="calendar-toolbar"><label for="calendarMonth">Explore a month</label><input type="month" id="calendarMonth" min="1900-01" max="2199-12"><button type="button" id="calendarPrev" aria-label="Previous month">←</button><button type="button" id="calendarToday">Today</button><button type="button" id="calendarNext" aria-label="Next month">→</button></div>
-    <p class="calendar-clock" id="calendarClock"></p><p class="calendar-error" id="calendarError" role="alert"></p>
-    <div class="calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
-    <div class="calendar-grid" id="calendarDays" role="group" aria-label="Choose a numbered advent page"></div>
+  panel.innerHTML = `<div class="calendar-heading"><p class="eyebrow">Shadow · Moon · Wholeness</p><h2 id="calendarHeading" tabindex="-1">A little magic, one day at a time.</h2><p>Tear away the date. Find the Moon and a small invitation underneath. The universe has left you a note. How unusually organised of it.</p><button type="button" id="calendarClose">Close calendar</button></div>
+    <p class="calendar-error" id="calendarError" role="alert"></p>
+    <nav class="calendar-page-nav" aria-label="Calendar pages"><button type="button" id="calendarBackPage">← Previous day</button><button type="button" id="calendarToday">Today</button><button type="button" id="calendarForwardPage">Next day →</button></nav>
     <article id="calendarDiscovery" class="calendar-discovery calendar-paper" hidden>
-      <div id="calendarCover" class="calendar-cover"><p class="paper-label">Darker Light Astrology</p><p id="calendarCoverMonth" class="paper-month"></p><p id="calendarCoverNumber" class="paper-number"></p><p class="paper-invitation">Something is waiting beneath this page.</p><button type="button" id="calendarTear" aria-controls="calendarReveal" aria-expanded="false">Tear off the page ↘</button><span class="paper-corner" aria-hidden="true"></span></div>
+      <div id="calendarCover" class="calendar-cover"><p class="paper-label">Darker Light Astrology</p><p id="calendarCoverMonth" class="paper-month"></p><p id="calendarCoverNumber" class="paper-number"></p><p id="calendarCoverWeekday" class="paper-weekday"></p><p class="paper-invitation">Something is waiting beneath this page.</p><button type="button" id="calendarTear" aria-controls="calendarReveal" aria-expanded="false">Tear off the page ↘</button><span class="paper-corner" aria-hidden="true"></span></div>
       <div id="calendarReveal" hidden><div class="calendar-facts"><span id="calendarGlyph" aria-hidden="true"></span><div><p class="eyebrow" id="calendarDate"></p><h3 id="calendarPhase"></h3><p id="calendarSky"></p></div></div>
       <h3 id="calendarTitle" tabindex="-1"></h3><div class="calendar-copy"><p id="calendarText"></p><blockquote id="calendarQuestion"></blockquote><h4>One small practice</h4><p id="calendarPractice"></p></div>
       <div id="calendarNatal" class="calendar-natal"></div><div class="calendar-page-actions"><button type="button" id="calendarListen">Listen to this day</button><button type="button" id="calendarNextPage">Next page →</button></div>
       <div class="calendar-private"><label for="calendarNote">A note to yourself <small>Optional. Stays in this tab; cleared if you change birth details or close the page.</small></label><textarea id="calendarNote" maxlength="2000" rows="3" placeholder="Something you noticed. No lunar paperwork required."></textarea><button type="button" id="calendarDownload">Save this day’s note ↓</button></div>
       <p class="calendar-footnote">Daily sky positions are calculated for local noon in your device’s time zone, not your birthplace. The Moon can change signs during the day. Phase names group the cycle into eight equal angular sectors; the lit percentage is calculated separately. Reflections are invitations, not forecasts.</p></div>
-    </article>`;
+    </article>
+    <p class="calendar-clock" id="calendarClock"></p>
+    <details id="calendarDateChooser" class="calendar-date-chooser"><summary>Choose another date</summary><p>Any page is yours to open. The calendar police have the day off.</p>
+      <div class="calendar-toolbar"><label for="calendarMonth">Explore a month</label><input type="month" id="calendarMonth" min="1900-01" max="2199-12"><button type="button" id="calendarPrev" aria-label="Previous month">←</button><button type="button" id="calendarNext" aria-label="Next month">→</button></div>
+      <div class="calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+      <div class="calendar-grid" id="calendarDays" role="group" aria-label="Choose a calendar date"></div>
+    </details>`;
   $('shadowReflections').after(panel);
   let zone = '', chart = null, days = [], selected = null, guidance = null;
   const notes = new Map(), opened = new Set();
@@ -25,7 +29,17 @@
   function cancelTear() {
     ++pageVersion;
     if (tearing) { tearing.cancel(); tearing = null; }
+    clearTearLayout();
+    const alreadyOpen = opened.has(selected?.iso);
+    $('calendarCover').hidden = alreadyOpen;
+    $('calendarReveal').hidden = !alreadyOpen;
     $('calendarTear').disabled = false;
+  }
+  function clearTearLayout() {
+    $('calendarDiscovery').classList.remove('tearing');
+    $('calendarDiscovery').style.removeProperty('--paper-height');
+    $('calendarReveal').inert = false;
+    $('calendarReveal').removeAttribute('aria-hidden');
   }
   function finishMotion() { if (tearing) tearing.finish(); }
   $('motionToggle').addEventListener('click', finishMotion);
@@ -60,6 +74,8 @@
   function selectDay(iso, focus = false) {
     cancelTear(); DLAVoice.clear();
     selected = days.find(day=>day.iso===iso); guidance = null;
+    $('calendarBackPage').disabled = !selected || !!selected.unavailable || iso === '1900-01-01';
+    $('calendarForwardPage').disabled = !selected || !!selected.unavailable || iso === '2199-12-31';
     $('calendarDiscovery').hidden = !selected || !!selected.unavailable;
     $('calendarError').textContent = selected?.error || '';
     [...$('calendarDays').children].forEach(button => button.setAttribute('aria-pressed',String(button.dataset.date===iso)));
@@ -70,6 +86,7 @@
     $('calendarTear').setAttribute('aria-expanded',String(alreadyOpen));
     $('calendarCoverNumber').textContent = String(Number(iso.slice(-2)));
     $('calendarCoverMonth').textContent = new Intl.DateTimeFormat(undefined,{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+    $('calendarCoverWeekday').textContent = new Intl.DateTimeFormat(undefined,{weekday:'long',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
     $('calendarTear').setAttribute('aria-label','Tear off the page for '+readable(iso));
     $('calendarNextPage').disabled = iso === '2199-12-31';
     $('calendarDate').textContent = readable(iso); $('calendarGlyph').textContent = selected.glyph;
@@ -89,13 +106,19 @@
     function reveal() {
       if (version !== pageVersion || selected?.iso !== iso) return;
       tearing?.cancel(); tearing = null; opened.add(iso);
+      clearTearLayout();
       $('calendarCover').hidden = true; $('calendarReveal').hidden = false;
       $('calendarTear').disabled = false; $('calendarTear').setAttribute('aria-expanded','true');
       const tile = [...$('calendarDays').children].find(button=>button.dataset.date===iso);
       if (tile) { tile.dataset.opened = 'true'; tile.querySelector('small').textContent = 'Opened'; tile.querySelector('span').textContent = selected.glyph; }
       $('calendarTitle').focus({preventScroll:true}); narrate();
     }
-    if (reduced.matches || document.body.classList.contains('motion-paused')) { reveal(); return; }
+    if (reduced.matches || document.body.classList.contains('motion-paused') || !$('calendarCover').animate) { reveal(); return; }
+    // Let the next sheet show underneath, but keep it out of keyboard/screen-reader focus until the tear finishes.
+    $('calendarDiscovery').style.setProperty('--paper-height', $('calendarDiscovery').getBoundingClientRect().height+'px');
+    $('calendarDiscovery').classList.add('tearing');
+    $('calendarReveal').hidden = false; $('calendarReveal').inert = true;
+    $('calendarReveal').setAttribute('aria-hidden','true');
     tearing = $('calendarCover').animate([
       {transform:'perspective(800px) rotateX(0) rotate(0)',opacity:1,offset:0},
       {transform:'perspective(800px) rotateX(-18deg) rotate(-3deg) translateY(10px)',opacity:1,offset:.3},
@@ -121,10 +144,16 @@
         const number = document.createElement('b'); number.textContent = String(index+1);
         const glyph = document.createElement('span'); glyph.setAttribute('aria-hidden','true'); glyph.textContent = opened.has(day.iso) ? day.glyph || '·' : '✦';
         const label = document.createElement('small'); label.textContent = day.unavailable ? 'Unavailable' : opened.has(day.iso) ? 'Opened' : 'Lift a page';
-        button.append(number,glyph,label); button.onclick = () => selectDay(day.iso,true); $('calendarDays').append(button);
+        button.append(number,glyph,label); button.onclick = () => {
+          if (!day.unavailable) $('calendarDateChooser').open = false;
+          selectDay(day.iso,true);
+        }; $('calendarDays').append(button);
       });
       selectDay(days.some(day=>day.iso===preferred) ? preferred : days.some(day=>day.iso===now) ? now : days[0].iso);
-    } catch (error) { days = []; $('calendarError').textContent = error.message; }
+    } catch (error) {
+      days = []; $('calendarError').textContent = error.message;
+      $('calendarBackPage').disabled = true; $('calendarForwardPage').disabled = true;
+    }
   }
   function shift(amount) {
     if (!/^\d{4}-\d{2}$/.test($('calendarMonth').value)) return;
@@ -134,16 +163,23 @@
     $('calendarMonth').value = date.toISOString().slice(0,7); loadMonth();
   }
   $('calendarMonth').onchange = () => loadMonth();
-  $('calendarNextPage').onclick = () => {
+  function turnPage(amount) {
     if (!selected) return;
-    const date = new Date(selected.iso+'T12:00:00Z'); date.setUTCDate(date.getUTCDate()+1);
+    const date = new Date(selected.iso+'T12:00:00Z'); date.setUTCDate(date.getUTCDate()+amount);
     const iso = date.toISOString().slice(0,10);
-    if (Number(iso.slice(0,4))>2199) return;
+    if (Number(iso.slice(0,4))<1900 || Number(iso.slice(0,4))>2199) return;
+    $('calendarDateChooser').open = false;
     if (iso.slice(0,7) !== $('calendarMonth').value) { $('calendarMonth').value = iso.slice(0,7); loadMonth(iso); }
     selectDay(iso,true);
-  };
+  }
+  $('calendarNextPage').onclick = () => turnPage(1);
+  $('calendarBackPage').onclick = () => turnPage(-1);
+  $('calendarForwardPage').onclick = () => turnPage(1);
   $('calendarPrev').onclick = () => shift(-1); $('calendarNext').onclick = () => shift(1);
-  $('calendarToday').onclick = () => { $('calendarMonth').value = today().slice(0,7); loadMonth(today()); };
+  $('calendarToday').onclick = () => {
+    $('calendarDateChooser').open = false;
+    $('calendarMonth').value = today().slice(0,7); loadMonth(today()); selectDay(today(),true);
+  };
   $('calendarNote').oninput = event => { if (selected) notes.set(selected.iso,event.target.value); };
   $('calendarListen').onclick = () => { narrate(); DLAVoice.listen(); };
   $('calendarDownload').onclick = () => {
@@ -156,12 +192,13 @@
   $('calendarClose').onclick = () => { cancelTear(); DLAVoice.clear(); panel.hidden = true; document.body.classList.remove('calendar-ready'); $('openMoonCalendar').focus(); };
   $('openMoonCalendar').onclick = () => {
     DLAExperience.leaveRoom(); panel.hidden = false; document.body.classList.add('calendar-ready');
+    $('calendarDateChooser').open = false;
     try {
       zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (!zone) throw new Error('Your device time zone is unavailable. Please check your device settings.');
       $('calendarClock').textContent = `Daily snapshots at noon · ${zone.replaceAll('_',' ')} · your device’s time zone`;
-      if (!$('calendarMonth').value) $('calendarMonth').value = today().slice(0,7);
-      loadMonth(selected?.iso);
+      $('calendarMonth').value = today().slice(0,7);
+      loadMonth(today());
     } catch (error) { $('calendarError').textContent = error.message; }
     $('calendarHeading').focus({preventScroll:true}); panel.scrollIntoView({block:'start',behavior:'instant'});
   };

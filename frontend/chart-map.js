@@ -10,6 +10,16 @@
   map.append($('sceneDoors')); map.append(guide); world.append($('guideSpeech'));
   let chart = null, hop = null, diveVersion = 0, lastStop = null, currentLayer = null;
   const roomNames = ['Self', 'Values', 'Communication', 'Home', 'Creativity', 'Daily life', 'Partnerships', 'Shared resources', 'Exploration', 'Public life', 'Community', 'Reflection'];
+  const key = document.createElement('aside');
+  key.id = 'chartSymbolKey'; key.className = 'chart-symbol-key';
+  key.setAttribute('aria-labelledby', 'chartKeyTitle');
+  key.innerHTML = '<h3 id="chartKeyTitle">A little key to your sky</h3><p>The symbols are your planets and lunar nodes.</p><dl id="chartKeyPlanets"></dl><details><summary>01–12 · The houses</summary><p>The numbered doors are areas of life. A house still matters when no planets occupy it.</p><dl id="chartKeyHouses"></dl></details>';
+  map.after(key);
+  roomNames.forEach((name, index) => {
+    const number = document.createElement('dt'), meaning = document.createElement('dd');
+    number.textContent = String(index+1).padStart(2,'0'); meaning.textContent = name;
+    $('chartKeyHouses').append(number, meaning);
+  });
   world.classList.add('vortex-world');
   // Cartoon spiral scenery is illustrative. Placements still use the calculated houses.
   const spiral = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -126,8 +136,13 @@
     currentLayer = DLARabbit.steps(nextChart,choice)[step];
     if (chart !== nextChart) {
       chart = nextChart; $('planetStops').replaceChildren();
+      $('chartKeyPlanets').replaceChildren();
       const placements = [...chart.list, chart.node, chart.south];
       placements.forEach(p => {
+        const symbol = document.createElement('dt'), description = document.createElement('dd');
+        const name = document.createElement('strong'), meaning = document.createElement('small');
+        symbol.textContent = p.symbol+'\uFE0E'; name.textContent = p.name; meaning.textContent = p.meaning;
+        description.append(name, meaning); $('chartKeyPlanets').append(symbol, description);
         const siblings = placements.filter(other=>other.house===p.house), index = siblings.indexOf(p);
         const angle = 180-(p.house-.5)*30 + (index-(siblings.length-1)/2)*Math.min(8,22/Math.max(1,siblings.length-1));
         const stop = document.createElement('button'); stop.type='button'; stop.className='planet-stop';
