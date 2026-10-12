@@ -35,7 +35,7 @@
 <div class="field"><label for="place">Birth place</label><input id="place" type="text" placeholder="City, State / Country" required></div>
 <p class="mini submit">Enter the local time where you were born. We’ll handle the time zone and daylight saving for your birth date.</p>
 <div id="clockChoice" class="field submit hidden"><label for="occurrence">The clocks went back that night, so this time happened twice. Which occurrence is on your birth record?</label><select id="occurrence"><option value="">Choose if known</option><option value="0">First — before the clocks went back</option><option value="1">Second — after the clocks went back</option></select><p class="mini">If you’re unsure, check your birth record before continuing.</p></div>
-<button class="submit" type="submit">Open my rabbit hole →</button>
+<button class="submit" type="submit">All who wonder are not lost</button>
 </form><div id="error" class="error" role="alert"></div>
 </section>
 </div>
@@ -120,7 +120,7 @@ $("chartForm").onsubmit=async e=>{
     rabbit(selectedThread,current,{enter:false});
     $("chartLedger").classList.remove("hidden");DLAExperience.arrive();
   }catch(err){if(id===requestId){current=null;$("error").textContent=err.message}}
-  finally{if(id===requestId){DLAExperience.loading(false);button.disabled=false;button.textContent="Open my rabbit hole →"}}
+  finally{if(id===requestId){DLAExperience.loading(false);button.disabled=false;button.textContent="All who wonder are not lost"}}
 };
 // Edits invalidate both displayed results and any outstanding place lookup.
 $("chartForm").addEventListener("input",event=>{
@@ -128,7 +128,7 @@ $("chartForm").addEventListener("input",event=>{
   $("error").textContent="";
   DLAExperience.reset();DLAExperience.loading(false);$("chartLedger").classList.add("hidden");
   ++requestId;current=null;$("result").classList.add("hidden");$("deeper").classList.add("hidden");
-  const button=document.querySelector("button.submit");button.disabled=false;button.textContent="Open my rabbit hole →";
+  const button=document.querySelector("button.submit");button.disabled=false;button.textContent="All who wonder are not lost";
 });
 document.querySelectorAll("[data-thread]").forEach(b=>b.onclick=()=>{if(current){selectedThread=b.dataset.thread;step=0;rabbit(selectedThread,current)}});
 $("myChartButton").onclick=()=>{if(current){DLAExperience.showMap();return}$("chartForm").scrollIntoView({block:'center',behavior:'instant'});$("date").focus({preventScroll:true})};
