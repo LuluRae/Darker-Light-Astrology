@@ -4,6 +4,8 @@ The chosen direction is one warm, sly, British fantasy narrator: a lovable smart
 
 This is an original character performance with a Cheshire-like mood. The selected ElevenLabs sample is saved as `assets/darker-light-cheshire-preview.mp3` and appears in the site's voice panel as **Meet the Cheshire narrator**. The live calculated narration still uses the device narrator because no ElevenLabs service is connected yet.
 
+The current approved preview is the **purring, smug** performance downloaded on October 12, 2026. Its original filename was `ElevenLabs_audio_elevenlabs-v4_[purring, smug]_2026-10-12T08_47_01.mp3`; the preserved project copy is 235,762 bytes with SHA-256 `B3C080EA5C2867A13A3CDED5B9EEA5E70A95ACB27D2304E0AB200A070985FF01`. Git history retains the earlier preview if comparison is ever needed.
+
 ## Set up the voice
 
 1. Create your account at https://elevenlabs.io/sign-up and complete sign-in yourself.
