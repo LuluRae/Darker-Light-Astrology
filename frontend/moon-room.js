@@ -1,0 +1,164 @@
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const room = $('destinationRoom'), world = $('world');
+  const chapter = document.createElement('section');
+  chapter.className = 'moon-chapter'; chapter.hidden = true;
+  chapter.setAttribute('aria-label', 'The Moonlit Conservatory');
+  chapter.innerHTML = `
+    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Midnight Host<br>has been expecting you.</h4><p>The rabbit’s trail leads to an enchanted tea party.<br>Your host knows a suspicious amount about needs, habits, and inner weather.</p></div>
+    <div class="moon-scene" aria-label="Explore the mirror, door, and teacup">
+      <div class="moon-scenery" aria-hidden="true"></div><div class="moon-water" aria-hidden="true"></div>
+      <div class="moon-motes" aria-hidden="true"></div>
+      <span class="moon-rabbit rabbit-trace" aria-hidden="true"><i></i><i></i><i></i></span>
+      <button type="button" class="moon-host" id="moonHost" aria-label="Meet The Midnight Host" aria-pressed="true"><img src="assets/midnight-host.png" alt=""><span>The Midnight Host</span></button>
+      <button type="button" class="moon-object moon-mirror" data-moon-stop="mirror" aria-label="Explore the silver mirror: your Moon sign" aria-controls="moonDiscovery"><span aria-hidden="true">✧</span><b>The silver mirror</b><small>Your Moon sign</small></button>
+      <button type="button" class="moon-object moon-door" data-moon-stop="door" aria-label="Explore the little door: your Moon house" aria-controls="moonDiscovery"><span aria-hidden="true" id="moonDoorNumber"></span><b>The little door</b><small>Your Moon house</small></button>
+      <button type="button" class="moon-object moon-cup" data-moon-stop="cup" aria-label="Explore the teacup: a moment of care" aria-controls="moonDiscovery"><span aria-hidden="true">♡</span><b>A cup of moonlight</b><small>A moment of care</small></button>
+      <p class="moon-scene-caption">The rabbit slips away. The Midnight Host lifts a teacup and smiles as though this explains everything.</p>
+    </div>
+    <div class="moon-story">
+      <div class="moon-trail"><p id="moonProgress" role="status"></p><button type="button" id="moonRestart">Revisit the entrance</button></div>
+      <div id="moonDiscovery" class="moon-discovery">
+        <div><p class="eyebrow" id="moonDiscoveryLabel"></p><h4 id="moonDiscoveryTitle" tabindex="-1"></h4><p id="moonDiscoveryText"></p><p class="moon-fact" id="moonFact"></p></div>
+        <aside class="moon-question"><span aria-hidden="true">“</span><p id="moonQuestion"></p><p id="moonWhisper" class="moon-whisper"></p></aside>
+      </div>
+      <div id="moonCare" class="moon-care" hidden>
+        <p class="moon-practice" id="moonPractice"></p>
+        <label for="moonReflection">A note to yourself <small>Optional · stays in this tab until you change the birth details or close the page.</small></label>
+        <textarea id="moonReflection" rows="3" maxlength="1200" placeholder="One thing worth trying. No royal decree required."></textarea>
+      </div>
+      <div id="moonKeepsake" class="moon-keepsake" hidden>
+        <div class="eyebrow">Findings from the comfort department</div><h4 tabindex="-1" id="moonKeepsakeTitle">You’ve met your Moon.<br>It would like a word.</h4>
+        <p class="moon-fact" id="moonKeepsakePlacement"></p><p id="moonTakeaway"></p><p id="moonTakeawayPractice"></p><blockquote id="moonSavedNote" hidden></blockquote>
+        <div class="moon-ending-actions"><button type="button" id="moonDownload">Save my Moon note ↓</button><button type="button" id="moonToVenus">Follow Venus →</button></div>
+        <p class="moon-whisper">Some things are worth stopping for. The path can wait.</p><p class="moon-ending-hint">Venus opens the next question: what draws you close? Or return to the chart and choose any door.</p>
+      </div>
+      <div class="moon-next-row"><p id="moonGuideLine"></p><button type="button" id="moonContinue"></button></div>
+      <p class="moon-footnote">Your sign and house come from your calculated chart. The story is an invitation to reflect. The painted Moon is scenery, not your birth Moon’s phase.</p>
+    </div>`;
+  $('roomDetail').before(chapter);
+  const stops = [...chapter.querySelectorAll('[data-moon-stop]')];
+  const motes = chapter.querySelector('.moon-motes');
+  for (let i = 0; i < 15; i++) {
+    const mote = document.createElement('i');
+    mote.style.cssText = `left:${(i*37+9)%96}%;top:${(i*23+12)%87}%;--delay:-${i}s;--drift:${5+i%6}s`;
+    motes.append(mote);
+  }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const rabbit = chapter.querySelector('.moon-rabbit');
+  const order = ['mirror', 'door', 'cup'];
+  let source = null, story = null, active = 'welcome', visited = new Set(), note = '', movement = null;
+  function stopMovement() { if (movement) { movement.cancel(); movement = null; } }
+  reduced.addEventListener('change', stopMovement);
+  function moveRabbit(key) {
+    const before = rabbit.getBoundingClientRect();
+    stopMovement(); chapter.dataset.discovery = key;
+    const after = rabbit.getBoundingClientRect();
+    if (reduced.matches || document.body.classList.contains('motion-paused')) return;
+    movement = rabbit.animate([
+      {transform: `translate(${before.left-after.left}px,${before.top-after.top}px) rotate(-6deg)`},
+      {transform: `translate(${(before.left-after.left)*.5}px,${(before.top-after.top)*.5-35}px) rotate(5deg)`, offset: .5},
+      {transform: 'translate(0,0) rotate(0)', opacity:0}
+    ], {duration: 850, easing: 'ease-in-out', fill:'forwards'});
+  }
+  function render(focus = false) {
+    const summary = active === 'keepsake', welcome = active === 'welcome';
+    $('moonDiscovery').hidden = summary;
+    $('moonCare').hidden = active !== 'cup';
+    $('moonKeepsake').hidden = !summary;
+    $('moonContinue').hidden = summary;
+    $('moonReflection').value = note;
+    $('moonProgress').textContent = `${visited.size} of 3 discoveries found · explore in any order`;
+    stops.forEach(button => {
+      const key = button.dataset.moonStop;
+      button.setAttribute('aria-pressed', String(active === key));
+      button.dataset.found = String(visited.has(key));
+    });
+    $('moonHost').setAttribute('aria-pressed', String(welcome));
+    if (summary) {
+      $('moonKeepsakePlacement').textContent = story.placement;
+      $('moonTakeaway').textContent = story.takeaway;
+      $('moonTakeawayPractice').textContent = story.practice;
+      $('moonSavedNote').textContent = note;
+      $('moonSavedNote').hidden = !note.trim();
+      $('moonGuideLine').textContent = 'The chart is still here. So are all its other doors.';
+    } else if (welcome) {
+      $('moonDiscoveryLabel').textContent = 'Your resident guide';
+      $('moonDiscoveryTitle').textContent = 'Meet the Midnight Host.';
+      $('moonDiscoveryText').textContent = 'He keeps the Moonlit Conservatory, pours tea according to phases nobody else can see, and treats emotional patterns like honored guests—even the ones that arrive uninvited and rearrange the furniture. In astrology, the Moon describes needs, habits, and familiar reactions. Your Moon sign suggests a style; its house gives us a setting. The Host has prepared three places to explore.';
+      $('moonFact').textContent = story.placement;
+      $('moonQuestion').textContent = 'What actually helps when your day behaves like a badly organised tea party?';
+      $('moonWhisper').textContent = '“Tea is optional. Emotional patterns are apparently compulsory.”';
+      $('moonGuideLine').textContent = 'The Midnight Host offers the silver mirror, the little door, and a cup of moonlight. Begin wherever your curiosity lands.';
+    } else {
+      const discovery = story[active];
+      $('moonDiscoveryLabel').textContent = {mirror: '01 · The sign / how', door: '02 · The house / where', cup: '03 · Bring it into your day'}[active];
+      $('moonDiscoveryTitle').textContent = discovery.title;
+      $('moonDiscoveryText').textContent = discovery.text;
+      $('moonFact').textContent = discovery.fact;
+      $('moonQuestion').textContent = discovery.question;
+      $('moonWhisper').textContent = {mirror: 'A mirror offers an angle. It does not tell the whole story.', door: 'A room to explore, not a prediction of what must happen.', cup: 'One small response is enough. There is no correct answer.'}[active];
+      $('moonPractice').textContent = story.practice;
+      $('moonGuideLine').textContent = {mirror: 'There is more to you than the first reflection. Mercifully.', door: 'Your door. No application, password, or proof of worth required.', cup: 'There is time for tea. Your to-do list will survive the betrayal.'}[active];
+    }
+    const next = order.find(key => !visited.has(key));
+    $('moonContinue').textContent = next ? {mirror: 'Look in the silver mirror →', door: `Open door ${story.house} →`, cup: 'Sit down for moonlight tea →'}[next] : 'Gather my discoveries →';
+    // Narrate authored discoveries only. Private reflection text is never included.
+    window.DLAVoice?.scene(summary ? 'Your Moon note' : $('moonDiscoveryTitle').textContent, summary ? [
+      {text:'Some things are worth stopping for. The path can wait.'},
+      {text:story.takeaway}, {text:story.practice},
+      {text:'You can save your Moon note, follow Venus, or return to your chart.'}
+    ] : [
+      {text:$('moonGuideLine').textContent},
+      {text:$('moonDiscoveryText').textContent},
+      ...(welcome ? [{speaker:'Midnight Host',text:$('moonWhisper').textContent},{text:story.placement}] : []),
+      {text:$('moonQuestion').textContent},
+      ...(active === 'cup' ? [{text:story.practice}] : []),
+      {text:$('moonContinue').textContent.replace('→','')}
+    ]);
+    if (focus) {
+      const heading = $(summary ? 'moonKeepsakeTitle' : 'moonDiscoveryTitle');
+      heading.focus({preventScroll:true});
+      heading.scrollIntoView({block:'nearest', behavior:'instant'});
+    }
+  }
+  function discover(key) {
+    if (!story) return;
+    active = key; if (order.includes(key)) visited.add(key);
+    moveRabbit(key); render(true);
+  }
+  stops.forEach(button => button.onclick = () => discover(button.dataset.moonStop));
+  $('moonHost').onclick = () => discover('welcome');
+  $('moonContinue').onclick = () => discover(order.find(key => !visited.has(key)) || 'keepsake');
+  $('moonRestart').onclick = () => discover('welcome');
+  $('moonReflection').addEventListener('input', e => { note = e.target.value; });
+  $('moonToVenus').onclick = () => {
+    document.dispatchEvent(new CustomEvent('dla-planet', {detail:'Venus'}));
+    world.scrollIntoView({block:'start', behavior:'instant'});
+  };
+  $('moonDownload').onclick = () => {
+    if (!story) return;
+    const text = ['Darker Light Astrology — My Moon Note', story.placement, '', story.takeaway, '', 'A small invitation', story.practice, '', 'A question to return to', story.mirror.question, story.door.question, ...(note.trim() ? ['', 'My own words', note] : []), '', 'Astrological reflection, not a prediction. Tropical zodiac; whole-sign houses.'].join('\n');
+    const url = URL.createObjectURL(new Blob([text], {type:'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = 'my-moon-note.txt'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  window.DLAMoonRoom = {
+    open(chart) {
+      if (source !== chart) {
+        source = chart; story = DLAMoonJourney.chapter(chart); active = 'welcome'; visited = new Set(); note = '';
+      }
+      room.classList.add('moon-room'); world.classList.add('moon-open'); chapter.hidden = false;
+      chapter.dataset.discovery = active; $('moonDoorNumber').textContent = String(story.house).padStart(2,'0');
+      render();
+    },
+    close() {
+      stopMovement(); room.classList.remove('moon-room'); world.classList.remove('moon-open'); chapter.hidden = true;
+    },
+    reset() {
+      this.close(); source = null; story = null; active = 'welcome'; visited.clear(); note = '';
+      $('moonReflection').value = ''; $('moonSavedNote').textContent = '';
+    }
+  };
+})();

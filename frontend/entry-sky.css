@@ -1,0 +1,15 @@
+.chart-entry{position:relative;isolation:isolate;overflow:hidden;padding-bottom:30px;background:#102420}
+.entry-sky{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:linear-gradient(#061c1a22,#071b2222 65%,#080b14),url('assets/enchanted-forest-rabbit-hole.png') center 62%/cover no-repeat}
+.entry-sky:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#080b1422,transparent 30%,transparent 70%,#080b1422),linear-gradient(0deg,#080b14,transparent 22%,transparent 85%,#080b1477)}
+.entry-vortex{position:absolute;left:50%;top:47%;width:850px;aspect-ratio:1;border-radius:50%;background:repeating-conic-gradient(from 20deg,#c69be52c 0deg 12deg,transparent 20deg 52deg,#c5a46528 56deg 65deg,transparent 70deg 90deg);mask-image:radial-gradient(circle,transparent 13%,#000 22%,#000 55%,transparent 70%);transform:translate(-50%,-50%) rotate(0);animation:entrySpiral 65s linear infinite;filter:blur(1px)}
+.entry-zodiac{position:absolute;left:50%;top:47%;width:1100px;max-width:none;aspect-ratio:1;transform:translate(-50%,-50%);fill:none;stroke:#edcc9880;stroke-width:1;filter:drop-shadow(0 0 10px #efc57a55)}
+.entry-zodiac text{fill:#f8e3b8;stroke:none;font:32px Georgia;text-anchor:middle}.entry-zodiac circle:last-of-type{stroke-dasharray:2 9}
+.chart-entry .chart-intro{padding-top:40px;text-shadow:0 2px 16px #080512}.chart-entry .chart-intro p{color:#f0e3ed;max-width:510px}.chart-entry .chart-intro .eyebrow{color:#ffe0a3}
+.wonderland-mode .chart-entry .birth-panel{max-width:740px;background:linear-gradient(135deg,#112c26ed,#10242eee);border-color:#dbbb8188;box-shadow:0 18px 70px #02020888;margin-bottom:35px}
+.chart-entry .birth-panel:before{content:'BIRTH DETAILS / NO CRYSTAL BALL REQUIRED';font-size:.6rem}
+@keyframes entrySpiral{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(max-width:650px){.entry-zodiac{width:760px;top:44%}.entry-vortex{width:680px;top:44%}.chart-entry .chart-intro{padding-top:30px}.entry-sky{background-position:58% 50%}.chart-entry{padding-bottom:10px}.wonderland-mode .chart-entry .birth-panel{background:linear-gradient(135deg,#112c26ed,#10242eee);margin-bottom:25px}.chart-entry .birth-panel:before{font-size:.55rem;letter-spacing:.12em}}
+@media(prefers-reduced-motion:reduce){.entry-vortex{animation:none!important}}
+
+.entry-fireflies{position:absolute;inset:0;pointer-events:none}.entry-fireflies i{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffeba9;box-shadow:0 0 12px 3px #ffcf6966;animation:fireflyDrift var(--duration) ease-in-out var(--delay) infinite}
+@media(prefers-reduced-motion:reduce){.entry-fireflies i{animation:none!important}}

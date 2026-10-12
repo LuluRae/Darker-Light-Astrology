@@ -1,0 +1,42 @@
+/* A fleeting trail, not a front-facing mascot. The original portrait is kept in assets. */
+.rabbit-trace{display:block;position:relative;pointer-events:none;filter:drop-shadow(0 0 7px #f0bd6266)}
+.rabbit-trace i{position:absolute;display:block;right:10%;top:15%;width:30%;height:48%;background:linear-gradient(140deg,#db5959,#7f1f38);border-radius:70% 15% 80% 5%;transform:rotate(35deg);box-shadow:1px 0 0 #e3bc68}
+.rabbit-trace i:nth-child(2){right:42%;top:30%;height:44%;width:25%;transform:rotate(45deg);opacity:.75}
+.rabbit-trace i:nth-child(3){right:70%;top:77%;width:7%;height:7%;border-radius:50%;background:#ffdfa1;box-shadow:0 0 9px #f5ce7a}
+.wonderland-mode .vortex-world{background:linear-gradient(#0b241b55,#09221c66 65%,#08151d),url('assets/enchanted-forest-rabbit-hole.png') center 65%/cover no-repeat}
+.wonderland-mode .destination-room:not(.moon-room){background:linear-gradient(#10251c33,#101e28dc 58%,#0c1623f2),url('assets/enchanted-forest-rabbit-hole.png') 72% 65%/cover no-repeat}
+.vortex-world .scene-guide .rabbit-trace{width:42px;height:48px;left:-21px;bottom:5px}
+.vortex-world:not(.diving) .scene-guide .rabbit-trace{animation:trailGlimmer 4s ease-in-out infinite}
+.vortex-world.diving .chart-map{animation:followDescent 1.05s ease-in forwards;transform-origin:50% 50%}
+.vortex-world.diving:after{background:radial-gradient(ellipse,transparent 20%,#061411b0);animation:chaseShade 1.05s ease-in forwards}
+.wonderland-mode .room-wonder{height:120px;max-width:210px;margin:0 auto 15px}
+.wonderland-mode .room-wonder .rabbit-trace{width:45px;height:50px;left:40%;bottom:15%;animation:justAhead 1.6s ease-in both}
+.wonderland-mode .room-wonder>span{font-size:2.4rem;right:12%;top:30px;color:#ebd5a4}
+.wonderland-mode .room-whirlpool{inset:0 15%;background:radial-gradient(ellipse,#0a1017 20%,#527a5844 55%,transparent 70%);box-shadow:inset 0 0 30px #0a1017}
+.wonderland-mode .destination-room .room-aside{font:italic .9rem/1.7 Georgia;color:#d9c59c}
+.moon-rabbit.rabbit-trace{width:5%;height:11%;left:36%;top:58%;filter:drop-shadow(0 0 5px #ddb36a88)}
+.moon-chapter[data-discovery=mirror] .moon-rabbit{left:28%;top:53%}.moon-chapter[data-discovery=door] .moon-rabbit{left:80%;top:59%}.moon-chapter[data-discovery=cup] .moon-rabbit,.moon-chapter[data-discovery=keepsake] .moon-rabbit{left:53%;top:70%}
+.shadow-trail{font:3rem Georgia;color:#cdb47c;transform:rotate(18deg);opacity:.65}
+.chart-tools{flex-wrap:wrap}
+.wonderland-mode .vortex-world>.guide-speech{background:transparent;border:0;border-radius:0;font-style:normal;color:#ebd9b5;text-shadow:0 2px 8px #05110f}
+/* Keep the chart key beside the map, outside the moving spiral. */
+.world.map-world:not(.moon-open){display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:center;padding-left:28px;padding-right:28px}
+.chart-symbol-key{position:relative;z-index:5;padding:20px 18px;border:1px solid #ccba8266;border-radius:20px;background:#0e201feF;text-align:left;color:#f5e7ca}
+.chart-symbol-key h3{font:1.15rem/1.3 Georgia;margin:0 0 8px;color:#f5e7ca}
+.chart-symbol-key p{font-size:.73rem;line-height:1.6;margin:0 0 14px;color:#c4cdbb}
+.chart-symbol-key dl{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:10px;row-gap:9px;margin:0}
+.chart-symbol-key dt{font:1.2rem/1.4 Georgia;color:#e8c78f;text-align:center}
+.chart-symbol-key dd{margin:0;line-height:1.35}.chart-symbol-key strong{display:block;font-size:.75rem;font-weight:600}
+.chart-symbol-key small{display:block;font-size:.66rem;color:#bccbb9;margin-top:2px}
+.chart-symbol-key details{margin-top:16px;padding-top:12px;border-top:1px solid #c8b78444}
+.chart-symbol-key summary{cursor:pointer;font-size:.75rem;color:#e8c78f;line-height:1.6}
+.chart-symbol-key details p{margin-top:12px}.chart-symbol-key details dt,.chart-symbol-key details dd{font-size:.73rem}
+.vortex-world.inside-hole>.chart-symbol-key{visibility:hidden}.world.moon-open>.chart-symbol-key{display:none}
+@media(max-width:850px){.world.map-world:not(.moon-open){grid-template-columns:minmax(0,1fr);gap:22px;padding-left:14px;padding-right:14px}.chart-symbol-key{width:min(530px,100%);margin:auto;padding:18px}.chart-symbol-key>dl{grid-template-columns:22px minmax(0,1fr) 22px minmax(0,1fr);column-gap:8px;row-gap:12px}}
+@media(max-width:650px){#deeper,#chartForm,.chart-ledger,.shadow-reflections,.moon-calendar{scroll-margin-top:180px}}
+@keyframes trailGlimmer{0%,100%{opacity:.18;transform:translate(-2px,3px)}45%{opacity:.85;transform:translate(3px,-3px)}}
+@keyframes justAhead{0%{opacity:.8;transform:translate(-30px,35px) scale(1)}75%,100%{opacity:0;transform:translate(12px,-30px) scale(.15)}}
+@keyframes followDescent{0%{transform:scale(1);filter:brightness(1)}65%{transform:scale(1.06) rotate(-2deg);filter:brightness(.85)}100%{transform:scale(1.12) rotate(-4deg);filter:brightness(.55)}}
+@keyframes chaseShade{from{opacity:0}to{opacity:1}}
+.motion-paused .vortex-world.diving .chart-map{animation:none;transform:none;filter:none}.motion-paused .room-wonder .rabbit-trace{animation:none;opacity:.4}
+@media(prefers-reduced-motion:reduce){.rabbit-trace,.vortex-world.diving .chart-map,.vortex-world.diving:after{animation:none!important;transform:none!important;filter:none!important}.room-wonder .rabbit-trace{opacity:.4}}
