@@ -20,7 +20,8 @@
       <div class="calendar-toolbar"><label for="calendarMonth">Explore a month</label><input type="month" id="calendarMonth" min="1900-01" max="2199-12"><button type="button" id="calendarPrev" aria-label="Previous month">←</button><button type="button" id="calendarNext" aria-label="Next month">→</button></div>
       <div class="calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
       <div class="calendar-grid" id="calendarDays" role="group" aria-label="Choose a calendar date"></div>
-    </details>`;
+    </details>
+    <aside class="calendar-membership" aria-labelledby="calendarMembershipTitle"><p class="eyebrow">Moon &amp; Shadow · Membership coming soon</p><h3 id="calendarMembershipTitle">A little ritual to return to.</h3><p>We’re planning a personalized daily Moon reading and a fresh shadow reflection inside these pages, with a weekly audio companion along the path.</p><a href="threshold-reading.html#membership" target="_blank" rel="noopener" aria-label="Explore the planned Moon and Shadow membership (opens in a new tab)">Explore the planned membership ↗</a><p class="calendar-footnote">For now, this free calendar offers general Moon-phase reflections. Membership pricing and subscriptions aren’t open yet.</p></aside>`;
   $('shadowReflections').after(panel);
   let zone = '', chart = null, days = [], selected = null, guidance = null;
   const notes = new Map(), opened = new Set();
@@ -210,4 +211,9 @@
       if (selected && !selected.unavailable) natal();
     }
   };
+  function openFromLink() {
+    if (window.location.hash === '#moonCalendar') $('openMoonCalendar').click();
+  }
+  window.addEventListener('hashchange', openFromLink);
+  openFromLink();
 })();

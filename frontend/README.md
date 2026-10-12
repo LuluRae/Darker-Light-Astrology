@@ -55,6 +55,8 @@ The selected future voice direction is a warm, mischievous Cheshire-style narrat
 
 threshold-reading.html and its stylesheet adapt the user-provided page concept under Darker Light Astrology branding. Links open separately to preserve the chart tab. The page includes the reading overview, planned process, keepsakes and **optional extra: a personalized daily Moon-phase horoscope paired with a unique shadow-style reflection prompt**. Personal audio is also a planned option.
 
+The optional **Moon & Shadow** monthly membership is presented as coming soon, with the tear-off calendar as its daily home: a planned chart-tailored Moon reading, fresh shadow prompt/practice, and weekly narrator audio. It is separate from the deeper personal Threshold Reading. Calendar and membership sections link to each other, and `chart-rabbit.html#moonCalendar` opens the free calendar directly. Current general phase prompts and future member personalization are explicitly distinguished. No price or working subscription is implied.
+
 Bookings remain coming soon. There are no payments, intake submission, daily delivery, subscriptions or prices enabled. Opening bookings requires a real destination, scope, price, delivery window and intake/privacy details. The optional personalized service is distinct from the free calendar's repeating editorial phase prompts.
 
 ## Verification

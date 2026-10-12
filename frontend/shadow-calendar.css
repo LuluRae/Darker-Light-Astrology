@@ -74,6 +74,7 @@
 .calendar-date-chooser>summary{width:fit-content;max-width:100%;margin:auto;color:#ead5a5;font-size:.86rem;cursor:pointer;padding:10px 16px}
 .calendar-date-chooser>p{text-align:center;font-size:.8rem;margin:10px 0}
 .calendar-date-chooser .calendar-toolbar{justify-content:center}
+.calendar-membership{max-width:780px;margin:30px auto 0;padding:23px;border:1px solid #b9c09a44;border-radius:18px;background:#172c2599}.calendar-membership h3{font-size:1.4rem}.calendar-membership p{font-size:.83rem}.calendar-membership a{font-size:.83rem;color:#f0d39b;text-underline-offset:4px}.calendar-membership .calendar-footnote{margin-bottom:0}
 .calendar-error:empty{display:none}
 .motion-paused #calendarReveal{animation:none}
 @media(max-width:650px){.calendar-heading{padding-right:0;padding-top:48px}.calendar-heading>#calendarClose{top:0}.calendar-page-nav{gap:8px;margin-top:15px}.calendar-page-nav button{font-size:.68rem;padding:9px 11px}.calendar-cover{min-height:370px;padding:40px 16px 30px}.calendar-paper{scroll-margin-top:180px}.calendar-date-chooser .calendar-toolbar{justify-content:flex-start}}
