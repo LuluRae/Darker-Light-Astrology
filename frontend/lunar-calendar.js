@@ -65,7 +65,7 @@
   function narrate() {
     if (!selected || !guidance) return;
     DLAVoice.scene('Moon calendar · '+readable(selected.iso), [
-      {speaker:'Rabbit',text:'A door for this day. Astonishingly, the Moon has kept its appointment.'},
+      {text:'A door for this day. Astonishingly, the Moon has kept its appointment.'},
       {text:`${readable(selected.iso)}. At local noon in ${zone.replaceAll('_',' ')}, ${selected.phaseLabel}, ${selected.illumination.toFixed(1)} percent lit. Moon in ${selected.moonSign}, ${selected.moonDegree}. This is the daily sky, not your birth chart.`},
       ...[guidance.title,guidance.text,guidance.question,guidance.practice].map(text=>({text})),
       {text:'You can keep a private note, or choose another day. These are reflection prompts, not predictions.'}

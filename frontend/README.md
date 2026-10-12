@@ -21,7 +21,7 @@ experience.js, chart-map.js and their styles create a whole-sign chart map. Stop
 
 A compact symbol key sits beside the spiral on wide screens and underneath it on smaller screens. The planet/node symbols, names, and meanings come from the same calculated chart entries as the map stops. Expand **01–12 · The houses** for all twelve life areas. The key leaves the view when entering a destination.
 
-The chase treatment uses brief red-coat traces and golden glints rather than large front-facing rabbit portraits. A selection sends the trace ahead while the view descends; destination clues suggest the rabbit has just moved on. The original portrait stays saved in assets/rabbit-guide.png, but the active journey does not render it. chase.css supplies the trail and descent treatment. Rapid selections, leaving for the calendar/study, and form edits cancel pending arrivals. Motion pause and reduced-motion preferences apply.
+The rabbit is a quiet visual guide along the path. Brief red-coat traces and golden glints lead the visitor onward; he has no dialogue or impatient, late-for-an-appointment persona. A selection sends the trace ahead while the view descends. Path captions replace speech bubbles, and all spoken lines belong to the single narrator. The original portrait stays saved in assets/rabbit-guide.png, but the active journey does not render it. chase.css supplies the trail and descent treatment. Rapid selections, leaving for the calendar/study, and form edits cancel pending arrivals. Motion pause and reduced-motion preferences apply.
 
 The forest painting is assets/enchanted-forest-rabbit-hole.png; its final built-in image-generation prompt is in assets/FOREST.md. The original Wonderland painting is preserved. The Moon chapter keeps its own conservatory scenery. Deploy the complete frontend assets together.
 
@@ -45,7 +45,7 @@ Daily notes remain in a memory map keyed by local date. They can be downloaded e
 
 ## One narrator
 
-Listen is opt-in, with Pause/Resume, Replay, Voice off and Show/Hide text. There are no voice or pace selectors. The controller chooses one browser-reported local voice, preferring British English when available, and keeps it across story and quoted rabbit lines at a fixed gentle pace. Device sound varies; this is synthesized storytelling, not a performed Alice or Cheshire character voice.
+Listen is opt-in, with Pause/Resume, Replay, Voice off and Show/Hide text. There are no voice or pace selectors. The controller chooses one browser-reported local voice, preferring British English when available, and keeps it across the narration at a fixed gentle pace. Device sound varies; this is synthesized storytelling, not a performed Cheshire character voice.
 
 Navigation cancels old speech and ignores late callbacks. Switching tabs pauses narration. Resume repeats the interrupted line; editing birth details turns narration off. Speech failure restores written content. No microphone, API key, paid voice service or cloud voice default is used. Direct Listen buttons are available in the calendar and study.
 

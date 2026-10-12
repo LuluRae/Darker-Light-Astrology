@@ -35,7 +35,7 @@
   });
   map.prepend(spiral);
   $('mapHint')?.remove();
-  world.insertAdjacentHTML('beforeend', `<section id="destinationRoom" class="destination-room" hidden aria-label="Inside your chosen rabbit hole"><div class="room-wonder" aria-hidden="true"><div class="room-whirlpool"></div>${cartoon}<span id="roomGlyph"></span></div><div class="eyebrow">Down the rabbit hole</div><h3 id="roomTitle" tabindex="-1"></h3><p id="roomDetail"></p><p class="room-aside">A watch ticks somewhere ahead. He has gone on without you.</p><button type="button" id="returnToVortex">Back to the swirling chart ↗</button></section>`);
+  world.insertAdjacentHTML('beforeend', `<section id="destinationRoom" class="destination-room" hidden aria-label="Inside your chosen rabbit hole"><div class="room-wonder" aria-hidden="true"><div class="room-whirlpool"></div>${cartoon}<span id="roomGlyph"></span></div><div class="eyebrow">Down the rabbit hole</div><h3 id="roomTitle" tabindex="-1"></h3><p id="roomDetail"></p><p class="room-aside">A flash of red between the trees. The path continues when you’re ready.</p><button type="button" id="returnToVortex">Back to the swirling chart ↗</button></section>`);
   $('sceneCaption').textContent = 'Choose a rabbit hole. Follow the flash of red.';
   function leaveRoom(focus = false) {
     window.DLACalendar?.cancelReveal();
@@ -51,7 +51,7 @@
     }
   }
   function narrateMap() {
-    window.DLAVoice?.scene('Your chart', [{speaker:'Rabbit',text:'A flash of red, then he is gone. Choose a planet or house to follow his trail.'},{text:'Choose a planet or a numbered house to explore. You can return here with My chart, or open Planet placements to see the details.'}]);
+    window.DLAVoice?.scene('Your chart', [{text:'The rabbit slips between the trees. Choose a planet or a numbered house to follow the path. There is no prize for rushing. Astonishing, I know.'},{text:'The little key beside your chart explains the symbols. You can return here with My chart, or open Planet placements to see the details.'}]);
   }
   DLAExperience.leaveRoom = leaveRoom;
   $('returnToVortex').onclick = () => { leaveRoom(true); narrateMap(); };
@@ -104,7 +104,7 @@
       window.DLAShadowRoom?.offer(placement?.name);
       if (placement?.name === 'Moon') window.DLAMoonRoom?.open(chart);
       else window.DLAVoice?.scene($('roomTitle').textContent, [
-        {speaker:'Rabbit',text:'You almost caught him. A watch is ticking somewhere ahead.'},
+        {text:'The rabbit has led you to a clearing. Take your time here.'},
         {text:$('roomTitle').textContent + '. ' + $('roomDetail').textContent},
         ...(placement && currentLayer ? [{text:currentLayer.text}] : [])
       ]);
@@ -127,7 +127,7 @@
     door.onclick = () => {
       explore(); jump(door);
       const residents = [...chart.list, chart.node, chart.south].filter(p => p.house === index+1).map(p=>p.name);
-      $('guideSpeech').textContent = `“House ${index+1}. Quick peek. We are spectacularly late.”`;
+      $('guideSpeech').textContent = `The path leads to House ${index+1} · ${roomNames[index]}.`;
       $('exploreNote').textContent = residents.length ? 'Here in your chart: ' + residents.join(', ') : 'No calculated planets or nodes here. Still a room you can explore.';
     };
   });
@@ -165,13 +165,13 @@
       leaveRoom(); guide.style.left='50%'; guide.style.top='50%'; delete guide.dataset.destination;
     }
     $('guideSpeech').textContent = [
-      `“${choice}! There you are. Do try to keep up.”`,
-      `“${p.sign}. Lovely. Admire it while walking.”`,
-      `“House ${p.house}! This way. Watch the ears.”`,
-      '“Yes, yes. A revelation. Take your time. I shall panic quietly.”',
-      '“Another rabbit hole? Fine. We were already late.”'
+      `A clearing for ${choice}. Follow the trail.`,
+      `${p.sign} · a different way to see this part of yourself.`,
+      `The path opens into House ${p.house}.`,
+      'A quiet place to pause and make a connection.',
+      'The trail continues. Go a little deeper when you’re ready.'
     ][step];
-    if (!enter) $('guideSpeech').textContent='“Your chart. Your choice of rabbit hole. I shall wait. Impatiently.”';
+    if (!enter) $('guideSpeech').textContent='A glimpse of red ahead. Choose where your path begins.';
     $('sceneCaption').textContent='Pick a planet or a house. Follow him down.';
     $('exploreNote').textContent='Choose a glowing rabbit hole. Your real placements are tucked inside.';
     if (!enter) narrateMap();

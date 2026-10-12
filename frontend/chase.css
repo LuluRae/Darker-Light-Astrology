@@ -18,6 +18,7 @@
 .moon-chapter[data-discovery=mirror] .moon-rabbit{left:28%;top:53%}.moon-chapter[data-discovery=door] .moon-rabbit{left:80%;top:59%}.moon-chapter[data-discovery=cup] .moon-rabbit,.moon-chapter[data-discovery=keepsake] .moon-rabbit{left:53%;top:70%}
 .shadow-trail{font:3rem Georgia;color:#cdb47c;transform:rotate(18deg);opacity:.65}
 .chart-tools{flex-wrap:wrap}
+.wonderland-mode .vortex-world>.guide-speech{background:transparent;border:0;border-radius:0;font-style:normal;color:#ebd9b5;text-shadow:0 2px 8px #05110f}
 /* Keep the chart key beside the map, outside the moving spiral. */
 .world.map-world:not(.moon-open){display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:center;padding-left:28px;padding-right:28px}
 .chart-symbol-key{position:relative;z-index:5;padding:20px 18px;border:1px solid #ccba8266;border-radius:20px;background:#0e201feF;text-align:left;color:#f5e7ca}

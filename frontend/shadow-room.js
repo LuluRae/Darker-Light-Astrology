@@ -18,7 +18,7 @@
   function narrate() {
     if (!story) return;
     DLAVoice.scene(story.title, [
-      {speaker:'Rabbit',text:'The shadow study. No villain audition required. Let’s have a look.'},
+      {text:'The shadow study. No villain audition required. Let’s have a look.'},
       ...[story.placement,story.theme,story.style,story.setting,story.question,story.practice,story.note,pairing.title,...pairing.placements,pairing.text,pairing.question,pairing.note].map(text=>({text}))
     ]);
   }

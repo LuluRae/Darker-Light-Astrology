@@ -1,6 +1,6 @@
 # Darker Light Astrology — Cheshire narrator
 
-The chosen direction is one warm, sly, British fantasy narrator: a lovable smart-ass with a smile in his voice. Humor is affectionate. Tease cosmic bureaucracy and the absurdity of being human; follow each joke with a clear explanation or useful question.
+The chosen direction is one warm, sly, British fantasy narrator: a lovable smart-ass with a smile in his voice. Humor is affectionate. Tease cosmic bureaucracy and the absurdity of being human; follow each joke with a clear explanation or useful question. The rabbit is a quiet visual guide along the path, with no dialogue or separate performed personality. All spoken narration belongs to this one guide voice.
 
 This is an original character performance with a Cheshire-like mood. The site currently still uses the device narrator. No ElevenLabs account, designed voice, generated recording, or paid service is connected yet.
 
@@ -19,7 +19,7 @@ Native English, British English. Male, middle-aged. Studio quality. Persona: cha
 
 ## Text to preview
 
-Ah. There you are. The rabbit has run ahead, naturally. Punctuality is his entire personality, and yet here we are. Take a look at your chart. Those little symbols are planets; the numbered doors are houses. Every door opens onto a different part of life. Start with the Moon. It offers a way to reflect on what helps you feel settled, and what you reach for when life gets noisy. A useful thing to know before sending that extremely well-considered text at midnight. No judgment. Well, a little. Affectionately. Shall we?
+Ah. There you are. A little red coat between the trees. Follow the rabbit when you’re ready. There is no prize for rushing. Astonishing, I know. Take a look at your chart. Those little symbols are planets; the numbered doors are houses. Every door opens onto a different part of life. Start with the Moon. It offers a way to reflect on what helps you feel settled, and what you reach for when life gets noisy. A useful thing to know before sending that extremely well-considered text at midnight. No judgment. Well, a little. Affectionately. Shall we?
 
 ## Once the voice is saved
 

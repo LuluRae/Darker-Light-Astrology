@@ -6,7 +6,7 @@
   chapter.className = 'moon-chapter'; chapter.hidden = true;
   chapter.setAttribute('aria-label', 'The Moonlit Conservatory');
   chapter.innerHTML = `
-    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Moon has opinions.<br>Of course it does.</h4><p>He disappeared through here.<br>The clues he left are about needs, habits, and your inner weather.</p></div>
+    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Moon has opinions.<br>Of course it does.</h4><p>The rabbit’s trail leads through here.<br>Explore your needs, habits, and inner weather.</p></div>
     <div class="moon-scene" aria-label="Explore the mirror, door, and teacup">
       <div class="moon-scenery" aria-hidden="true"></div><div class="moon-water" aria-hidden="true"></div>
       <div class="moon-motes" aria-hidden="true"></div>
@@ -31,7 +31,7 @@
         <div class="eyebrow">Findings from the comfort department</div><h4 tabindex="-1" id="moonKeepsakeTitle">You’ve met your Moon.<br>It would like a word.</h4>
         <p class="moon-fact" id="moonKeepsakePlacement"></p><p id="moonTakeaway"></p><p id="moonTakeawayPractice"></p><blockquote id="moonSavedNote" hidden></blockquote>
         <div class="moon-ending-actions"><button type="button" id="moonDownload">Save my Moon note ↓</button><button type="button" id="moonToVenus">Follow Venus →</button></div>
-        <p class="moon-whisper">“Late? Yes. But some things are worth stopping for.”</p><p class="moon-ending-hint">Venus opens the next question: what draws you close? Or return to the chart and choose any door.</p>
+        <p class="moon-whisper">Some things are worth stopping for. The path can wait.</p><p class="moon-ending-hint">Venus opens the next question: what draws you close? Or return to the chart and choose any door.</p>
       </div>
       <div class="moon-next-row"><p id="moonGuideLine"></p><button type="button" id="moonContinue"></button></div>
       <p class="moon-footnote">Your sign and house come from your calculated chart. The story is an invitation to reflect. The painted Moon is scenery, not your birth Moon’s phase.</p>
@@ -88,8 +88,8 @@
       $('moonDiscoveryText').textContent = 'In astrology, the Moon is the character concerned with needs, habits, and familiar reactions. The Sun got the spotlight. The Moon got the admin. Your Moon sign suggests a style; its house gives us a setting. Let’s inspect the paperwork.';
       $('moonFact').textContent = story.placement;
       $('moonQuestion').textContent = 'What actually helps when your day behaves like a badly organised tea party?';
-      $('moonWhisper').textContent = 'No correct answer. The rabbit has already submitted three complaints.';
-      $('moonGuideLine').textContent = 'A note by the mirror: “Three clues. Do try to keep up.”';
+      $('moonWhisper').textContent = 'No correct answer. A rare administrative oversight. Enjoy it.';
+      $('moonGuideLine').textContent = 'Three places to explore. Begin wherever your curiosity lands.';
     } else {
       const discovery = story[active];
       $('moonDiscoveryLabel').textContent = {mirror: '01 · The sign / how', door: '02 · The house / where', cup: '03 · Bring it into your day'}[active];
@@ -99,17 +99,17 @@
       $('moonQuestion').textContent = discovery.question;
       $('moonWhisper').textContent = {mirror: 'A mirror offers an angle. It does not tell the whole story.', door: 'A room to explore, not a prediction of what must happen.', cup: 'One small response is enough. There is no correct answer.'}[active];
       $('moonPractice').textContent = story.practice;
-      $('moonGuideLine').textContent = {mirror: '“Look properly. There is more to you than the first reflection.”', door: '“Your door. I checked the number twice. We are that late.”', cup: '“Yes, there is time for tea. I shall panic after.”'}[active];
+      $('moonGuideLine').textContent = {mirror: 'There is more to you than the first reflection. Mercifully.', door: 'Your door. No application, password, or proof of worth required.', cup: 'There is time for tea. Your to-do list will survive the betrayal.'}[active];
     }
     const next = order.find(key => !visited.has(key));
     $('moonContinue').textContent = next ? {mirror: 'Look in the silver mirror →', door: `Open door ${story.house} →`, cup: 'Sit down for moonlight tea →'}[next] : 'Gather my discoveries →';
     // Narrate authored discoveries only. Private reflection text is never included.
     window.DLAVoice?.scene(summary ? 'Your Moon note' : $('moonDiscoveryTitle').textContent, summary ? [
-      {speaker:'Rabbit',text:'Late? Yes. But some things are worth stopping for.'},
+      {text:'Some things are worth stopping for. The path can wait.'},
       {text:story.takeaway}, {text:story.practice},
       {text:'You can save your Moon note, follow Venus, or return to your chart.'}
     ] : [
-      {speaker:'Rabbit',text:$('moonGuideLine').textContent},
+      {text:$('moonGuideLine').textContent},
       {text:$('moonDiscoveryText').textContent},
       ...(welcome ? [{text:story.placement}] : []),
       {text:$('moonQuestion').textContent},
