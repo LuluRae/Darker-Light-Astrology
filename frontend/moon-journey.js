@@ -1,8 +1,8 @@
 /* Story content reads the engine's Moon placement. No new chart calculations. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.DLAMoonJourney = factory();
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./shadow-journey.js'));
+  else root.DLAMoonJourney = factory(root.DLAShadow);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (shadow) {
   'use strict';
   const signs = {
     Aries: ['Emotions, with a launch button', 'Aries is the spark: direct, responsive, and keen to get moving. Apparently the feeling has already put its shoes on. Explore whether a little movement helps you understand a reaction before acting on all of it.', 'Would a small action help, or does this decision need five minutes?', 'Try a short walk before deciding what a strong feeling is asking of you.'],
@@ -39,12 +39,13 @@
     }
     const [title, text, question, practice] = signs[moon.sign];
     const [houseTitle, theme, houseQuestion] = houses[moon.house - 1];
+    const reflection = shadow.reflection(chart,'Moon');
     return {
       placement: `Moon in ${moon.sign} · ${moon.degree} · House ${moon.house}`,
       sign: moon.sign, house: moon.house,
-      mirror: {title, text, question, fact: `Your calculated Moon is ${moon.degree} ${moon.sign}.`},
-      door: {title: houseTitle, text: `Your whole-sign chart places the Moon in House ${moon.house}, the area of ${theme}. The sign is the style; the house is the setting. Finally, an address. The rabbit has been asking for one all morning.`, question: houseQuestion, fact: `Moon · House ${moon.house} · ${theme}`},
-      cup: {title: 'Tea first. Revelations can queue.', text: `Put the two together: Moon in ${moon.sign}, in the setting of ${theme}. Try one small idea and see whether it fits your life. We are conducting an experiment, not issuing a royal decree.`, question: 'What is one useful thing I could try today?', fact: 'One small experiment', practice},
+      mirror: {title, text:text+' '+reflection.style, question, fact: `Your calculated Moon is ${moon.degree} ${moon.sign}.`},
+      door: {title: houseTitle, text: `Your whole-sign chart places the Moon in House ${moon.house}, the area of ${theme}. The sign is the style; the house is the setting. Finally, an address. The rabbit appears to have left without forwarding his mail. Think of a recent, ordinary moment in this part of life. What made you feel supported, unsettled, or in need of a different response? Notice what happened separately from what you assumed it meant. A house is a place to explore these questions, not a claim that something particular must happen to you. Your circumstances and choices remain part of the story.`, question: houseQuestion, fact: `Moon · House ${moon.house} · ${theme}`},
+      cup: {title: 'Tea first. Revelations can queue.', text: `Put the two together: Moon in ${moon.sign}, in the setting of ${theme}. Try one small idea and see whether it fits your life. We are conducting an experiment, not issuing a royal decree. Choose a situation that feels manageable, then notice a need, your usual response, and one alternative you might try. Perhaps that means asking clearly, pausing before answering, or making room for a simple comfort. Afterwards, ask whether the choice helped. You can keep it, adjust it, or decide it was not useful; the teacup does not issue grades.`, question: 'What is one useful thing I could try today?', fact: 'One small experiment', practice},
       takeaway: `Explore “${title.toLowerCase()}” in the part of life connected with ${theme}.`,
       practice
     };

@@ -6,15 +6,15 @@
   chapter.className = 'moon-chapter'; chapter.hidden = true;
   chapter.setAttribute('aria-label', 'The Moonlit Conservatory');
   chapter.innerHTML = `
-    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Moon has opinions.<br>Of course it does.</h4><p>Needs. Habits. Your inner weather report.<br>The rabbit would like to speak to management.</p></div>
+    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Moon has opinions.<br>Of course it does.</h4><p>He disappeared through here.<br>The clues he left are about needs, habits, and your inner weather.</p></div>
     <div class="moon-scene" aria-label="Explore the mirror, door, and teacup">
       <div class="moon-scenery" aria-hidden="true"></div><div class="moon-water" aria-hidden="true"></div>
       <div class="moon-motes" aria-hidden="true"></div>
-      <img class="moon-rabbit illustrated-rabbit" src="assets/rabbit-guide.png" width="1024" height="1536" alt="" aria-hidden="true" draggable="false">
+      <span class="moon-rabbit rabbit-trace" aria-hidden="true"><i></i><i></i><i></i></span>
       <button type="button" class="moon-object moon-mirror" data-moon-stop="mirror" aria-label="Explore the silver mirror: your Moon sign" aria-controls="moonDiscovery"><span aria-hidden="true">✧</span><b>The silver mirror</b><small>Your Moon sign</small></button>
       <button type="button" class="moon-object moon-door" data-moon-stop="door" aria-label="Explore the little door: your Moon house" aria-controls="moonDiscovery"><span aria-hidden="true" id="moonDoorNumber"></span><b>The little door</b><small>Your Moon house</small></button>
       <button type="button" class="moon-object moon-cup" data-moon-stop="cup" aria-label="Explore the teacup: a moment of care" aria-controls="moonDiscovery"><span aria-hidden="true">♡</span><b>A cup of moonlight</b><small>A moment of care</small></button>
-      <p class="moon-scene-caption">Three small discoveries. Follow your curiosity.</p>
+      <p class="moon-scene-caption">A disturbed reflection. An open door. Tea still warm. He was just here.</p>
     </div>
     <div class="moon-story">
       <div class="moon-trail"><p id="moonProgress" role="status"></p><button type="button" id="moonRestart">Revisit the entrance</button></div>
@@ -59,8 +59,8 @@
     movement = rabbit.animate([
       {transform: `translate(${before.left-after.left}px,${before.top-after.top}px) rotate(-6deg)`},
       {transform: `translate(${(before.left-after.left)*.5}px,${(before.top-after.top)*.5-35}px) rotate(5deg)`, offset: .5},
-      {transform: 'translate(0,0) rotate(0)'}
-    ], {duration: 650, easing: 'ease-in-out'});
+      {transform: 'translate(0,0) rotate(0)', opacity:0}
+    ], {duration: 850, easing: 'ease-in-out', fill:'forwards'});
   }
   function render(focus = false) {
     const summary = active === 'keepsake', welcome = active === 'welcome';
@@ -89,7 +89,7 @@
       $('moonFact').textContent = story.placement;
       $('moonQuestion').textContent = 'What actually helps when your day behaves like a badly organised tea party?';
       $('moonWhisper').textContent = 'No correct answer. The rabbit has already submitted three complaints.';
-      $('moonGuideLine').textContent = '“A mirror, a door, and tea. Finally, a sensible delay.”';
+      $('moonGuideLine').textContent = 'A note by the mirror: “Three clues. Do try to keep up.”';
     } else {
       const discovery = story[active];
       $('moonDiscoveryLabel').textContent = {mirror: '01 · The sign / how', door: '02 · The house / where', cup: '03 · Bring it into your day'}[active];

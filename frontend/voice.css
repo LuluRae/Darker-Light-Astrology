@@ -1,18 +1,15 @@
 #voiceToggle{display:none;font-size:.75rem;padding:8px 14px;white-space:nowrap;border-color:#c5a5df88;background:#372743}
 .world-ready #voiceToggle{display:block}
-.voice-panel[hidden],body:not(.world-ready) .voice-panel{display:none}
+.voice-panel[hidden],body:not(.world-ready):not(.calendar-ready) .voice-panel{display:none}
 .voice-panel{position:fixed;z-index:40;bottom:16px;left:50%;transform:translateX(-50%);width:min(720px,calc(100% - 28px));padding:16px 20px;border:1px solid #d6ba8888;border-radius:20px;background:#111524f5;box-shadow:0 8px 45px #0009;color:#fff0d6}
 .voice-top{display:flex;justify-content:space-between;align-items:center;gap:14px}.voice-eyebrow{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:#d9bd89}
 .voice-panel #voiceStatus{font-size:.78rem;line-height:1.5;margin:4px 0 10px;color:#e4dbea}
 .voice-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.voice-panel button{font-size:.75rem;padding:9px 14px;border-color:#bcacd055}.voice-panel button:disabled{opacity:.5;cursor:default}
 .voice-panel #voicePause,.voice-panel #voiceReplay{background:#dcca9f;color:#152033;border-color:#dcca9f}
 .voice-panel #voiceOff{font-size:.65rem;padding:8px 10px;align-self:flex-start}
-.voice-settings{position:relative;margin-left:auto}.voice-settings summary{cursor:pointer;font-size:.7rem;padding:10px;color:#d1c5df}
-.voice-settings>div{position:absolute;bottom:100%;right:0;width:min(280px,75vw);padding:20px;background:#161b2b;border:1px solid #d6ba8866;border-radius:16px;box-shadow:0 6px 30px #0009}
-.voice-settings label{display:block;font-size:.72rem;margin:0 0 6px}.voice-settings select{display:block;width:100%;min-width:0;margin-bottom:16px;padding:10px;background:#0c1223;color:#fff0d6;border:1px solid #bcacd055;border-radius:8px;font-size:.78rem}.voice-settings small{font-size:.65rem;line-height:1.5;color:#b5bdd0}
 .voice-caption{font-size:.78rem;line-height:1.6;padding-top:12px;border-top:1px solid #bcacd026;margin:12px 0 0;color:#d6ddeb;max-height:115px;overflow:auto}
 .voice-panel button:focus-visible,.voice-panel summary:focus-visible,.voice-panel select:focus-visible,#voiceToggle:focus-visible{outline:2px solid #ffe6a8;outline-offset:3px}
-.voice-reading.world-ready main{padding-bottom:230px}
+.voice-reading.world-ready main,.voice-reading.calendar-ready main{padding-bottom:230px}
 .voice-hide-text #rabbitText,.voice-hide-text #roomDetail,.voice-hide-text #moonDiscoveryText,.voice-hide-text .moon-question,.voice-hide-text .moon-footnote{display:none}
 .voice-hide-text .moon-discovery{grid-template-columns:1fr}.voice-hide-text #moonDiscoveryTitle{font-size:clamp(1.5rem,3vw,2rem)}
-@media(max-width:650px){.voice-panel{bottom:8px;padding:13px 14px;border-radius:15px}.voice-panel #voiceStatus{font-size:.7rem}.voice-panel button{padding:8px 10px;font-size:.7rem}.voice-settings{margin-left:0;position:static}.voice-settings>div{right:10px;left:10px;width:auto;bottom:calc(100% + 8px)}.voice-reading.world-ready main{padding-bottom:260px}#voiceToggle{font-size:.65rem;padding:8px 10px}}
+@media(max-width:650px){.voice-panel{bottom:8px;padding:13px 14px;border-radius:15px}.voice-panel #voiceStatus{font-size:.7rem}.voice-panel button{padding:8px 10px;font-size:.7rem}.voice-reading.world-ready main,.voice-reading.calendar-ready main{padding-bottom:260px}#voiceToggle{font-size:.65rem;padding:8px 10px}}

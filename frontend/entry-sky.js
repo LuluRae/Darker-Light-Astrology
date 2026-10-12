@@ -18,4 +18,12 @@
     ray.setAttribute('d', `M ${400+285*Math.cos(edge)} ${400+285*Math.sin(edge)} L ${400+380*Math.cos(edge)} ${400+380*Math.sin(edge)}`); wheel.append(ray);
   });
   sky.append(wheel);
+  const fireflies = document.createElement('div');
+  fireflies.className = 'entry-fireflies';
+  for (let i = 0; i < 18; i++) {
+    const light = document.createElement('i');
+    light.style.cssText = `left:${(i*37+4)%96}%;top:${(i*23+15)%88}%;--duration:${7+i%6}s;--delay:-${i}s`;
+    fireflies.append(light);
+  }
+  sky.append(fireflies);
 })();

@@ -25,8 +25,10 @@ test('speech requires opting in and uses a device voice, never a remote default'
   const {engine,utterances} = fixture();
   engine.scene('Moon',scene); assert.equal(utterances.length,0);
   engine.enable(); assert.equal(utterances[0].text,'We are late.');
-  assert.equal(utterances[0].voice.voiceURI,'local-en');
+  assert.equal(utterances[0].voice.voiceURI,'local-two');
   utterances[0].onend(); assert.equal(utterances[1].text,'Choose the mirror or the door.');
+  assert.equal(utterances[0].voice,utterances[1].voice);
+  assert.equal(utterances[0].pitch,utterances[1].pitch);
   utterances[1].onend(); assert.equal(engine.state().status,'finished');
 });
 test('changing rooms cancels speech and ignores delayed callbacks from the previous room', () => {
@@ -51,14 +53,14 @@ test('turning voice off and clearing a scene cannot leave stale speech running',
   assert.equal(utterances.length,1); assert.equal(engine.state().enabled,false);
   engine.scene('',[]); engine.replay(); assert.equal(utterances.length,1); assert.equal(engine.state().status,'ready');
 });
-test('replay starts from the beginning and voice/rate changes stay within allowed options', () => {
+test('replay keeps the same single narrator and fixed storybook pace', () => {
   const {engine,utterances} = fixture();
   engine.scene('Moon',scene); engine.enable(); utterances[0].onend(); engine.replay();
   assert.equal(utterances[2].text,'We are late.');
-  engine.selectVoice('remote'); assert.equal(utterances.length,3);
-  engine.selectVoice('local-two'); assert.equal(utterances.at(-1).voice.voiceURI,'local-two');
-  engine.setRate(1.15); assert.equal(utterances.at(-1).rate,1.15);
-  engine.setRate(8); assert.equal(engine.state().rate,1.15);
+  assert.equal(utterances.at(-1).voice.voiceURI,'local-two');
+  assert.equal(utterances.at(-1).rate,0.96);
+  assert.equal(engine.selectVoice,undefined);
+  assert.equal(engine.setRate,undefined);
 });
 test('missing or blocked speech has an explicit error state for the text fallback', () => {
   const unsupported = create({}); unsupported.scene('Moon',scene); unsupported.enable();

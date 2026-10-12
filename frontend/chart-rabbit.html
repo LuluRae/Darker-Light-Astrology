@@ -5,6 +5,8 @@
 <title>Darker Light Astrology — Your Rabbit Hole Chart</title>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 <script src="chart-engine.js"></script>
+<script src="shadow-journey.js"></script>
+<script src="lunar-calendar-engine.js"></script>
 <script src="rabbit-journey.js"></script>
 <script src="moon-journey.js"></script>
 <style>
@@ -18,11 +20,13 @@
 <link rel="stylesheet" href="moon-room.css">
 <link rel="stylesheet" href="voice.css">
 <link rel="stylesheet" href="entry-sky.css">
+<link rel="stylesheet" href="shadow-calendar.css">
+<link rel="stylesheet" href="chase.css">
 </head>
 <body class="wonderland-mode direct-entry"><main>
-<header><a class="brand" href="#chartForm">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><button type="button" id="myChartButton" hidden>My chart</button><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Personal reading (opens in a new tab)">Personal reading ↗</a></header>
+<header><a class="brand" href="#chartForm">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><button type="button" id="myChartButton" hidden>My chart</button><button type="button" id="openMoonCalendar">Moon calendar</button><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Personal reading (opens in a new tab)">Personal reading ↗</a></header>
 <div class="chart-entry"><div class="entry-sky" aria-hidden="true"><div class="entry-vortex"></div></div>
-<section class="chart-intro" aria-labelledby="chartIntroTitle"><div class="eyebrow">The universe has some explaining to do.</div><h1 id="chartIntroTitle">Open your rabbit hole.</h1><p>Birth details first. Then we’ll see what the planets have been getting up to. The rabbit is already late.</p></section>
+<section class="chart-intro" aria-labelledby="chartIntroTitle"><div class="eyebrow">The universe has some explaining to do.</div><h1 id="chartIntroTitle">Open your rabbit hole.</h1><p>Birth details first. He’s already disappeared between the trees. Your chart shows which way to follow.</p></section>
 <section class="panel birth-panel" aria-label="Your birth details">
 <form id="chartForm" class="form">
 <div class="field"><label for="date">Birth date</label><input id="date" type="date" required></div>
@@ -38,7 +42,7 @@
 
 
 <section id="deeper" class="panel experience-panel hidden">
-<nav class="chart-tools" aria-label="Chart controls"><button type="button" id="showChartPlacements">Planet placements</button><button type="button" id="editBirthDetails">Edit birth details</button></nav>
+<nav class="chart-tools" aria-label="Chart controls"><button type="button" id="showChartPlacements">Planet placements</button><button type="button" id="showShadowReflections">Shadow reflections</button><button type="button" id="editBirthDetails">Edit birth details</button></nav>
 <div class="rabbit" aria-live="polite"><div class="eyebrow" id="rabbitLabel">FOLLOW THE THREAD</div><h2 id="rabbitTitle"></h2><p id="rabbitText"></p><button id="rabbitNext" type="button">How does it behave? →</button><div class="thread"><button data-thread="Sun">Follow Sun</button><button data-thread="Moon">Follow Moon</button><button data-thread="North Node">Follow the Nodes</button><button data-thread="Pluto">Follow Pluto 👀</button></div></div>
 </section>
 
@@ -55,6 +59,8 @@
 <script src="moon-room.js"></script>
 <script src="voice-engine.js"></script>
 <script src="voice.js"></script>
+<script src="shadow-room.js"></script>
+<script src="lunar-calendar.js"></script>
 <script src="entry-sky.js"></script>
 <script>
 const $=id=>document.getElementById(id);
@@ -106,6 +112,7 @@ $("chartForm").onsubmit=async e=>{
     if(candidates.length>1 && $("occurrence").value==="") {$("occurrence").focus();return;}
     const date=candidates[candidates.length===1?0:Number($("occurrence").value)];
     current=calculate(date,place.latitude,place.longitude);
+    DLAShadowRoom.setChart(current);DLACalendar.setChart(current);
     render(current,place.name+(place.admin1?", "+place.admin1:"")+(place.country?", "+place.country:""));
     $("result").classList.remove("hidden");$("deeper").classList.remove("hidden");
     // Start on the chart map. A room opens only when the visitor chooses a destination.

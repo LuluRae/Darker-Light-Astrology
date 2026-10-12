@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
-  const cartoon = `<img class="guide-svg illustrated-rabbit" src="assets/rabbit-guide.png" width="1024" height="1536" alt="" aria-hidden="true" draggable="false">`;
+  const cartoon = `<span class="guide-svg rabbit-trace" aria-hidden="true"><i></i><i></i><i></i></span>`;
   document.querySelectorAll('.guide-svg').forEach(svg => { svg.outerHTML = cartoon; });
   const world = $('world');
   world.classList.add('map-world');
@@ -25,9 +25,10 @@
   });
   map.prepend(spiral);
   $('mapHint')?.remove();
-  world.insertAdjacentHTML('beforeend', `<section id="destinationRoom" class="destination-room" hidden aria-label="Inside your chosen rabbit hole"><div class="room-wonder" aria-hidden="true"><div class="room-whirlpool"></div>${cartoon}<span id="roomGlyph"></span></div><div class="eyebrow">Down the rabbit hole</div><h3 id="roomTitle" tabindex="-1"></h3><p id="roomDetail"></p><p class="room-aside">“Well? Was it worth being late for?”</p><button type="button" id="returnToVortex">Back to the swirling chart ↗</button></section>`);
-  $('sceneCaption').textContent = 'Choose a rabbit hole. He knows the way down.';
+  world.insertAdjacentHTML('beforeend', `<section id="destinationRoom" class="destination-room" hidden aria-label="Inside your chosen rabbit hole"><div class="room-wonder" aria-hidden="true"><div class="room-whirlpool"></div>${cartoon}<span id="roomGlyph"></span></div><div class="eyebrow">Down the rabbit hole</div><h3 id="roomTitle" tabindex="-1"></h3><p id="roomDetail"></p><p class="room-aside">A watch ticks somewhere ahead. He has gone on without you.</p><button type="button" id="returnToVortex">Back to the swirling chart ↗</button></section>`);
+  $('sceneCaption').textContent = 'Choose a rabbit hole. Follow the flash of red.';
   function leaveRoom(focus = false) {
+    window.DLACalendar?.cancelReveal();
     window.DLAVoice?.clear();
     const leavingMoon = world.classList.contains('moon-open');
     window.DLAMoonRoom?.close();
@@ -40,8 +41,9 @@
     }
   }
   function narrateMap() {
-    window.DLAVoice?.scene('Your chart', [{speaker:'Rabbit',text:'Your chart. Your choice of rabbit hole. I shall wait. Impatiently.'},{text:'Choose a planet or a numbered house to explore. You can return here with My chart, or open Planet placements to see the details.'}]);
+    window.DLAVoice?.scene('Your chart', [{speaker:'Rabbit',text:'A flash of red, then he is gone. Choose a planet or house to follow his trail.'},{text:'Choose a planet or a numbered house to explore. You can return here with My chart, or open Planet placements to see the details.'}]);
   }
+  DLAExperience.leaveRoom = leaveRoom;
   $('returnToVortex').onclick = () => { leaveRoom(true); narrateMap(); };
   map.tabIndex = -1;
   DLAExperience.showMap = function () {
@@ -53,7 +55,7 @@
   };
   world.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('destinationRoom').hidden) {e.preventDefault(); leaveRoom(true); narrateMap();} });
   const originalReset = DLAExperience.reset;
-  DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); window.DLAVoice?.reset(); originalReset(); };
+  DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); window.DLAShadowRoom?.setChart(null); window.DLACalendar?.setChart(null); window.DLAVoice?.reset(); originalReset(); };
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   function stopHop() { if (hop) hop.finish(); }
   $('motionToggle').addEventListener('click', stopHop);
@@ -80,7 +82,7 @@
       if (placement) {
         $('roomGlyph').textContent = placement.symbol+'\uFE0E';
         $('roomTitle').textContent = placement.name + ' in ' + placement.sign;
-        $('roomDetail').textContent = placement.degree + ' · House ' + placement.house + '. ' + placement.meaning + '. The rabbit has brought you to this placement in your own chart.';
+        $('roomDetail').textContent = placement.degree + ' · House ' + placement.house + '. ' + placement.meaning + '. You followed him here. This clue belongs to your own chart.';
       } else {
         const number = Number(destination.slice(6));
         const residents = [...chart.list,chart.node,chart.south].filter(p=>p.house===number).map(p=>p.name);
@@ -89,9 +91,10 @@
         $('roomDetail').textContent = residents.length ? 'You found ' + residents.join(', ') + ' here in your chart.' : 'No calculated planets or nodes occupy this house. Its theme is still part of your chart.';
       }
       $('destinationRoom').hidden = false;
+      window.DLAShadowRoom?.offer(placement?.name);
       if (placement?.name === 'Moon') window.DLAMoonRoom?.open(chart);
       else window.DLAVoice?.scene($('roomTitle').textContent, [
-        {speaker:'Rabbit',text:'Well? Was it worth being late for?'},
+        {speaker:'Rabbit',text:'You almost caught him. A watch is ticking somewhere ahead.'},
         {text:$('roomTitle').textContent + '. ' + $('roomDetail').textContent},
         ...(placement && currentLayer ? [{text:currentLayer.text}] : [])
       ]);
@@ -154,7 +157,7 @@
       '“Another rabbit hole? Fine. We were already late.”'
     ][step];
     if (!enter) $('guideSpeech').textContent='“Your chart. Your choice of rabbit hole. I shall wait. Impatiently.”';
-    $('sceneCaption').textContent='Pick a planet or a house. Down he goes.';
+    $('sceneCaption').textContent='Pick a planet or a house. Follow him down.';
     $('exploreNote').textContent='Choose a glowing rabbit hole. Your real placements are tucked inside.';
     if (!enter) narrateMap();
   };

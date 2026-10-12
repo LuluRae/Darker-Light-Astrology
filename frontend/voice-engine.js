@@ -18,7 +18,8 @@
   function create({synthesis, Utterance, onChange = () => {}}) {
     const supported = !!(synthesis && Utterance);
     let enabled = false, paused = false, status = 'off', title = '', lines = [], index = 0;
-    let generation = 0, current = null, voiceURI = '', rate = 1, error = '';
+    let generation = 0, current = null, voiceURI = '', error = '';
+    const rate = 0.96;
     const voices = () => supported ? synthesis.getVoices().filter(v => v.localService === true) : [];
     function state() { return {supported, enabled, paused, status, title, error, voiceURI, rate, line:lines[index] || null}; }
     function emit() { onChange(state()); }
@@ -31,12 +32,16 @@
       if (!enabled || paused) return;
       if (index >= lines.length) { current = null; status = lines.length ? 'finished' : 'ready'; emit(); return; }
       const options = voices();
-      const voice = options.find(v => v.voiceURI === voiceURI) || options.find(v => /^en\b/i.test(v.lang)) || options[0];
+      const voice = options.find(v => v.voiceURI === voiceURI)
+        || options.find(v => /^en-GB$/i.test(v.lang) && /hazel|susan|female/i.test(v.name || ''))
+        || options.find(v => /^en-GB$/i.test(v.lang))
+        || options.find(v => /^en\b/i.test(v.lang)) || options[0];
       if (!voice) { fail('No device voice is available yet. Try Replay in a moment, or continue with text.'); return; }
+      voiceURI = voice.voiceURI; // Keep one narrator across all scenes and quoted rabbit lines.
       const token = generation, utterance = new Utterance(lines[index].text);
       current = utterance; // Retain it while the browser is speaking.
       utterance.voice = voice; utterance.lang = voice.lang; utterance.rate = rate;
-      utterance.pitch = lines[index].speaker === 'Rabbit' ? 1.1 : 1;
+      utterance.pitch = 1.08;
       status = 'speaking'; error = ''; emit();
       utterance.onend = () => {
         if (token !== generation || current !== utterance) return;
@@ -44,7 +49,7 @@
       };
       utterance.onerror = event => {
         if (token !== generation || current !== utterance) return;
-        fail(event.error === 'not-allowed' ? 'Tap Replay to start the voice here.' : 'The voice stopped. Try Replay, choose another voice, or continue with text.');
+        fail(event.error === 'not-allowed' ? 'Tap Replay to start the voice here.' : 'The voice stopped. Try Replay, or continue with text.');
       };
       try { synthesis.speak(utterance); } catch (_) { fail('This browser could not start the voice. The written journey is still available.'); }
     }
@@ -67,17 +72,7 @@
         cancel(); paused = true; status = 'paused'; emit();
       },
       resume() { if (enabled && paused) { paused = false; next(); } },
-      replay() { if (enabled) { cancel(); paused = false; index = 0; next(); } else this.enable(); },
-      selectVoice(uri) {
-        if (!voices().some(v => v.voiceURI === uri)) return;
-        voiceURI = uri;
-        if (enabled && !paused) this.replay(); else emit();
-      },
-      setRate(value) {
-        if (![0.85, 1, 1.15].includes(value)) return;
-        rate = value;
-        if (enabled && !paused) this.replay(); else emit();
-      }
+      replay() { if (enabled) { cancel(); paused = false; index = 0; next(); } else this.enable(); }
     };
   }
   return {create, chunks};
