@@ -78,3 +78,56 @@
 .calendar-error:empty{display:none}
 .motion-paused #calendarReveal{animation:none}
 @media(max-width:650px){.calendar-heading{padding-right:0;padding-top:48px}.calendar-heading>#calendarClose{top:0}.calendar-page-nav{gap:8px;margin-top:15px}.calendar-page-nav button{font-size:.68rem;padding:9px 11px}.calendar-cover{min-height:370px;padding:40px 16px 30px}.calendar-paper{scroll-margin-top:180px}.calendar-date-chooser .calendar-toolbar{justify-content:flex-start}}
+
+/* Enchanted pressed-paper calendar pages. */
+.calendar-paper{isolation:isolate;border-color:#d0b978;background:
+  repeating-linear-gradient(0deg,#6f5d3622 0 1px,transparent 1px 5px),
+  radial-gradient(circle at 12% 15%,#ffffff9c 0 1px,transparent 2px),
+  linear-gradient(105deg,#d9c99f,#fff6d9 28%,#f6e8c5 72%,#d5c092);box-shadow:0 4px 0 #cbb786,0 8px 0 #9c865d,0 12px 0 #65573e,0 28px 65px #000b}
+.calendar-paper:after{left:5%;right:5%;height:11px;border-radius:2px 2px 7px 7px;background:linear-gradient(180deg,#d7be7b,#80663c 45%,#d8c18a 52%,#7c6239);box-shadow:0 3px 5px #59442c77,0 0 0 1px #f8e8b855}
+.calendar-cover{overflow:hidden;background:
+  radial-gradient(circle at 15% 18%,#8f6d3430 0 1px,transparent 2px),
+  radial-gradient(circle at 79% 73%,#79643d22 0 1px,transparent 2px),
+  repeating-linear-gradient(96deg,#9c82430a 0 1px,transparent 1px 7px),
+  radial-gradient(ellipse at 50% 42%,#fffbed 0,#fff4d0 38%,transparent 72%),
+  linear-gradient(110deg,#dfcfa8,#fff4d4 58%,#d7c292)}
+.calendar-cover:before{content:'';position:absolute;inset:18px;border:1px solid #80663a55;border-radius:46% 46% 8px 8px;box-shadow:inset 0 0 0 4px #fff7dc66;pointer-events:none}
+.paper-vine{position:absolute;top:54px;font:3.5rem/1 Georgia;color:#5f765655;filter:drop-shadow(1px 1px #fff8dc);pointer-events:none}.paper-vine-left{left:32px;transform:rotate(-28deg)}.paper-vine-right{right:32px;transform:scaleX(-1) rotate(-28deg)}
+.moon-calendar .calendar-cover .paper-label{position:relative;z-index:1;font-size:.78rem;letter-spacing:.34em;color:#705936}
+.paper-celestial{display:flex;justify-content:center;align-items:center;gap:13px;margin:0 auto 15px;color:#776441}.paper-celestial span{font-size:.72rem;opacity:.68}.paper-celestial i{font-style:normal;font-size:1rem;color:#a77a32;text-shadow:0 0 10px #d6a95066}
+.moon-calendar .calendar-cover .paper-month{font-size:1.15rem;letter-spacing:.24em;color:#52634d}
+.paper-date-medallion{position:relative;display:grid;place-items:center;width:clamp(150px,32vw,190px);aspect-ratio:1;margin:12px auto 10px;border:1px solid #9a7d47;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffbe9,#ebddb5 63%,#c8b17a);box-shadow:inset 0 0 0 7px #fff7d077,inset 0 0 0 9px #8c704755,0 8px 20px #65503530}
+.paper-date-medallion:before,.paper-date-medallion:after{content:'✦';position:absolute;top:50%;transform:translateY(-50%);font-size:.75rem;color:#9a7840}.paper-date-medallion:before{left:-28px}.paper-date-medallion:after{right:-28px}
+.moon-calendar .calendar-cover .paper-number{font-size:clamp(5.2rem,14vw,7.2rem);margin:0;color:#2d493e;letter-spacing:-.08em;transform:translateX(-.04em);text-shadow:0 2px #fff9e2,0 7px 18px #6d5d3a24}
+.moon-calendar .calendar-cover .paper-weekday{font-size:.82rem;letter-spacing:.32em;color:#6a5b3f}
+.moon-calendar .calendar-cover .paper-invitation{margin:13px 0 18px;color:#6c5a3d;font-size:1.05rem}
+.moon-calendar #calendarTear{position:relative;border-color:#8d6d36;background:linear-gradient(#3e6351,#294839);box-shadow:0 3px 0 #1b3328,0 7px 16px #5d4a2e44;color:#fff1c9;font-family:Georgia,serif;font-size:1rem;font-weight:400;letter-spacing:.03em}
+.moon-calendar #calendarTear:hover{transform:translateY(-2px);box-shadow:0 5px 0 #1b3328,0 10px 20px #5d4a2e55}
+.paper-corner{width:66px;height:66px;background:linear-gradient(135deg,#9d814433,#fff6d6 48%,#9e7e45 50%,#dac590);filter:drop-shadow(-5px -5px 4px #6e552d44)}
+#calendarReveal{position:relative;background:
+  radial-gradient(circle at 8% 8%,#9879451f 0 1px,transparent 2px),
+  repeating-linear-gradient(90deg,#725b2908 0 1px,transparent 1px 9px),
+  linear-gradient(105deg,#e6d7af,#fff8df 48%,#e5d3a6);border-top:0;padding-top:34px}
+#calendarReveal:before{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:#213e34;clip-path:polygon(0 0,4% 65%,8% 15%,13% 78%,18% 20%,23% 70%,29% 10%,35% 80%,41% 18%,48% 72%,55% 12%,62% 82%,70% 17%,77% 74%,84% 8%,92% 68%,100% 15%,100% 0)}
+.paper-reveal-ornament{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 auto 25px;color:#806841}.paper-reveal-ornament:before,.paper-reveal-ornament:after{content:'';width:70px;border-top:1px solid #9b835855}.paper-reveal-ornament span{font:1.3rem Georgia}.paper-reveal-ornament i{font-style:normal;font-size:.7rem;color:#bd8b39}
+.calendar-paper .calendar-facts{padding:0 0 22px;justify-content:center;text-align:left;font-size:1.03rem}.calendar-facts>span{display:grid;place-items:center;width:78px;height:78px;flex:0 0 78px;border:1px solid #8f7443;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffde9,#d8c497);box-shadow:inset 0 0 0 5px #fff6d477,0 5px 14px #65503433;color:#304b3e}
+.moon-calendar .calendar-paper #calendarTitle{text-align:center;max-width:490px;margin:25px auto 18px;font-size:clamp(1.8rem,4vw,2.45rem)}
+.calendar-paper .calendar-copy{margin:auto;font-size:1.08rem;line-height:1.75}.calendar-paper .calendar-copy>p:first-child{font:1.12rem/1.85 Georgia;color:#4c503f}
+.calendar-paper .calendar-copy blockquote{position:relative;margin:28px 0;padding:24px 28px 24px 55px;border:1px solid #9d815455;border-radius:4px 22px 4px 22px;background:#d9c99b40;font-size:1.3rem;line-height:1.65}.calendar-paper .calendar-copy blockquote:before{content:'☾';position:absolute;left:20px;top:20px;font:1.4rem Georgia;color:#426152}
+.calendar-paper .calendar-copy h4{display:inline-block;margin:10px 0 8px;padding:6px 12px;border-radius:999px;background:#385849;color:#fff2cb;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem}
+.calendar-paper #calendarPractice{margin:0;padding:18px 20px;border-left:3px solid #a7864d;background:#f8edcf99;color:#414b3d;font-size:1.08rem;line-height:1.75}
+.calendar-paper .calendar-natal{position:relative;padding:18px 22px 20px;margin-top:30px;border:1px solid #89927655;border-left:4px solid #6b8269;border-radius:4px 18px 4px 18px;background:#b5c09a30;font-size:1.02rem;line-height:1.7}.calendar-paper .calendar-natal:after{content:'YOUR MOON';position:absolute;right:15px;top:10px;font-size:.58rem;letter-spacing:.18em;color:#71806b}
+.calendar-paper .calendar-page-actions{justify-content:center;margin-top:22px}
+.calendar-paper .calendar-private{position:relative;margin-top:34px;padding:24px 22px 20px;border:1px solid #9b835955;border-radius:4px;background:#fff9e7a8;box-shadow:inset 0 0 22px #8d75421a;font-size:1rem}.calendar-paper .calendar-private:before{content:'PRIVATE NOTE';position:absolute;right:18px;top:10px;font-size:.58rem;letter-spacing:.18em;color:#87734e}
+.moon-calendar .calendar-paper .calendar-footnote{font-size:.86rem;line-height:1.65}.paper-signature{margin:26px 0 0;padding-top:15px;border-top:1px solid #9e875844;text-align:center;font:italic .84rem Georgia;color:#776744;letter-spacing:.08em}
+.calendar-grid{background:radial-gradient(circle at 50% 0,#3e5b3b55,transparent 50%),linear-gradient(120deg,#193a2eaa,#0b2328d9);border-color:#d1b77c55}
+.calendar-grid .calendar-door{overflow:hidden;border-color:#c6a66e;background:
+  radial-gradient(circle at 16% 20%,#fff9 0 1px,transparent 2px),
+  linear-gradient(145deg,#f5e9c9,#d8c18e);box-shadow:2px 4px 0 #8a7249,3px 8px 12px #0007;transform:rotate(-.4deg)}
+.calendar-grid .calendar-door:nth-child(3n){transform:rotate(.7deg)}.calendar-grid .calendar-door:nth-child(4n){transform:rotate(-1deg)}
+.calendar-grid .calendar-door:after{content:'☾';position:absolute;right:7px;bottom:5px;font:1rem Georgia;color:#7d684a22}
+.calendar-door:before{left:6%;right:6%;border-top:1px dashed #9b7c49}
+.calendar-door:hover{transform:translateY(-5px) rotate(-1.5deg);box-shadow:4px 7px 0 #8a7249,5px 13px 18px #0008}
+.calendar-door[aria-pressed=true]{background:linear-gradient(145deg,#fff5d5,#e9d19c);box-shadow:0 0 0 3px #e8d59b55,2px 6px 0 #8a7249}
+.calendar-door[data-opened=true]:after{content:''}
+@media(max-width:650px){.paper-vine{font-size:2.5rem;top:50px}.paper-vine-left{left:18px}.paper-vine-right{right:18px}.paper-celestial{gap:9px}.paper-date-medallion{width:145px}.paper-date-medallion:before{left:-18px}.paper-date-medallion:after{right:-18px}.calendar-facts>span{width:62px;height:62px;flex-basis:62px}.calendar-paper .calendar-copy blockquote{padding:20px 17px 20px 45px}.calendar-paper .calendar-copy blockquote:before{left:15px}.calendar-paper .calendar-private{padding:28px 15px 17px}.paper-reveal-ornament:before,.paper-reveal-ornament:after{width:45px}.moon-calendar .calendar-paper button{font-size:.86rem}}

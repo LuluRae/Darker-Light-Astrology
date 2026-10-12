@@ -23,7 +23,6 @@
   });
   function centerCamera(){cancelAnimationFrame(frame);hero.style.setProperty('--camera-x','0px');hero.style.setProperty('--camera-y','0px')}
   hero.addEventListener('pointerleave',centerCamera);
-  document.getElementById('motionToggle').addEventListener('click',centerCamera);
   reduced.addEventListener('change',centerCamera);
   document.getElementById('followOpening').addEventListener('click',()=>{
     hero.classList.remove('wonder-fall');void hero.offsetWidth;hero.classList.add('wonder-fall');

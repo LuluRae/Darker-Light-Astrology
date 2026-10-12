@@ -68,7 +68,6 @@
   DLAExperience.reset = function () { leaveRoom(); window.DLAMoonRoom?.reset(); window.DLAShadowRoom?.setChart(null); window.DLACalendar?.setChart(null); window.DLAVoice?.reset(); originalReset(); };
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   function stopHop() { if (hop) hop.finish(); }
-  $('motionToggle').addEventListener('click', stopHop);
   reduced.addEventListener('change', stopHop);
   function position(el, angle, radius) {
     const rad = angle * Math.PI / 180;

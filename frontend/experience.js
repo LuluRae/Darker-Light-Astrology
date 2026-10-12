@@ -3,12 +3,11 @@
   const $=id=>document.getElementById(id);
   const guide=`<svg class="guide-svg" viewBox="0 0 120 180" aria-hidden="true"><g class="guide-ear"><path d="M48 66Q20 25 38 6Q58 33 56 61" fill="#e8dfcb"/><path d="M63 62Q61 29 83 8Q94 39 75 70" fill="#e8dfcb"/><path d="M44 26L49 51M78 28L70 53" stroke="#bfa9a4" stroke-width="5" stroke-linecap="round"/></g><ellipse cx="60" cy="100" rx="28" ry="43" fill="#e8dfcb"/><circle cx="31" cy="121" r="12" fill="#f6efdf"/><path d="M38 88L59 100L80 87L88 137L61 129L35 140Z" fill="#352238" stroke="#caab69"/><path d="M46 137L37 165M72 138L83 164" stroke="#e8dfcb" stroke-width="10" stroke-linecap="round"/><path d="M37 166L24 169M84 166L98 170" stroke="#b8a18b" stroke-width="8" stroke-linecap="round"/><ellipse cx="61" cy="73" rx="21" ry="24" fill="#e8dfcb"/><circle cx="72" cy="72" r="2.5" fill="#231923"/><path d="M78 81L83 80L79 85" fill="#ab8585"/><path d="M51 96L65 92L66 101Z" fill="#caab69"/><path d="M76 108Q94 101 88 126" stroke="#caab69" fill="none"/><g class="guide-watch"><circle cx="88" cy="131" r="10" fill="#251a2c" stroke="#e3bc68" stroke-width="2"/><path d="M88 125V131L93 134" stroke="#e3bc68" fill="none"/></g></svg>`;
   // The guide joins the visitor in the calculated chart world.
-  document.querySelector('header').insertAdjacentHTML('beforeend','<button type="button" id="motionToggle" class="motion-button" aria-pressed="false">Pause motion</button>');
   document.querySelector('header > .eyebrow').remove();
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let paused=reduced.matches;
-  function setMotion(){document.body.classList.toggle('motion-paused',paused);$('motionToggle').setAttribute('aria-pressed',String(paused));$('motionToggle').textContent=paused?'Motion paused':'Pause motion'}
-  setMotion();$('motionToggle').onclick=()=>{paused=!paused;setMotion()};
+  function setMotion(){document.body.classList.toggle('motion-paused',paused)}
+  setMotion();
   reduced.addEventListener('change',()=>{paused=reduced.matches;setMotion()});
   const scene=`<div class="scene-topline"><p id="sceneCaption">The rabbit has found your sky.</p><span class="scene-counter" id="sceneCounter">01 / 05 · WHAT</span></div><div class="world" id="world" data-stage="0" role="group" aria-label="Animated Rabbit Hole scene"><div class="scene-stars" aria-hidden="true"></div><div class="rings" aria-hidden="true"><i></i></div><div class="scene-emblem" id="sceneEmblem" aria-hidden="true">☉</div><div class="scene-orbit-label" id="scenePlacement"></div><div class="scene-doors" id="sceneDoors" aria-label="Explore the twelve houses"></div><div class="scene-dust" aria-hidden="true"></div><div class="scene-guide">${guide}<span class="guide-speech" id="guideSpeech">“Start with a little light.”</span></div><span class="explore-note" id="exploreNote">Choose a thread below.<br>This sky belongs to you.</span></div>`;
   $('deeper').insertAdjacentHTML('afterbegin',scene);
@@ -28,8 +27,8 @@
   function animate(el,className){el.classList.remove(className);void el.offsetWidth;if(!paused)el.classList.add(className)}
   window.DLAExperience={
     loading(value){document.body.classList.toggle('world-loading',value)},
-    reset(){document.body.classList.remove('world-ready');$('myChartButton').hidden=true},
-    arrive(){document.body.classList.add('world-ready');$('myChartButton').hidden=false;animate($('descentVeil'),'falling');$('deeper').scrollIntoView({behavior:paused?'instant':'smooth',block:'start'})},
+    reset(){document.body.classList.remove('world-ready')},
+    arrive(){document.body.classList.add('world-ready');animate($('descentVeil'),'falling');$('deeper').scrollIntoView({behavior:paused?'instant':'smooth',block:'start'})},
     show(chart,choice,step){
       const p=[...chart.list,chart.node,chart.south].find(p=>p.name===choice);
       const world=$('world');world.dataset.stage=String(step);world.style.setProperty('--scene-color',colors[step]);

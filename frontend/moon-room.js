@@ -50,7 +50,6 @@
   const order = ['mirror', 'door', 'cup'];
   let source = null, story = null, active = 'welcome', visited = new Set(), note = '', movement = null;
   function stopMovement() { if (movement) { movement.cancel(); movement = null; } }
-  $('motionToggle').addEventListener('click', stopMovement);
   reduced.addEventListener('change', stopMovement);
   function moveRabbit(key) {
     const before = rabbit.getBoundingClientRect();

@@ -4,7 +4,7 @@
   const toggle = document.createElement('button');
   toggle.type = 'button'; toggle.id = 'voiceToggle'; toggle.textContent = 'Listen';
   toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-controls', 'voicePanel');
-  $('myChartButton').after(toggle);
+  $('openMoonCalendar').after(toggle);
   const panel = document.createElement('section');
   panel.id = 'voicePanel'; panel.className = 'voice-panel'; panel.hidden = true;
   panel.setAttribute('aria-label', 'Journey voice controls');

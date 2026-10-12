@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="chase.css">
 </head>
 <body class="wonderland-mode direct-entry"><main>
-<header><a class="brand" href="#chartForm">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><button type="button" id="myChartButton" hidden>My chart</button><button type="button" id="openMoonCalendar">Moon calendar</button><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="Personal reading (opens in a new tab)">Personal reading ↗</a></header>
+<header><a class="brand" href="#chartForm">✦ DARKER LIGHT ASTROLOGY</a><span class="eyebrow">Rabbit Hole</span><nav class="header-actions" aria-label="Quick access"><button type="button" id="myChartButton">My chart</button><button type="button" id="openMoonCalendar">Moon calendar</button><a class="personal-reading-link" href="threshold-reading.html" target="_blank" rel="noopener" aria-label="The Threshold Reading (opens in a new tab)">The Threshold</a></nav></header>
 <div class="chart-entry"><div class="entry-sky" aria-hidden="true"><div class="entry-vortex"></div></div>
 <section class="chart-intro" aria-labelledby="chartIntroTitle"><div class="eyebrow">A little curiosity. A little cosmic mischief.</div><h1 id="chartIntroTitle">Let your shadow shine.</h1><p>Follow your birth chart into the forest. Get curious about every side of yourself. Yes, even that one.</p></section>
 <section class="panel birth-panel" aria-label="Your birth details">
@@ -130,7 +130,7 @@ $("chartForm").addEventListener("input",event=>{
   const button=document.querySelector("button.submit");button.disabled=false;button.textContent="Open my rabbit hole →";
 });
 document.querySelectorAll("[data-thread]").forEach(b=>b.onclick=()=>{if(current){selectedThread=b.dataset.thread;step=0;rabbit(selectedThread,current)}});
-$("myChartButton").onclick=()=>{if(current)DLAExperience.showMap()};
+$("myChartButton").onclick=()=>{if(current){DLAExperience.showMap();return}$("chartForm").scrollIntoView({block:'center',behavior:'instant'});$("date").focus({preventScroll:true})};
 $("showChartPlacements").onclick=()=>{if(current){DLAVoice.pause();$("chartLedger").open=true;$("chartLedger").scrollIntoView({block:'start',behavior:'instant'});$("chartLedger").querySelector('summary').focus({preventScroll:true})}};
 $("editBirthDetails").onclick=()=>{DLAVoice.pause();$("chartForm").scrollIntoView({block:'center',behavior:'instant'});$("date").focus({preventScroll:true})};
 </script></body></html>
