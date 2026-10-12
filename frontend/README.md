@@ -45,17 +45,17 @@ Daily notes remain in a memory map keyed by local date. They can be downloaded e
 
 ## One narrator
 
-Listen is opt-in, with Pause/Resume, Replay, Voice off and Show/Hide text. There are no voice or pace selectors. The controller chooses one browser-reported local voice, preferring British English when available, and keeps it across the narration at a fixed gentle pace. Device sound varies; this is synthesized storytelling, not a performed Cheshire character voice.
+Voice is opt-in and uses only the approved Cheshire MP3. The top control, calendar, and shadow study open the same native audio player; leaving the page, editing birth details, or changing scenes stops the clip. There is no browser speech synthesis, voice menu, microphone, API key, or cloud request in the public experience.
 
-Navigation cancels old speech and ignores late callbacks. Switching tabs pauses narration. Resume repeats the interrupted line; editing birth details turns narration off. Speech failure restores written content. No microphone, API key, paid voice service or cloud voice default is used. Direct Listen buttons are available in the calendar and study.
+Calculated chart and calendar details remain readable on screen and are never handed to a substitute computer voice. A future secure narration service may perform those changing details in the same approved character voice. Private notes remain excluded.
 
-The selected voice direction is a warm, mischievous Cheshire-style narrator with affectionate dry humor. The saved ElevenLabs MP3 appears in the voice panel as a single preview, and CHESHIRE-VOICE.md records its brief, script, and integration notes. Live calculated narration still uses the current device voice because no character-voice service is connected.
+The selected voice direction is a warm, mischievous Cheshire-style narrator with affectionate dry humor. The approved ElevenLabs MP3 appears in the voice panel as the site's only voice, and CHESHIRE-VOICE.md records its brief, script, fingerprint, and integration notes. Browser-generated speech is not used. Personalized calculated details remain written until the same character voice is connected through a secure service.
 
 ## The Threshold Reading
 
 threshold-reading.html and its stylesheet adapt the user-provided page concept under Darker Light Astrology branding. Links open separately to preserve the chart tab. The page includes the reading overview, planned process, keepsakes and **optional extra: a personalized daily Moon-phase horoscope paired with a unique shadow-style reflection prompt**. Personal audio is also a planned option.
 
-The optional **Moon & Shadow** monthly membership is presented as coming soon, with the tear-off calendar as its daily home: a planned chart-tailored Moon reading, fresh shadow prompt/practice, and weekly narrator audio. It is separate from the deeper personal Threshold Reading. Calendar and membership sections link to each other, and `chart-rabbit.html#moonCalendar` opens the free calendar directly. Current general phase prompts and future member personalization are explicitly distinguished. No price or working subscription is implied.
+The optional **Moon & Shadow** monthly membership is presented as coming soon, with the tear-off calendar as its daily home: a planned chart-tailored Moon reading, fresh shadow prompt/practice, weekly narrator audio, and an optional members-only **Tea Table** for prompt-based discussion. `tea-party.html` is the dedicated membership preview and distinguishes its daily rhythm from the deeper personal Threshold Reading. The community preview is not interactive; accounts, display names, rules, reporting, muting, moderation, and deletion must exist before it opens. Calendar, Threshold, and membership pages link to each other, and `chart-rabbit.html#moonCalendar` opens the free calendar directly. Current general phase prompts and future member personalization are explicitly distinguished. No price or working subscription is implied.
 
 Bookings remain coming soon. There are no payments, intake submission, daily delivery, subscriptions or prices enabled. Opening bookings requires a real destination, scope, price, delivery window and intake/privacy details. The optional personalized service is distinct from the free calendar's repeating editorial phase prompts.
 

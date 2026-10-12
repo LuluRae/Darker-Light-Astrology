@@ -2,7 +2,7 @@
 
 The chosen direction is one warm, sly, British fantasy narrator: a lovable smart-ass with a smile in his voice. Humor is affectionate. Tease cosmic bureaucracy and the absurdity of being human; follow each joke with a clear explanation or useful question. The rabbit is a quiet visual guide along the path, with no dialogue or separate performed personality. All spoken narration belongs to this one guide voice.
 
-This is an original character performance with a Cheshire-like mood. The selected ElevenLabs sample is saved as `assets/darker-light-cheshire-preview.mp3` and appears in the site's voice panel as **Meet the Cheshire narrator**. The live calculated narration still uses the device narrator because no ElevenLabs service is connected yet.
+This is an original character performance with a Cheshire-like mood. The selected ElevenLabs sample is saved as `assets/darker-light-cheshire-preview.mp3` and appears in the site's voice panel as **Meet the Cheshire narrator**. Browser-generated speech has been removed from the experience. Personalized calculated details remain written until this same character voice is connected through a secure service.
 
 The current approved preview is the **purring, smug** performance downloaded on October 12, 2026. Its original filename was `ElevenLabs_audio_elevenlabs-v4_[purring, smug]_2026-10-12T08_47_01.mp3`; the preserved project copy is 235,762 bytes with SHA-256 `B3C080EA5C2867A13A3CDED5B9EEA5E70A95ACB27D2304E0AB200A070985FF01`. Git history retains the earlier preview if comparison is ever needed.
 

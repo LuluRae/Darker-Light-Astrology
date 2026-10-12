@@ -2,58 +2,43 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const toggle = document.createElement('button');
-  toggle.type = 'button'; toggle.id = 'voiceToggle'; toggle.textContent = 'Listen';
+  toggle.type = 'button'; toggle.id = 'voiceToggle'; toggle.textContent = 'Cheshire voice';
   toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-controls', 'voicePanel');
   $('openMoonCalendar').after(toggle);
+
   const panel = document.createElement('section');
   panel.id = 'voicePanel'; panel.className = 'voice-panel'; panel.hidden = true;
-  panel.setAttribute('aria-label', 'Journey voice controls');
-  panel.innerHTML = `<div class="voice-top"><div><span class="voice-eyebrow">Listen to the journey</span><p id="voiceStatus" role="status"></p></div><button type="button" id="voiceOff">Voice off</button></div>
-    <div class="cheshire-preview"><label for="cheshirePreview">Meet the Cheshire narrator</label><audio id="cheshirePreview" controls preload="metadata" src="assets/darker-light-cheshire-preview.mp3"></audio><small>This saved performance is the voice direction. Live chart details still use your device voice for now.</small></div>
-    <div class="voice-controls"><button type="button" id="voicePause">Pause</button><button type="button" id="voiceReplay">Replay</button><button type="button" id="voiceText" aria-pressed="false">Show text</button></div>
-    <p id="voiceCaption" class="voice-caption" hidden></p>`;
+  panel.setAttribute('aria-label', 'Cheshire narrator');
+  panel.innerHTML = `<div class="voice-top"><div><span class="voice-eyebrow">Your Cheshire narrator</span><p id="voiceStatus" role="status">The chosen purring, smug performance.</p></div><button type="button" id="voiceOff">Close</button></div>
+    <div class="cheshire-preview"><label for="cheshirePreview">Meet the Cheshire narrator</label><audio id="cheshirePreview" controls preload="metadata" src="assets/darker-light-cheshire-preview.mp3"></audio><small>This is the only voice used on the site. Personalized chart details remain written until this same character voice is connected securely.</small></div>`;
   document.body.append(panel);
-  let expanded = false, textVisible = false;
-  const narrator = DLAVoiceEngine.create({synthesis:window.speechSynthesis, Utterance:window.SpeechSynthesisUtterance, onChange:update});
-  function update(state) {
-    const active = expanded && state.enabled && state.status !== 'error';
-    document.body.classList.toggle('voice-reading', expanded);
-    document.body.classList.toggle('voice-hide-text', active && !textVisible);
-    toggle.textContent = expanded ? 'Voice on' : 'Listen';
-    toggle.setAttribute('aria-expanded', String(expanded)); panel.hidden = !expanded;
-    $('voicePause').textContent = state.paused ? 'Resume' : 'Pause';
-    $('voicePause').disabled = !state.enabled || !['speaking','paused'].includes(state.status);
-    $('voiceReplay').disabled = !state.supported;
-    $('voiceText').disabled = !active;
-    $('voiceText').textContent = textVisible ? 'Hide text' : 'Show text';
-    $('voiceText').setAttribute('aria-pressed', String(textVisible));
-    $('voiceStatus').textContent = state.error || ({off:'Voice is off', ready:'Choose a place to explore', paused:'Paused — take your time', speaking:`Narrator · ${state.title}`, finished:'Your turn. Explore when you’re ready.'}[state.status]);
-    $('voiceCaption').hidden = !textVisible || !state.line;
-    $('voiceCaption').textContent = state.line ? state.line.text : '';
-    // Spoken lines have visible optional captions, without a second live announcement.
-    document.querySelectorAll('.rabbit[aria-live]').forEach(el => el.setAttribute('aria-live', active ? 'off' : 'polite'));
-  }
+
   const preview = $('cheshirePreview');
-  preview.addEventListener('play', () => narrator.pause());
+  let expanded = false;
   function stopPreview() { preview.pause(); preview.currentTime = 0; }
-  function off() { stopPreview(); expanded = false; narrator.disable(); }
-  function listen() { expanded = true; narrator.enable(); }
-  toggle.onclick = () => {
-    if (expanded) { off(); return; }
-    listen();
-  };
-  $('voiceOff').onclick = () => { off(); toggle.focus({preventScroll:true}); };
-  $('voicePause').onclick = () => narrator.state().paused ? narrator.resume() : narrator.pause();
-  $('voiceReplay').onclick = () => narrator.replay();
-  $('voiceText').onclick = () => { textVisible = !textVisible; update(narrator.state()); };
-  document.addEventListener('visibilitychange', () => { if (document.hidden) narrator.pause(); });
-  window.addEventListener('pagehide', off);
+  function render() {
+    toggle.textContent = expanded ? 'Close voice' : 'Cheshire voice';
+    toggle.setAttribute('aria-expanded', String(expanded));
+    panel.hidden = !expanded;
+  }
+  function open(play = false) {
+    expanded = true; render();
+    if (play) preview.play().catch(() => { $('voiceStatus').textContent = 'Press play to meet the Cheshire narrator.'; });
+  }
+  function close() { stopPreview(); expanded = false; render(); }
+
+  toggle.onclick = () => expanded ? close() : open(true);
+  $('voiceOff').onclick = () => { close(); toggle.focus({preventScroll:true}); };
+  document.addEventListener('visibilitychange', () => { if (document.hidden) preview.pause(); });
+  window.addEventListener('pagehide', close);
+
+  // This facade keeps the journey controls simple without invoking browser speech synthesis.
   window.DLAVoice = {
-    listen,
-    scene(title, lines) { stopPreview(); narrator.scene(title, lines); },
-    clear() { stopPreview(); narrator.scene('', []); },
-    reset() { off(); narrator.scene('', []); },
-    pause() { narrator.pause(); }
+    listen() { open(true); },
+    scene() { if (!preview.paused) stopPreview(); },
+    clear() { stopPreview(); },
+    reset() { close(); },
+    pause() { preview.pause(); }
   };
-  update(narrator.state());
+  render();
 })();
