@@ -9,7 +9,7 @@
     <nav class="calendar-page-nav" aria-label="Calendar pages"><button type="button" id="calendarBackPage">← Previous day</button><button type="button" id="calendarToday">Today</button><button type="button" id="calendarForwardPage">Next day →</button></nav>
     <article id="calendarDiscovery" class="calendar-discovery calendar-paper" hidden>
       <div id="calendarCover" class="calendar-cover"><span class="paper-vine paper-vine-left" aria-hidden="true">❧</span><span class="paper-vine paper-vine-right" aria-hidden="true">❧</span><p class="paper-label">Darker Light Astrology</p><div class="paper-celestial" aria-hidden="true"><span>●</span><span>◐</span><i>✦</i><span>○</span><span>◑</span></div><p id="calendarCoverMonth" class="paper-month"></p><div class="paper-date-medallion"><p id="calendarCoverNumber" class="paper-number"></p></div><p id="calendarCoverWeekday" class="paper-weekday"></p><p class="paper-invitation">Something is waiting beneath this page.</p><button type="button" id="calendarTear" aria-controls="calendarReveal" aria-expanded="false">Tear off the page <span aria-hidden="true">↘</span></button><span class="paper-corner" aria-hidden="true"></span></div>
-      <div id="calendarReveal" hidden><div class="paper-reveal-ornament" aria-hidden="true"><span>☾</span><i>✦</i><span>☽</span></div><div class="calendar-facts"><span id="calendarGlyph" aria-hidden="true"></span><div><p class="eyebrow" id="calendarDate"></p><h3 id="calendarPhase"></h3><p id="calendarSky"></p></div></div>
+      <div id="calendarReveal" hidden><div class="paper-reveal-ornament" aria-hidden="true"><span>☾</span><i>✦</i><span>☽</span></div><div class="calendar-facts"><span id="calendarGlyph" aria-hidden="true"></span><div><p class="eyebrow" id="calendarDate"></p><h3 id="calendarPhase"></h3><p id="calendarSky"></p></div></div><button type="button" id="calendarKeepReading" class="calendar-scroll-cue">Keep reading—your full reflection continues below <span aria-hidden="true">↓</span></button>
       <h3 id="calendarTitle" tabindex="-1"></h3><div class="calendar-copy"><p id="calendarText"></p><blockquote id="calendarQuestion"></blockquote><h4>One small practice</h4><p id="calendarPractice"></p></div>
       <div id="calendarNatal" class="calendar-natal"></div><div class="calendar-page-actions"><button type="button" id="calendarListen">Listen to this day</button><button type="button" id="calendarNextPage">Next page →</button></div>
       <div class="calendar-private"><label for="calendarNote">A note to yourself <small>Optional. Stays in this tab; cleared if you change birth details or close the page.</small></label><textarea id="calendarNote" maxlength="2000" rows="3" placeholder="Something you noticed. No lunar paperwork required."></textarea><button type="button" id="calendarDownload">Save this day’s note ↓</button></div>
@@ -126,6 +126,10 @@
       {transform:'perspective(800px) rotateX(-65deg) rotate(18deg) translate(70px,220px)',opacity:0,offset:1}
     ],{duration:1050,easing:'ease-in',fill:'forwards'});
     tearing.finished.then(reveal).catch(()=>{});
+  };
+  $('calendarKeepReading').onclick = () => {
+    $('calendarTitle').scrollIntoView({block:'start',behavior:reduced.matches?'instant':'smooth'});
+    $('calendarTitle').focus({preventScroll:true});
   };
   function loadMonth(preferred) {
     cancelTear(); DLAVoice.clear(); selected = null; guidance = null;
