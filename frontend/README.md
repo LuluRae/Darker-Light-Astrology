@@ -27,7 +27,7 @@ The forest painting is assets/enchanted-forest-rabbit-hole.png; its final built-
 
 ## Moon chapter and shadow study
 
-Selecting Moon opens the Moonlit Conservatory. Mirror, door and teacup provide guided or free exploration of sign, house and a practical reflection. The longer descriptions read the exact calculated Moon. The painted Moon is scenery, not a birth-phase calculation.
+Selecting Moon opens the Moonlit Conservatory and introduces its first resident character, **The Midnight Host**. He is an original eccentric tea-party keeper with a moon-phase hat and a warm, chaotic sense of humor. Visitors can meet him again by selecting his figure, then explore the mirror, door, and teacup in any order for sign, house, and practical reflections. His visual provenance and final built-in image-generation prompt are in `assets/MIDNIGHT-HOST.md`. The longer descriptions read the exact calculated Moon. The painted Moon is scenery, not a birth-phase calculation.
 
 The shadow study adapts the user's earlier Shadow Astrology and Luna Door materials to the same chart: ten planets, rising, mean nodes and a Moon/Pluto reflection explored together. It adds strengths, possible patterns, setting, questions and practical choices, with a lightly sarcastic tone. It never asserts a Moon–Pluto aspect. SHADOW-INTEGRATION.md records sources and fingerprints.
 

@@ -6,15 +6,16 @@
   chapter.className = 'moon-chapter'; chapter.hidden = true;
   chapter.setAttribute('aria-label', 'The Moonlit Conservatory');
   chapter.innerHTML = `
-    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Moon has opinions.<br>Of course it does.</h4><p>The rabbit’s trail leads through here.<br>Explore your needs, habits, and inner weather.</p></div>
+    <div class="moon-heading"><p class="eyebrow">The Moonlit Conservatory</p><h4>The Midnight Host<br>has been expecting you.</h4><p>The rabbit’s trail leads to an enchanted tea party.<br>Your host knows a suspicious amount about needs, habits, and inner weather.</p></div>
     <div class="moon-scene" aria-label="Explore the mirror, door, and teacup">
       <div class="moon-scenery" aria-hidden="true"></div><div class="moon-water" aria-hidden="true"></div>
       <div class="moon-motes" aria-hidden="true"></div>
       <span class="moon-rabbit rabbit-trace" aria-hidden="true"><i></i><i></i><i></i></span>
+      <button type="button" class="moon-host" id="moonHost" aria-label="Meet The Midnight Host" aria-pressed="true"><img src="assets/midnight-host.png" alt=""><span>The Midnight Host</span></button>
       <button type="button" class="moon-object moon-mirror" data-moon-stop="mirror" aria-label="Explore the silver mirror: your Moon sign" aria-controls="moonDiscovery"><span aria-hidden="true">✧</span><b>The silver mirror</b><small>Your Moon sign</small></button>
       <button type="button" class="moon-object moon-door" data-moon-stop="door" aria-label="Explore the little door: your Moon house" aria-controls="moonDiscovery"><span aria-hidden="true" id="moonDoorNumber"></span><b>The little door</b><small>Your Moon house</small></button>
       <button type="button" class="moon-object moon-cup" data-moon-stop="cup" aria-label="Explore the teacup: a moment of care" aria-controls="moonDiscovery"><span aria-hidden="true">♡</span><b>A cup of moonlight</b><small>A moment of care</small></button>
-      <p class="moon-scene-caption">A disturbed reflection. An open door. Tea still warm. He was just here.</p>
+      <p class="moon-scene-caption">The rabbit slips away. The Midnight Host lifts a teacup and smiles as though this explains everything.</p>
     </div>
     <div class="moon-story">
       <div class="moon-trail"><p id="moonProgress" role="status"></p><button type="button" id="moonRestart">Revisit the entrance</button></div>
@@ -75,6 +76,7 @@
       button.setAttribute('aria-pressed', String(active === key));
       button.dataset.found = String(visited.has(key));
     });
+    $('moonHost').setAttribute('aria-pressed', String(welcome));
     if (summary) {
       $('moonKeepsakePlacement').textContent = story.placement;
       $('moonTakeaway').textContent = story.takeaway;
@@ -83,13 +85,13 @@
       $('moonSavedNote').hidden = !note.trim();
       $('moonGuideLine').textContent = 'The chart is still here. So are all its other doors.';
     } else if (welcome) {
-      $('moonDiscoveryLabel').textContent = 'You have arrived';
-      $('moonDiscoveryTitle').textContent = 'Welcome to the comfort department.';
-      $('moonDiscoveryText').textContent = 'In astrology, the Moon is the character concerned with needs, habits, and familiar reactions. The Sun got the spotlight. The Moon got the admin. Your Moon sign suggests a style; its house gives us a setting. Let’s inspect the paperwork.';
+      $('moonDiscoveryLabel').textContent = 'Your resident guide';
+      $('moonDiscoveryTitle').textContent = 'Meet the Midnight Host.';
+      $('moonDiscoveryText').textContent = 'He keeps the Moonlit Conservatory, pours tea according to phases nobody else can see, and treats emotional patterns like honored guests—even the ones that arrive uninvited and rearrange the furniture. In astrology, the Moon describes needs, habits, and familiar reactions. Your Moon sign suggests a style; its house gives us a setting. The Host has prepared three places to explore.';
       $('moonFact').textContent = story.placement;
       $('moonQuestion').textContent = 'What actually helps when your day behaves like a badly organised tea party?';
-      $('moonWhisper').textContent = 'No correct answer. A rare administrative oversight. Enjoy it.';
-      $('moonGuideLine').textContent = 'Three places to explore. Begin wherever your curiosity lands.';
+      $('moonWhisper').textContent = '“Tea is optional. Emotional patterns are apparently compulsory.”';
+      $('moonGuideLine').textContent = 'The Midnight Host offers the silver mirror, the little door, and a cup of moonlight. Begin wherever your curiosity lands.';
     } else {
       const discovery = story[active];
       $('moonDiscoveryLabel').textContent = {mirror: '01 · The sign / how', door: '02 · The house / where', cup: '03 · Bring it into your day'}[active];
@@ -111,7 +113,7 @@
     ] : [
       {text:$('moonGuideLine').textContent},
       {text:$('moonDiscoveryText').textContent},
-      ...(welcome ? [{text:story.placement}] : []),
+      ...(welcome ? [{speaker:'Midnight Host',text:$('moonWhisper').textContent},{text:story.placement}] : []),
       {text:$('moonQuestion').textContent},
       ...(active === 'cup' ? [{text:story.practice}] : []),
       {text:$('moonContinue').textContent.replace('→','')}
@@ -128,6 +130,7 @@
     moveRabbit(key); render(true);
   }
   stops.forEach(button => button.onclick = () => discover(button.dataset.moonStop));
+  $('moonHost').onclick = () => discover('welcome');
   $('moonContinue').onclick = () => discover(order.find(key => !visited.has(key)) || 'keepsake');
   $('moonRestart').onclick = () => discover('welcome');
   $('moonReflection').addEventListener('input', e => { note = e.target.value; });
